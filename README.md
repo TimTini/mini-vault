@@ -24,6 +24,8 @@ Các preset:
 
 Kiểm chứng tăng thành 200 từ 1,8 lên 2,4 mm dùng `work/verify-thick-housing.py`: dựng lại bộ 200 bằng exporter bên dưới, rồi chạy `python work/verify-thick-housing.py --openscad $env:MINI_VAULT_OPENSCAD --previous-manifest <manifest-200-truoc-khi-tang-thanh.json>`. Manifest đối chứng phải được lưu trước khi xuất lại. Script đối chiếu hash 21 chi tiết còn lại, tiết diện thành, 231 cặp tĩnh, cửa 0..90° bước 0,5°, chốt -8..0 mm qua 61 vị trí, đĩa/trục bước 2°. Chênh vật liệu dùng OFF gốc; giao khối khi lắp/chuyển động dùng STL. Kết quả không thay thế thử in/lắp PETG hoặc mô phỏng nhiệt.
 
+Kiểm tra bổ sung bằng PyChrono 10.0.0 (runtime riêng, không thuộc `requirements.txt`): chạy `<python-PyChrono> work/chrono-housing-check.py poses`, sau đó `<python-project> work/chrono-housing-check.py inspect --previous-manifest <manifest-200-truoc-khi-tang-thanh.json>`. Cần chạy verifier trên trước để tạo vỏ đối chứng và report. Chrono giải ràng buộc motor bản lề tại [20,-0.5,0] mm và thanh trượt theo X; 361 tư thế cửa (bước 0,25°) và 121 vị trí trượt được đối chiếu giao khối bằng STL thật. Đây là động học cưỡng bức, không phải mô phỏng lực tiếp xúc/ma sát PETG hoặc chứng nhận không kẹt. Xem [Chrono 10.0.0 motors](https://api.projectchrono.org/10.0.0/motors.html).
+
 Vạch chỉ số mặt ngoài cửa giữ kích thước cục bộ1×4mm rồi nhân tỷ lệ; bản200 là1×4mm, bản220/1.5 là1,5×6mm. Latch mở rộng theo bề rộng cửa và có đế đỡ sau cổ núm ở các bản lớn.
 
 ## File để in
