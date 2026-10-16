@@ -1,0 +1,91 @@
+{
+  "scope": "inverse search over existing15^3holes; fixed contact-band model, mostly approximate; no CAD/STL changes",
+  "input": [
+    8,
+    4,
+    12
+  ],
+  "direction": [
+    "CW",
+    "CCW",
+    "CW"
+  ],
+  "results": [
+    {
+      "scale": 1,
+      "holes": [
+        0,
+        1,
+        6
+      ],
+      "predictedNumbers": [
+        7.909142408106062,
+        4.0580000124043885,
+        11.966508465094698
+      ],
+      "stopErrors": [
+        -2.0442958176136017,
+        1.3050002790987492,
+        -0.753559535369277
+      ],
+      "maxStopError": 2.0442958176136017,
+      "measured": true,
+      "matches": false,
+      "stageErrors": [
+        [
+          2.0442958176136017
+        ],
+        [
+          43.0494786798954,
+          -1.3050002790987492
+        ],
+        [
+          43.0494786798954,
+          -1.3050002790987492,
+          0.753559535369277
+        ]
+      ],
+      "maxStageError": 43.0494786798954,
+      "tested": 3375,
+      "matchingCandidates": 0
+    },
+    {
+      "scale": 1.5,
+      "holes": [
+        0,
+        1,
+        6
+      ],
+      "predictedNumbers": [
+        7.910518975721465,
+        4.056354690757063,
+        11.972355970905888
+      ],
+      "stopErrors": [
+        -2.0133230462670326,
+        1.2679805420339108,
+        -0.621990654617548
+      ],
+      "maxStopError": 2.0133230462670326,
+      "measured": false,
+      "matches": false,
+      "stageErrors": [
+        [
+          2.0133230462670326
+        ],
+        [
+          42.98696415498853,
+          -1.2679805420339108
+        ],
+        [
+          42.98696415498853,
+          -1.2679805420339108,
+          0.621990654617548
+        ]
+      ],
+      "maxStageError": 42.98696415498853,
+      "tested": 3375,
+      "matchingCandidates": 0
+    }
+  ]
+}

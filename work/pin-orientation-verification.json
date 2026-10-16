@@ -1,0 +1,95 @@
+{
+  "scope": "current pin meshes, SCAD assembled transform and scene axis comparison; no friction/motion assertion",
+  "source_hashes": {
+    "mini-vault.scad": "db98be6d01deb5ffe2d2162449dc88379b54c622a4066286d1380513354cbd99",
+    "exporter.py": "84c01ff0b675d366ca09c61635d04b4da19ae3cadf281ed6791e1ddf10923dde",
+    "audit.py": "51c76221f77e4d4ad5e05adc4b4904033072665bd1d3aec7bfa2c32b318fd490",
+    "build.ps1": "33d46eeac25bbc577c774b6bbfea4c3df2e33981c7244f2fc9e5144fafd703de",
+    "analyze.py": "fa4ec1ddef52341fc32711f972cb123a906dd32d8ba4585590697b3ef3cd73a5",
+    "profile_builder.py": "0cd9627c2eee800995de153eb48e6175f128ebad0c304825006e2fd8e29e98be",
+    "profiles/collar_1.scad": "52bf3f6eda5a3cf50573a275b0f915573d9c8e6bb6e9688c6604dbe8627232a8",
+    "profiles/dial.scad": "0172fad2d7cbaef3b05676972ee088f748e8db82079f5d603b94fc6dca8b9ca0",
+    "profiles/disk_1.scad": "62dcab619a605cf87c5005fa14d15d0ff2d2540215b98328404e2cab39b234a6",
+    "profiles/door.scad": "9d1733828cb296ad8d32ef7aefe6b1ef3b409c99f0ec9b2dd113c9e4fe16961e",
+    "profiles/fastener_1.scad": "a6d1ec2c81d2ebebd631bc72acd1cd67c0a256f04f127729950c169cfa9fa320",
+    "profiles/hinge_leaf_top.scad": "404b8f39aae2f83594fbe14444e7952f1fc52019a64c4420e3d081fc88dc3de7",
+    "profiles/hinge_socket_top.scad": "062e652f94985815eddc60ea284b4b7354b2f3ace1f5d47bfd4fba3a77284914",
+    "profiles/housing.scad": "54140c25c06f33009d544f5818867ced073c89b4f8123422f8709584380eab64",
+    "profiles/knob.scad": "bd34d2fc76a506de487356fdbe1146d26afe41f2e0064312055df8fd12239b35",
+    "profiles/latch.scad": "340c50730657993665d777f2caabfce47343d04295ce052db062a150c99c3ae8",
+    "profiles/latch_cover.scad": "e2e1daafbee473bc6c169ec762199cefd785aec1d86dacc202c85793e89dd614",
+    "profiles/link.scad": "eb7ecc15371a72f52cede0429b9341d66a8c89f56ba62e50798a7f89543a6802",
+    "profiles/retaining_ring.scad": "088810c5c333a4f1b2842f6d83a72016127192fa36b7620b779954da53630a45",
+    "profiles/shaft.scad": "1d7b730d7226006bfc2e70b77958283dbc162860358b591ade64dd6b3b3c7054",
+    "geometry/collar.scad": "54e504db053959b46cfed69aa0f914b0bc61206caa9a9c83a30ed33dae8a3d2b",
+    "geometry/door.scad": "7f2d1733fd51275745cbea9de0a4eebd355e9ba6fb35097d31cf7da103cbd03a",
+    "geometry/fastener.scad": "776d3d541e86a58df7e66225cca5ec236abc41997550ebfeaf8eef1456936ed0",
+    "geometry/housing.scad": "20fc3e48d9c7fd92ba72d84711c880f737cbb405be609b4e1fb3169d36bf5fe1",
+    "geometry/latch.scad": "a55effdcd3ebf6fcf31fb6e012890b5011cec56864536d71aa88cce008f9a12b",
+    "geometry/link-cover.scad": "a05430eb7c486d3e42cd8c623c0b9225dd8113af85caca1f5ba1763b816572d2",
+    "geometry/rotating.scad": "f8068a20508f9effa1bd3c753c720d56718aa54df42fecb42b253044bf044d8d"
+  },
+  "orientation": "small end towards external dial; large head towards box interior",
+  "pins": [
+    {
+      "scale": 1,
+      "disk": 1,
+      "hole": 0,
+      "small_end_towards_exterior_y_mm": -3,
+      "small_radius_mm": 1.5187284827778795,
+      "large_head_towards_interior_y_mm": 1,
+      "head_radius_mm": 3.60004679566085,
+      "mesh_sha256": "f7142f3c76952aa61f7c6afab4f09a685dc55c411bb6215af9e95f8459ab514a"
+    },
+    {
+      "scale": 1,
+      "disk": 2,
+      "hole": 1,
+      "small_end_towards_exterior_y_mm": 2,
+      "small_radius_mm": 1.5187290542935852,
+      "large_head_towards_interior_y_mm": 6,
+      "head_radius_mm": 3.600047148091936,
+      "mesh_sha256": "94ea31ec468c0e750b16c2229d17fdcb0855a3e791acb28b8f632cece5308ddb"
+    },
+    {
+      "scale": 1,
+      "disk": 3,
+      "hole": 6,
+      "small_end_towards_exterior_y_mm": 7,
+      "small_radius_mm": 1.5187286732831136,
+      "large_head_towards_interior_y_mm": 11,
+      "head_radius_mm": 3.600046503691854,
+      "mesh_sha256": "848b49e06fa6a1ab668b439695569f95e2f4912c921fe7768e08daa7dcb76ea7"
+    },
+    {
+      "scale": 1.5,
+      "disk": 1,
+      "hole": 0,
+      "small_end_towards_exterior_y_mm": -4.5,
+      "small_radius_mm": 2.278070571470253,
+      "large_head_towards_interior_y_mm": 1.5,
+      "head_radius_mm": 5.400039827483724,
+      "mesh_sha256": "57e0149f641519f7e609df1f7dfe8ababf4bf5f09ef93fe17811c60037182ea2"
+    },
+    {
+      "scale": 1.5,
+      "disk": 2,
+      "hole": 1,
+      "small_end_towards_exterior_y_mm": 3.0,
+      "small_radius_mm": 2.2780711409193426,
+      "large_head_towards_interior_y_mm": 9.0,
+      "head_radius_mm": 5.400040204825175,
+      "mesh_sha256": "31939edfc52d8b2b9c6abb8cc8c9b7e103a1414dea7bf471de4246573610b5f3"
+    },
+    {
+      "scale": 1.5,
+      "disk": 3,
+      "hole": 6,
+      "small_end_towards_exterior_y_mm": 10.5,
+      "small_radius_mm": 2.2780707612866196,
+      "large_head_towards_interior_y_mm": 16.5,
+      "head_radius_mm": 5.400040959508075,
+      "mesh_sha256": "9bcaf888d7fd10ae002ccc9eb757faeed681f1cd239afc451e7557e9001d869c"
+    }
+  ]
+}

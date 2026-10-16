@@ -1,0 +1,261 @@
+{
+  "scope": "exact current200/220door,shaft,collar context; normalized scale; no CAD/STL changes",
+  "source_hashes": {
+    "mini-vault.scad": "db98be6d01deb5ffe2d2162449dc88379b54c622a4066286d1380513354cbd99",
+    "exporter.py": "84c01ff0b675d366ca09c61635d04b4da19ae3cadf281ed6791e1ddf10923dde",
+    "audit.py": "51c76221f77e4d4ad5e05adc4b4904033072665bd1d3aec7bfa2c32b318fd490",
+    "build.ps1": "33d46eeac25bbc577c774b6bbfea4c3df2e33981c7244f2fc9e5144fafd703de",
+    "analyze.py": "fa4ec1ddef52341fc32711f972cb123a906dd32d8ba4585590697b3ef3cd73a5",
+    "profile_builder.py": "0cd9627c2eee800995de153eb48e6175f128ebad0c304825006e2fd8e29e98be",
+    "profiles/collar_1.scad": "52bf3f6eda5a3cf50573a275b0f915573d9c8e6bb6e9688c6604dbe8627232a8",
+    "profiles/dial.scad": "0172fad2d7cbaef3b05676972ee088f748e8db82079f5d603b94fc6dca8b9ca0",
+    "profiles/disk_1.scad": "62dcab619a605cf87c5005fa14d15d0ff2d2540215b98328404e2cab39b234a6",
+    "profiles/door.scad": "9d1733828cb296ad8d32ef7aefe6b1ef3b409c99f0ec9b2dd113c9e4fe16961e",
+    "profiles/fastener_1.scad": "a6d1ec2c81d2ebebd631bc72acd1cd67c0a256f04f127729950c169cfa9fa320",
+    "profiles/hinge_leaf_top.scad": "404b8f39aae2f83594fbe14444e7952f1fc52019a64c4420e3d081fc88dc3de7",
+    "profiles/hinge_socket_top.scad": "062e652f94985815eddc60ea284b4b7354b2f3ace1f5d47bfd4fba3a77284914",
+    "profiles/housing.scad": "54140c25c06f33009d544f5818867ced073c89b4f8123422f8709584380eab64",
+    "profiles/knob.scad": "bd34d2fc76a506de487356fdbe1146d26afe41f2e0064312055df8fd12239b35",
+    "profiles/latch.scad": "340c50730657993665d777f2caabfce47343d04295ce052db062a150c99c3ae8",
+    "profiles/latch_cover.scad": "e2e1daafbee473bc6c169ec762199cefd785aec1d86dacc202c85793e89dd614",
+    "profiles/link.scad": "eb7ecc15371a72f52cede0429b9341d66a8c89f56ba62e50798a7f89543a6802",
+    "profiles/retaining_ring.scad": "088810c5c333a4f1b2842f6d83a72016127192fa36b7620b779954da53630a45",
+    "profiles/shaft.scad": "1d7b730d7226006bfc2e70b77958283dbc162860358b591ade64dd6b3b3c7054",
+    "geometry/collar.scad": "54e504db053959b46cfed69aa0f914b0bc61206caa9a9c83a30ed33dae8a3d2b",
+    "geometry/door.scad": "7f2d1733fd51275745cbea9de0a4eebd355e9ba6fb35097d31cf7da103cbd03a",
+    "geometry/fastener.scad": "776d3d541e86a58df7e66225cca5ec236abc41997550ebfeaf8eef1456936ed0",
+    "geometry/housing.scad": "20fc3e48d9c7fd92ba72d84711c880f737cbb405be609b4e1fb3169d36bf5fe1",
+    "geometry/latch.scad": "a55effdcd3ebf6fcf31fb6e012890b5011cec56864536d71aa88cce008f9a12b",
+    "geometry/link-cover.scad": "a05430eb7c486d3e42cd8c623c0b9225dd8113af85caca1f5ba1763b816572d2",
+    "geometry/rotating.scad": "f8068a20508f9effa1bd3c753c720d56718aa54df42fecb42b253044bf044d8d"
+  },
+  "meshes": [
+    {
+      "scale": 1,
+      "part": "door",
+      "triangles": 18974,
+      "vertices": 9485,
+      "input_sha256": "0877e078e7a204f4d1c1f51df07030552cef05e36d1dbdff41724af4bcf5694f",
+      "scene_bounds": [
+        [
+          -148.0,
+          -98.0,
+          -15.0
+        ],
+        [
+          40.0,
+          98.0,
+          5.0
+        ]
+      ],
+      "anchors": {
+        "inside_skin_scene_z": 3,
+        "first_disk_front_scene_z": 0,
+        "skin_to_first_disk_front_gap_normalized_mm": 3
+      }
+    },
+    {
+      "scale": 1,
+      "part": "shaft",
+      "triangles": 5090,
+      "vertices": 2547,
+      "input_sha256": "cd01fca2fac2dde06006b432290fad9c4e9da2aeb87a0a70d5009dcd1d97e131",
+      "scene_bounds": [
+        [
+          -7.0,
+          -7.0,
+          -20.0
+        ],
+        [
+          7.0,
+          7.0,
+          11.2
+        ]
+      ],
+      "anchors": {}
+    },
+    {
+      "scale": 1,
+      "part": "collar_1",
+      "triangles": 1220,
+      "vertices": 610,
+      "input_sha256": "8bfa69c136c3e2dfce5943d6ddac06ca6977dd79311a487f0aca97ea4ff8174d",
+      "scene_bounds": [
+        [
+          -8.0,
+          -8.0,
+          -5.0
+        ],
+        [
+          8.0,
+          8.0,
+          1.8
+        ]
+      ],
+      "anchors": {
+        "flange_seat_scene_z": -2,
+        "disk_rear_scene_z": -2
+      }
+    },
+    {
+      "scale": 1,
+      "part": "collar_2",
+      "triangles": 1220,
+      "vertices": 610,
+      "input_sha256": "cdb88392b8c97bfd46b5581210c6ffc4224c133bea23e20d7399137d98ace205",
+      "scene_bounds": [
+        [
+          -8.0,
+          -8.0,
+          -10.0
+        ],
+        [
+          8.0,
+          8.0,
+          -3.2
+        ]
+      ],
+      "anchors": {
+        "flange_seat_scene_z": -7,
+        "disk_rear_scene_z": -7
+      }
+    },
+    {
+      "scale": 1,
+      "part": "collar_3",
+      "triangles": 1220,
+      "vertices": 610,
+      "input_sha256": "f6e6ad3a84aefc246d33a5a9ec5802c72e29cbeba5cd0e50f628e0c6b8b1cb58",
+      "scene_bounds": [
+        [
+          -8.0,
+          -8.0,
+          -15.0
+        ],
+        [
+          8.0,
+          8.0,
+          -8.2
+        ]
+      ],
+      "anchors": {
+        "flange_seat_scene_z": -12,
+        "disk_rear_scene_z": -12
+      }
+    },
+    {
+      "scale": 1.5,
+      "part": "door",
+      "triangles": 26112,
+      "vertices": 13054,
+      "input_sha256": "9bf092fdeb10376d1552b78e46051c0cc6bd13b56b6dcc52012b34d2b5c10bac",
+      "scene_bounds": [
+        [
+          -94.733337,
+          -71.399999,
+          -15.0
+        ],
+        [
+          40.066666,
+          71.399999,
+          5.0
+        ]
+      ],
+      "anchors": {
+        "inside_skin_scene_z": 3,
+        "first_disk_front_scene_z": 0,
+        "skin_to_first_disk_front_gap_normalized_mm": 3
+      }
+    },
+    {
+      "scale": 1.5,
+      "part": "shaft",
+      "triangles": 5120,
+      "vertices": 2562,
+      "input_sha256": "f8f351355041c0ea92efbc756c4bb1b455ad2ecb60dbe926bd73bbd37d24a558",
+      "scene_bounds": [
+        [
+          -7.0,
+          -7.0,
+          -20.0
+        ],
+        [
+          7.0,
+          7.0,
+          11.199999
+        ]
+      ],
+      "anchors": {}
+    },
+    {
+      "scale": 1.5,
+      "part": "collar_1",
+      "triangles": 1220,
+      "vertices": 610,
+      "input_sha256": "3475abb71ca5a740f123fd04e7c615569bdeb589e9b2f1c69c90e9be03e0fe74",
+      "scene_bounds": [
+        [
+          -8.0,
+          -8.0,
+          -5.0
+        ],
+        [
+          8.0,
+          8.0,
+          1.8
+        ]
+      ],
+      "anchors": {
+        "flange_seat_scene_z": -2,
+        "disk_rear_scene_z": -2
+      }
+    },
+    {
+      "scale": 1.5,
+      "part": "collar_2",
+      "triangles": 1220,
+      "vertices": 610,
+      "input_sha256": "db59caa063901b4744ae029d7ab39f9d451b999376000158b6c2bc956a886447",
+      "scene_bounds": [
+        [
+          -8.0,
+          -8.0,
+          -10.0
+        ],
+        [
+          8.0,
+          8.0,
+          -3.2
+        ]
+      ],
+      "anchors": {
+        "flange_seat_scene_z": -7,
+        "disk_rear_scene_z": -7
+      }
+    },
+    {
+      "scale": 1.5,
+      "part": "collar_3",
+      "triangles": 1220,
+      "vertices": 610,
+      "input_sha256": "ce5b16f602aee45f56bb8eed106149b6f9f7174961459f93185f8b686c2773c8",
+      "scene_bounds": [
+        [
+          -8.0,
+          -8.0,
+          -15.0
+        ],
+        [
+          8.0,
+          8.0,
+          -8.2
+        ]
+      ],
+      "anchors": {
+        "flange_seat_scene_z": -12,
+        "disk_rear_scene_z": -12
+      }
+    }
+  ],
+  "asset_sha256": "a56eaf072486e09c72f9cbd33c4fbde4e9300e3a88c7ee3eae95dd02c41c2eb8"
+}

@@ -1,0 +1,6 @@
+numpy
+scipy
+trimesh
+manifold3d
+matplotlib
+Pillow

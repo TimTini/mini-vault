@@ -1,0 +1,57 @@
+{
+  "scope": "explicit encounter-count route; fixed-band model, no physical proof",
+  "code": [
+    8,
+    4,
+    12
+  ],
+  "startNumber": 16,
+  "result": {
+    "holes": [
+      0,
+      1,
+      6
+    ],
+    "predictedNumbers": [
+      7.909142408106062,
+      4.0580000124043885,
+      11.966508465094698
+    ],
+    "stopErrors": [
+      -2.0442958176136017,
+      1.3050002790987492,
+      -0.753559535369277
+    ],
+    "maxStopError": 2.0442958176136017,
+    "measured": true,
+    "matches": false,
+    "score": 2.0442958176136017,
+    "stageErrors": [
+      [
+        2.0442958176136017
+      ],
+      [
+        2.0442958176136017,
+        1.3989251852035522
+      ],
+      [
+        2.0442958176136017,
+        1.3989251852035522,
+        0.753559535369277
+      ]
+    ],
+    "maxStageError": 2.0442958176136017,
+    "tested": 3375,
+    "matchingCandidates": 0,
+    "visits": [
+      4,
+      2,
+      2
+    ],
+    "stops": [
+      -1260,
+      -630,
+      -1170
+    ]
+  }
+}

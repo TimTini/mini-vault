@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MINI-VAULT · Đặt mã và lắp chốt</title>
+<style>
+:root{color-scheme:dark;font:15px/1.5 system-ui,sans-serif;background:#10151d;color:#e8eef5}*{box-sizing:border-box}body{margin:0}main{max-width:1180px;margin:auto;padding:24px}h1{font-size:25px;margin:0}h2{font-size:17px;margin:0 0 12px}p{margin:8px 0}button,input,select{font:inherit}button{cursor:pointer;border:1px solid #3b4b5b;border-radius:10px;background:#253240;color:#e8eef5;padding:9px 14px}button:hover{background:#314556}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #88dfca;outline-offset:3px}button:disabled{cursor:default;opacity:.4}button[aria-pressed=true]{background:#245448;border-color:#75d4b6}.primary{background:#326c59;border-color:#6db69c}input,select{border:1px solid #3b4b5b;border-radius:8px;background:#101923;color:#e8eef5;padding:9px}input{width:92px}.panel{background:#1a2330;border:1px solid #2c3949;border-radius:16px;padding:20px;margin-top:16px}.row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.spread{justify-content:space-between}.muted{font-size:13px;color:#a8b8c8}.tag{color:#89d8bd;font-size:13px}.fields{align-items:flex-end}.fields label{display:grid;gap:5px;font-size:13px}.result{padding:12px 15px;background:#352e21;border-left:3px solid #e7bc70;border-radius:8px;margin-top:16px}.result.good{background:#173d32;border-color:#6bdeb4}.result strong{display:block}.layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(280px,1fr);gap:16px;align-items:start}.layout>.panel{min-width:0}#scene{height:440px;position:relative;background:radial-gradient(ellipse at center,#2b3d4b,#111a25);border-radius:12px;overflow:hidden;margin:12px 0}#scene canvas{display:block;width:100%;height:100%}#fatal{position:absolute;inset:20px;color:#ffb39c}.modes{display:flex;gap:8px;flex-wrap:wrap}.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:#b4c2d0}.legend span:before{content:'●';color:var(--c);margin-right:5px}.hole-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}.hole-card{padding:10px 3px;background:#101923;min-width:0;text-align:center}.hole-card svg{display:block;width:100%;height:auto}.hole-card b{font-size:13px}.hole-card small{display:block;font-size:11px;color:#b7c7d5}.assembly-note{padding:10px 12px;border-radius:8px;background:#101923;font-size:13px;color:#c8d5e1}.readout{font-size:32px;font-variant-numeric:tabular-nums}.badge{font-weight:650;color:#f1be80}.badge.good{color:#73dfb5}#message{min-height:24px;color:#f1c784;font-size:13px}details{font-size:13px;margin-top:12px;color:#adc0d1}summary{cursor:pointer}footer{padding:15px 4px;color:#98aabc;font-size:12px}a{color:#8adcc1}[hidden]{display:none!important}
+@media(max-width:850px){main{padding:14px}.layout{grid-template-columns:1fr}.panel{padding:15px}#scene{height:360px}.fields{gap:9px}.hole-cards svg{max-height:180px}.hole-card b{font-size:12px}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+</head>
+<body><main>
+<header class="row spread"><div><h1>MINI-VAULT</h1><p class="muted">Đặt mã → gắn chốt → thử mở</p></div><span class="tag">Hướng lắp nhìn từ mặt trong cửa</span></header>
+<section class="panel" aria-labelledby="input-title">
+<h2 id="input-title">1. Nhập mã muốn dùng</h2>
+<form id="codeForm" class="row fields">
+<label>⭮ Số thứ 1<input id="n1" aria-label="Số thứ nhất trên núm" type="number" min="1" max="16" step="any" value="8" required></label>
+<label>⭯ Số thứ 2<input id="n2" aria-label="Số thứ hai trên núm" type="number" min="1" max="16" step="any" value="4" required></label>
+<label>⭮ Số thứ 3<input id="n3" aria-label="Số thứ ba trên núm" type="number" min="1" max="16" step="any" value="12" required></label>
+<button id="search" type="submit" class="primary">Tìm vị trí chốt</button>
+<fieldset style="border:0;padding:0;margin:8px 0 0;flex-basis:100%"><legend class="muted">Dừng khi gặp số lần thứ mấy?</legend><div class="row fields">
+<label>⭮ Số thứ 1 · lần<input id="v1" aria-label="Lượt gặp số thứ nhất" type="number" min="1" max="10" step="1" value="4" required></label>
+<label>⭯ Số thứ 2 · lần<input id="v2" aria-label="Lượt gặp số thứ hai" type="number" min="1" max="10" step="1" value="2" required></label>
+<label>⭮ Số thứ 3 · lần<input id="v3" aria-label="Lượt gặp số thứ ba" type="number" min="1" max="10" step="1" value="2" required></label>
+</div><p class="muted">Bắt đầu ở 16. Mỗi khi đảo chiều, đếm lại từ lần 1; vị trí đang đứng chưa tính là một lần gặp. Tool quay đúng số lần bạn chọn.</p></fieldset>
+</form>
+<div id="suggestion" class="result" role="status"></div>
+<details><summary>Độ chính xác của phương án</summary><p id="precision"></p><p class="muted">Mô hình hỗ trợ đặt chốt; lực, ma sát và độ vừa của bản in cần kiểm tra thực tế.</p></details>
+</section>
+<div class="layout">
+<section class="panel" aria-labelledby="view-title">
+<div class="row spread"><h2 id="view-title">2. Xem cách lắp</h2><button id="wholeDoor" type="button">Cả nắp</button></div>
+<div class="modes" aria-label="Phía nhìn"><button id="assemblyView" type="button" aria-pressed="true">Lắp từ mặt trong</button><button id="dialView" type="button" aria-pressed="false">Nhìn núm bên ngoài</button></div>
+<div id="scene"><div id="fatal" role="alert"></div></div>
+<p id="viewCaption" class="assembly-note"></p>
+<div class="legend"><span style="--c:#6ed9ed">Đầu nhỏ → núm ngoài</span><span style="--c:#ffe18d">Đầu lớn → trong thân</span></div>
+<p class="muted">Mặt cửa, trục và vòng đỡ lấy từ mô hình đang in. Lăn chuột để phóng to.</p>
+</section>
+<section class="panel" aria-labelledby="holes-title">
+<h2 id="holes-title">Vị trí chốt — nhìn từ mặt trong</h2>
+<p id="assemblyInstruction" class="assembly-note"></p>
+<div id="holeCards" class="hole-cards"></div>
+<p class="muted">Chọn một đĩa để xem riêng trên mặt cửa. Số 0–14 là chỉ số lỗ; số đĩa giữ nguyên khi đổi phía nhìn.</p>
+<div class="panel" style="margin-top:16px;padding:15px">
+<h2>3. Thử mã ⭮ → ⭯ → ⭮</h2>
+<ol id="route" class="muted"></ol>
+<div class="row"><button id="play" type="button" class="primary">Thử quay mã đã nhập</button><button id="stop" type="button" disabled>Dừng</button></div>
+<div id="dialStatus" hidden><div id="readout" class="readout">16.000</div><div id="status" class="badge" role="status"></div><p id="stage" class="muted"></p><p id="diskErrors" class="muted"></p><button id="latch" type="button">Thử mở</button></div>
+<p id="message" role="status"></p>
+</div>
+</section>
+</div>
+<footer>⭮ ⭯ ⭮ luôn tính khi nhìn núm từ bên ngoài. Mặt trong dùng để lắp chốt. <a href="README.md">Hướng dẫn</a></footer>
+</main>
+<script src="vendor/three.min.js"></script><script src="mechanism.js"></script><script src="view.js"></script><script src="context-meshes.js"></script><script src="app.js"></script>
+</body></html>

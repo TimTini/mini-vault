@@ -1,0 +1,18 @@
+const assert=require('node:assert/strict');
+const {visitTargets,describeVisits,solveCode,error}=require('../simulator/mechanism.js');
+const route=visitTargets([8,4,12],[4,2,2]);
+assert.deepEqual(route,[-1260,-630,-1170]);
+assert.deepEqual(route.map((q,i)=>Math.abs(q-(i?route[i-1]:0))),[1260,630,540]);
+assert.deepEqual(describeVisits([8,4,12],route),[4,2,2]);
+assert.deepEqual(describeVisits([8,4,12],[-1980,-990,-1530]),[6,3,2]);
+assert.deepEqual(visitTargets([16,16,16],[4,2,1]),[-1440,-720,-1080],'starting on target is not a counted encounter');
+route.forEach((q,i)=>assert.ok(Math.abs(error(q-[8,4,12][i]*22.5))<1e-9));
+for(const invalid of [[0,2,2],[4,1.5,2],[4,2],[4,2,Infinity]])assert.throws(()=>visitTargets([8,4,12],invalid));
+const s=solveCode([8,4,12],1,[4,2,2]);
+assert.deepEqual(s.visits,[4,2,2]);
+assert.deepEqual(s.stops,route,'solver must inspect exactly the requested encounter counts');
+assert.equal(s.tested,3375);
+assert.deepEqual(s.holes,[0,1,6]);
+assert.equal(s.matches,false);
+assert.ok(s.maxStageError<2.05,'explicit second encounter must not silently add360anddrag frontdisk43deg');
+console.log('Verified encounter counts, explicit4/2/2route, repeated-number360deg rule, legacy6/3/2description and inverse-route contract.');

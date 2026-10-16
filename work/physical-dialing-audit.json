@@ -1,0 +1,292 @@
+{
+  "source_hashes": {
+    "mini-vault.scad": "db98be6d01deb5ffe2d2162449dc88379b54c622a4066286d1380513354cbd99",
+    "exporter.py": "84c01ff0b675d366ca09c61635d04b4da19ae3cadf281ed6791e1ddf10923dde",
+    "audit.py": "51c76221f77e4d4ad5e05adc4b4904033072665bd1d3aec7bfa2c32b318fd490",
+    "build.ps1": "33d46eeac25bbc577c774b6bbfea4c3df2e33981c7244f2fc9e5144fafd703de",
+    "analyze.py": "fa4ec1ddef52341fc32711f972cb123a906dd32d8ba4585590697b3ef3cd73a5",
+    "profile_builder.py": "0cd9627c2eee800995de153eb48e6175f128ebad0c304825006e2fd8e29e98be",
+    "profiles/collar_1.scad": "52bf3f6eda5a3cf50573a275b0f915573d9c8e6bb6e9688c6604dbe8627232a8",
+    "profiles/dial.scad": "0172fad2d7cbaef3b05676972ee088f748e8db82079f5d603b94fc6dca8b9ca0",
+    "profiles/disk_1.scad": "62dcab619a605cf87c5005fa14d15d0ff2d2540215b98328404e2cab39b234a6",
+    "profiles/door.scad": "9d1733828cb296ad8d32ef7aefe6b1ef3b409c99f0ec9b2dd113c9e4fe16961e",
+    "profiles/fastener_1.scad": "a6d1ec2c81d2ebebd631bc72acd1cd67c0a256f04f127729950c169cfa9fa320",
+    "profiles/hinge_leaf_top.scad": "404b8f39aae2f83594fbe14444e7952f1fc52019a64c4420e3d081fc88dc3de7",
+    "profiles/hinge_socket_top.scad": "062e652f94985815eddc60ea284b4b7354b2f3ace1f5d47bfd4fba3a77284914",
+    "profiles/housing.scad": "54140c25c06f33009d544f5818867ced073c89b4f8123422f8709584380eab64",
+    "profiles/knob.scad": "bd34d2fc76a506de487356fdbe1146d26afe41f2e0064312055df8fd12239b35",
+    "profiles/latch.scad": "340c50730657993665d777f2caabfce47343d04295ce052db062a150c99c3ae8",
+    "profiles/latch_cover.scad": "e2e1daafbee473bc6c169ec762199cefd785aec1d86dacc202c85793e89dd614",
+    "profiles/link.scad": "eb7ecc15371a72f52cede0429b9341d66a8c89f56ba62e50798a7f89543a6802",
+    "profiles/retaining_ring.scad": "088810c5c333a4f1b2842f6d83a72016127192fa36b7620b779954da53630a45",
+    "profiles/shaft.scad": "1d7b730d7226006bfc2e70b77958283dbc162860358b591ade64dd6b3b3c7054",
+    "geometry/collar.scad": "54e504db053959b46cfed69aa0f914b0bc61206caa9a9c83a30ed33dae8a3d2b",
+    "geometry/door.scad": "7f2d1733fd51275745cbea9de0a4eebd355e9ba6fb35097d31cf7da103cbd03a",
+    "geometry/fastener.scad": "776d3d541e86a58df7e66225cca5ec236abc41997550ebfeaf8eef1456936ed0",
+    "geometry/housing.scad": "20fc3e48d9c7fd92ba72d84711c880f737cbb405be609b4e1fb3169d36bf5fe1",
+    "geometry/latch.scad": "a55effdcd3ebf6fcf31fb6e012890b5011cec56864536d71aa88cce008f9a12b",
+    "geometry/link-cover.scad": "a05430eb7c486d3e42cd8c623c0b9225dd8113af85caca1f5ba1763b816572d2",
+    "geometry/rotating.scad": "f8068a20508f9effa1bd3c753c720d56718aa54df42fecb42b253044bf044d8d"
+  },
+  "scope": "200scale1currentmesh; quasistatic contact; no friction/elastic simulation",
+  "results": [
+    {
+      "holes": [
+        0,
+        1,
+        6
+      ],
+      "dial_code": [
+        8,
+        4,
+        12
+      ],
+      "contact_bands_degrees": [
+        [
+          -134.34016960673034,
+          -90.75355953536928
+        ],
+        [
+          -134.3548301141709,
+          -90.64536564983428
+        ],
+        [
+          -44.35447895899415,
+          -0.6453706324100494
+        ]
+      ],
+      "stops": [
+        -1980.0,
+        -990.0,
+        -1530.0
+      ],
+      "stages_dial_rear_middle_front": [
+        [
+          -1980.0,
+          -1889.2464404646307,
+          -1798.6010748147964,
+          -1797.9557041823864
+        ],
+        [
+          -990.0,
+          -1215.6598303932697,
+          -1441.3050002790987,
+          -1756.9505213201046
+        ],
+        [
+          -1530.0,
+          -1439.2464404646307,
+          -1441.3050002790987,
+          -1756.9505213201046
+        ]
+      ],
+      "gate_checks": [
+        {
+          "disk": 1,
+          "angle_error_degrees": 43.0494786798954,
+          "max_link_overlap_mm3": 14.550740450924131
+        },
+        {
+          "disk": 2,
+          "angle_error_degrees": -1.3050002790987492,
+          "max_link_overlap_mm3": 1.0341494762269545
+        },
+        {
+          "disk": 3,
+          "angle_error_degrees": 0.753559535369277,
+          "max_link_overlap_mm3": 0.0
+        }
+      ],
+      "trajectory_steps": 3513,
+      "neighbor_collision_maxima": {},
+      "significant_neighbor_collisions": {},
+      "transmitting_contact_maxima": {
+        "knob/fastener_3": {
+          "volume_mm3": 0.010672741087826112,
+          "dial_degrees": -1789.0964159515395
+        },
+        "fastener_3/fastener_2": {
+          "volume_mm3": 9.999712345073903e-07,
+          "dial_degrees": -1321.664984863774
+        },
+        "fastener_2/fastener_1": {
+          "volume_mm3": 9.999836518506424e-07,
+          "dial_degrees": -1589.1973750630993
+        }
+      },
+      "axial_stack": [
+        {
+          "disk": 1,
+          "disk_rear_y_mm": 0.0,
+          "collar_flange_front_y_mm": 0.0,
+          "nominal_axial_gap_mm": 0.0
+        },
+        {
+          "disk": 2,
+          "disk_rear_y_mm": 5.0,
+          "collar_flange_front_y_mm": 5.0,
+          "nominal_axial_gap_mm": 0.0
+        },
+        {
+          "disk": 3,
+          "disk_rear_y_mm": 10.0,
+          "collar_flange_front_y_mm": 10.0,
+          "nominal_axial_gap_mm": 0.0
+        }
+      ],
+      "corrected_contact_dial_numbers": [
+        7.909142408106062,
+        4.0580000124043885,
+        11.966508465094698
+      ],
+      "corrected_gate_checks": [
+        {
+          "disk": 1,
+          "angle_error_degrees": 0.0,
+          "max_link_overlap_mm3": 0.0
+        },
+        {
+          "disk": 2,
+          "angle_error_degrees": 0.0,
+          "max_link_overlap_mm3": 0.0
+        },
+        {
+          "disk": 3,
+          "angle_error_degrees": 0.0,
+          "max_link_overlap_mm3": 0.0
+        }
+      ],
+      "original_second_leg_degrees": 990.0,
+      "corrected_second_leg_degrees": 633.3492960967124
+    },
+    {
+      "holes": [
+        8,
+        4,
+        12
+      ],
+      "dial_code": [
+        16,
+        7,
+        2
+      ],
+      "contact_bands_degrees": [
+        [
+          0.8473567571491003,
+          44.37775196507573
+        ],
+        [
+          -201.85435141436756,
+          -158.14517193473876
+        ],
+        [
+          68.14564579166472,
+          111.85479113832116
+        ]
+      ],
+      "stops": [
+        -2160.0,
+        -1282.5,
+        -1755.0
+      ],
+      "stages_dial_rear_middle_front": [
+        [
+          -2160.0,
+          -2204.3777519650753,
+          -2046.2325800303365,
+          -2158.0873711686577
+        ],
+        [
+          -1282.5,
+          -1643.347356757149,
+          -1801.4930053427815,
+          -2158.0873711686577
+        ],
+        [
+          -1755.0,
+          -1799.3777519650757,
+          -1801.4930053427815,
+          -2158.0873711686577
+        ]
+      ],
+      "gate_checks": [
+        {
+          "disk": 1,
+          "angle_error_degrees": 1.9126288313423174,
+          "max_link_overlap_mm3": 2.723754324124304
+        },
+        {
+          "disk": 2,
+          "angle_error_degrees": -1.4930053427815437,
+          "max_link_overlap_mm3": 1.5376430262098486
+        },
+        {
+          "disk": 3,
+          "angle_error_degrees": 0.6222480349242687,
+          "max_link_overlap_mm3": 0.0
+        }
+      ],
+      "trajectory_steps": 3512,
+      "neighbor_collision_maxima": {},
+      "significant_neighbor_collisions": {},
+      "transmitting_contact_maxima": {
+        "knob/fastener_3": {
+          "volume_mm3": 0.022680700116713335,
+          "dial_degrees": -1631.3012528473805
+        },
+        "fastener_3/fastener_2": {
+          "volume_mm3": 9.999629613894104e-07,
+          "dial_degrees": -1439.333641832485
+        },
+        "fastener_2/fastener_1": {
+          "volume_mm3": 9.999161917399903e-07,
+          "dial_degrees": -1519.2966219342898
+        }
+      },
+      "axial_stack": [
+        {
+          "disk": 1,
+          "disk_rear_y_mm": 0.0,
+          "collar_flange_front_y_mm": 0.0,
+          "nominal_axial_gap_mm": 0.0
+        },
+        {
+          "disk": 2,
+          "disk_rear_y_mm": 5.0,
+          "collar_flange_front_y_mm": 5.0,
+          "nominal_axial_gap_mm": 0.0
+        },
+        {
+          "disk": 3,
+          "disk_rear_y_mm": 10.0,
+          "collar_flange_front_y_mm": 10.0,
+          "nominal_axial_gap_mm": 0.0
+        }
+      ],
+      "corrected_contact_dial_numbers": [
+        15.914994274162584,
+        7.066355793012513,
+        1.9723445317811437
+      ],
+      "corrected_gate_checks": [
+        {
+          "disk": 1,
+          "angle_error_degrees": 0.0,
+          "max_link_overlap_mm3": 0.0
+        },
+        {
+          "disk": 2,
+          "angle_error_degrees": 0.0,
+          "max_link_overlap_mm3": 0.0
+        },
+        {
+          "disk": 3,
+          "angle_error_degrees": 0.0,
+          "max_link_overlap_mm3": 0.0
+        }
+      ],
+      "original_second_leg_degrees": 877.5,
+      "corrected_second_leg_degrees": 880.9056341741234
+    }
+  ]
+}

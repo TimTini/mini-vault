@@ -1,0 +1,75 @@
+{
+  "parameterSets": {
+    "Default": {
+      "body_width": "142",
+      "body_depth": "100",
+      "body_height": "84",
+      "wall_thickness": "1.8",
+      "bottom_thickness": "2",
+      "door_plate_thickness": "2",
+      "door_rib_height": "0",
+      "hinge_socket_root_thickness": "1.8",
+      "hinge_gusset_size": "0",
+      "link_web_thickness": "1.6",
+      "latch_pocket_inset": "0",
+      "size_scale": "1"
+    },
+    "220 - local reinforcement": {
+      "body_width": "220",
+      "body_depth": "220",
+      "body_height": "220",
+      "wall_thickness": "2.4",
+      "bottom_thickness": "2.4",
+      "door_plate_thickness": "2.8",
+      "door_rib_height": "4",
+      "hinge_socket_root_thickness": "2.6",
+      "hinge_gusset_size": "4",
+      "link_web_thickness": "2.4",
+      "latch_pocket_inset": "0.8",
+      "size_scale": "1"
+    },
+    "150 - scale 1": {
+      "body_width": "150",
+      "body_depth": "150",
+      "body_height": "150",
+      "wall_thickness": "1.8",
+      "bottom_thickness": "2",
+      "door_plate_thickness": "2",
+      "door_rib_height": "0",
+      "hinge_socket_root_thickness": "1.8",
+      "hinge_gusset_size": "0",
+      "link_web_thickness": "1.6",
+      "latch_pocket_inset": "0",
+      "size_scale": "1"
+    },
+    "200 - scale 1": {
+      "body_width": "200",
+      "body_depth": "200",
+      "body_height": "200",
+      "wall_thickness": "1.8",
+      "bottom_thickness": "2",
+      "door_plate_thickness": "2",
+      "door_rib_height": "0",
+      "hinge_socket_root_thickness": "1.8",
+      "hinge_gusset_size": "0",
+      "link_web_thickness": "1.6",
+      "latch_pocket_inset": "0",
+      "size_scale": "1"
+    },
+    "220 - scale 1.5": {
+      "body_width": "220",
+      "body_depth": "220",
+      "body_height": "220",
+      "wall_thickness": "1.8",
+      "bottom_thickness": "2",
+      "door_plate_thickness": "2",
+      "door_rib_height": "0",
+      "hinge_socket_root_thickness": "1.8",
+      "hinge_gusset_size": "0",
+      "link_web_thickness": "1.6",
+      "latch_pocket_inset": "0",
+      "size_scale": "1.5"
+    }
+  },
+  "fileFormatVersion": "1"
+}

@@ -1,0 +1,1394 @@
+[
+  {
+    "source_hashes": {
+      "mini-vault.scad": "db98be6d01deb5ffe2d2162449dc88379b54c622a4066286d1380513354cbd99",
+      "exporter.py": "84c01ff0b675d366ca09c61635d04b4da19ae3cadf281ed6791e1ddf10923dde",
+      "audit.py": "51c76221f77e4d4ad5e05adc4b4904033072665bd1d3aec7bfa2c32b318fd490",
+      "build.ps1": "33d46eeac25bbc577c774b6bbfea4c3df2e33981c7244f2fc9e5144fafd703de",
+      "analyze.py": "fa4ec1ddef52341fc32711f972cb123a906dd32d8ba4585590697b3ef3cd73a5",
+      "profile_builder.py": "0cd9627c2eee800995de153eb48e6175f128ebad0c304825006e2fd8e29e98be",
+      "profiles/collar_1.scad": "52bf3f6eda5a3cf50573a275b0f915573d9c8e6bb6e9688c6604dbe8627232a8",
+      "profiles/dial.scad": "0172fad2d7cbaef3b05676972ee088f748e8db82079f5d603b94fc6dca8b9ca0",
+      "profiles/disk_1.scad": "62dcab619a605cf87c5005fa14d15d0ff2d2540215b98328404e2cab39b234a6",
+      "profiles/door.scad": "9d1733828cb296ad8d32ef7aefe6b1ef3b409c99f0ec9b2dd113c9e4fe16961e",
+      "profiles/fastener_1.scad": "a6d1ec2c81d2ebebd631bc72acd1cd67c0a256f04f127729950c169cfa9fa320",
+      "profiles/hinge_leaf_top.scad": "404b8f39aae2f83594fbe14444e7952f1fc52019a64c4420e3d081fc88dc3de7",
+      "profiles/hinge_socket_top.scad": "062e652f94985815eddc60ea284b4b7354b2f3ace1f5d47bfd4fba3a77284914",
+      "profiles/housing.scad": "54140c25c06f33009d544f5818867ced073c89b4f8123422f8709584380eab64",
+      "profiles/knob.scad": "bd34d2fc76a506de487356fdbe1146d26afe41f2e0064312055df8fd12239b35",
+      "profiles/latch.scad": "340c50730657993665d777f2caabfce47343d04295ce052db062a150c99c3ae8",
+      "profiles/latch_cover.scad": "e2e1daafbee473bc6c169ec762199cefd785aec1d86dacc202c85793e89dd614",
+      "profiles/link.scad": "eb7ecc15371a72f52cede0429b9341d66a8c89f56ba62e50798a7f89543a6802",
+      "profiles/retaining_ring.scad": "088810c5c333a4f1b2842f6d83a72016127192fa36b7620b779954da53630a45",
+      "profiles/shaft.scad": "1d7b730d7226006bfc2e70b77958283dbc162860358b591ade64dd6b3b3c7054",
+      "geometry/collar.scad": "54e504db053959b46cfed69aa0f914b0bc61206caa9a9c83a30ed33dae8a3d2b",
+      "geometry/door.scad": "a7a5610f3a93753c13114abed585c54703bdf078c45e47481c4a02dc69d2b20f",
+      "geometry/fastener.scad": "776d3d541e86a58df7e66225cca5ec236abc41997550ebfeaf8eef1456936ed0",
+      "geometry/housing.scad": "20fc3e48d9c7fd92ba72d84711c880f737cbb405be609b4e1fb3169d36bf5fe1",
+      "geometry/latch.scad": "a55effdcd3ebf6fcf31fb6e012890b5011cec56864536d71aa88cce008f9a12b",
+      "geometry/link-cover.scad": "a05430eb7c486d3e42cd8c623c0b9225dd8113af85caca1f5ba1763b816572d2",
+      "geometry/rotating.scad": "f8068a20508f9effa1bd3c753c720d56718aa54df42fecb42b253044bf044d8d"
+    },
+    "scale": 1,
+    "contacts": [
+      {
+        "driver": "knob",
+        "follower": "fastener_3",
+        "alignment_rotation_degrees": 22.5,
+        "forbidden_relative_angle_degrees": [
+          0.8473567850887775,
+          44.37775194644928
+        ],
+        "edge_offset_degrees": [
+          -21.652643214911222,
+          21.87775194644928
+        ],
+        "overlap_inside_mm3": 0.005555070932392935,
+        "overlap_outside_mm3": 0.0
+      },
+      {
+        "driver": "fastener_3",
+        "follower": "fastener_2",
+        "alignment_rotation_degrees": -202.5,
+        "forbidden_relative_angle_degrees": [
+          -224.57848412916064,
+          -180.88936796411872
+        ],
+        "edge_offset_degrees": [
+          -22.078484129160643,
+          21.61063203588128
+        ],
+        "overlap_inside_mm3": 0.005753655033332168,
+        "overlap_outside_mm3": 0.0
+      },
+      {
+        "driver": "fastener_2",
+        "follower": "fastener_1",
+        "alignment_rotation_degrees": 90.0,
+        "forbidden_relative_angle_degrees": [
+          68.24554476886988,
+          111.99714366346598
+        ],
+        "edge_offset_degrees": [
+          -21.754455231130123,
+          21.997143663465977
+        ],
+        "overlap_inside_mm3": 0.005798633434590227,
+        "overlap_outside_mm3": 0.0
+      }
+    ],
+    "convention": "Front view, CCW positive; pointer assumed at +Z (top), 16=0. Disk order rear3, middle2, front1.",
+    "exact_dial_numbers": [
+      9.089529663324356,
+      9.932817065881359,
+      0.03766030155950122
+    ],
+    "rounded_dial_numbers": [
+      9.0,
+      10.0,
+      0.0
+    ],
+    "exact_trials": [
+      {
+        "seed": 0,
+        "step_degrees": 0.25,
+        "stop_angles_degrees": [
+          204.514417424798,
+          223.48838398233056,
+          0.8473567850887775
+        ],
+        "disk_angles_degrees_rear_to_front": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stages_rear_to_front": [
+          [
+            2004.514417424798,
+            1643.6670606397092,
+            1508.2455447688699,
+            1080.0
+          ],
+          [
+            1303.4883839823306,
+            1259.1106320358813,
+            1440.0,
+            1080.0
+          ],
+          [
+            1800.8473567850888,
+            1440.0,
+            1440.0,
+            1080.0
+          ]
+        ],
+        "gate_checks": [
+          {
+            "disk": "disk_3",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_2",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_1",
+            "maximum_link_overlap_mm3": 0.0
+          }
+        ],
+        "maximum_stop_pin_overlap_mm3": 9.99995591372148e-07
+      },
+      {
+        "seed": 0,
+        "step_degrees": 1.0,
+        "stop_angles_degrees": [
+          204.514417424798,
+          223.48838398233056,
+          0.8473567850887775
+        ],
+        "disk_angles_degrees_rear_to_front": [
+          2.2737367544323206e-13,
+          0.0,
+          -2.2737367544323206e-13
+        ],
+        "stages_rear_to_front": [
+          [
+            2004.514417424798,
+            1643.667060639709,
+            1508.2455447688696,
+            1079.9999999999998
+          ],
+          [
+            1303.4883839823306,
+            1259.1106320358813,
+            1440.0,
+            1079.9999999999998
+          ],
+          [
+            1800.8473567850888,
+            1440.0000000000002,
+            1440.0,
+            1079.9999999999998
+          ]
+        ],
+        "gate_checks": [
+          {
+            "disk": "disk_3",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_2",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_1",
+            "maximum_link_overlap_mm3": 0.0
+          }
+        ],
+        "maximum_stop_pin_overlap_mm3": 9.99995592504144e-07
+      },
+      {
+        "seed": 1,
+        "step_degrees": 0.25,
+        "stop_angles_degrees": [
+          204.514417424798,
+          223.48838398233056,
+          0.8473567850887775
+        ],
+        "disk_angles_degrees_rear_to_front": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stages_rear_to_front": [
+          [
+            2004.514417424798,
+            1643.6670606397092,
+            1508.2455447688699,
+            1080.0
+          ],
+          [
+            1303.4883839823306,
+            1259.1106320358813,
+            1440.0,
+            1080.0
+          ],
+          [
+            1800.8473567850888,
+            1440.0,
+            1440.0,
+            1080.0
+          ]
+        ],
+        "gate_checks": [
+          {
+            "disk": "disk_3",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_2",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_1",
+            "maximum_link_overlap_mm3": 0.0
+          }
+        ],
+        "maximum_stop_pin_overlap_mm3": 9.99995591372148e-07
+      },
+      {
+        "seed": 1,
+        "step_degrees": 1.0,
+        "stop_angles_degrees": [
+          204.514417424798,
+          223.48838398233056,
+          0.8473567850887775
+        ],
+        "disk_angles_degrees_rear_to_front": [
+          2.2737367544323206e-13,
+          0.0,
+          -2.2737367544323206e-13
+        ],
+        "stages_rear_to_front": [
+          [
+            2004.514417424798,
+            1643.667060639709,
+            1508.2455447688696,
+            1079.9999999999998
+          ],
+          [
+            1303.4883839823306,
+            1259.1106320358813,
+            1440.0,
+            1079.9999999999998
+          ],
+          [
+            1800.8473567850888,
+            1440.0000000000002,
+            1440.0,
+            1079.9999999999998
+          ]
+        ],
+        "gate_checks": [
+          {
+            "disk": "disk_3",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_2",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_1",
+            "maximum_link_overlap_mm3": 0.0
+          }
+        ],
+        "maximum_stop_pin_overlap_mm3": 9.99995592504144e-07
+      },
+      {
+        "seed": 2,
+        "step_degrees": 0.25,
+        "stop_angles_degrees": [
+          204.514417424798,
+          223.48838398233056,
+          0.8473567850887775
+        ],
+        "disk_angles_degrees_rear_to_front": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stages_rear_to_front": [
+          [
+            2004.514417424798,
+            1643.6670606397092,
+            1508.2455447688699,
+            1080.0
+          ],
+          [
+            1303.4883839823306,
+            1259.1106320358813,
+            1440.0,
+            1080.0
+          ],
+          [
+            1800.8473567850888,
+            1440.0,
+            1440.0,
+            1080.0
+          ]
+        ],
+        "gate_checks": [
+          {
+            "disk": "disk_3",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_2",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_1",
+            "maximum_link_overlap_mm3": 0.0
+          }
+        ],
+        "maximum_stop_pin_overlap_mm3": 9.99995591372148e-07
+      },
+      {
+        "seed": 2,
+        "step_degrees": 1.0,
+        "stop_angles_degrees": [
+          204.514417424798,
+          223.48838398233056,
+          0.8473567850887775
+        ],
+        "disk_angles_degrees_rear_to_front": [
+          2.2737367544323206e-13,
+          0.0,
+          -2.2737367544323206e-13
+        ],
+        "stages_rear_to_front": [
+          [
+            2004.514417424798,
+            1643.667060639709,
+            1508.2455447688696,
+            1079.9999999999998
+          ],
+          [
+            1303.4883839823306,
+            1259.1106320358813,
+            1440.0,
+            1079.9999999999998
+          ],
+          [
+            1800.8473567850888,
+            1440.0000000000002,
+            1440.0,
+            1079.9999999999998
+          ]
+        ],
+        "gate_checks": [
+          {
+            "disk": "disk_3",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_2",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_1",
+            "maximum_link_overlap_mm3": 0.0
+          }
+        ],
+        "maximum_stop_pin_overlap_mm3": 9.99995592504144e-07
+      },
+      {
+        "seed": 3,
+        "step_degrees": 0.25,
+        "stop_angles_degrees": [
+          204.514417424798,
+          223.48838398233056,
+          0.8473567850887775
+        ],
+        "disk_angles_degrees_rear_to_front": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stages_rear_to_front": [
+          [
+            2004.514417424798,
+            1643.6670606397092,
+            1508.2455447688699,
+            1080.0
+          ],
+          [
+            1303.4883839823306,
+            1259.1106320358813,
+            1440.0,
+            1080.0
+          ],
+          [
+            1800.8473567850888,
+            1440.0,
+            1440.0,
+            1080.0
+          ]
+        ],
+        "gate_checks": [
+          {
+            "disk": "disk_3",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_2",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_1",
+            "maximum_link_overlap_mm3": 0.0
+          }
+        ],
+        "maximum_stop_pin_overlap_mm3": 9.99995591372148e-07
+      },
+      {
+        "seed": 3,
+        "step_degrees": 1.0,
+        "stop_angles_degrees": [
+          204.514417424798,
+          223.48838398233056,
+          0.8473567850887775
+        ],
+        "disk_angles_degrees_rear_to_front": [
+          2.2737367544323206e-13,
+          0.0,
+          -2.2737367544323206e-13
+        ],
+        "stages_rear_to_front": [
+          [
+            2004.514417424798,
+            1643.667060639709,
+            1508.2455447688696,
+            1079.9999999999998
+          ],
+          [
+            1303.4883839823306,
+            1259.1106320358813,
+            1440.0,
+            1079.9999999999998
+          ],
+          [
+            1800.8473567850888,
+            1440.0000000000002,
+            1440.0,
+            1079.9999999999998
+          ]
+        ],
+        "gate_checks": [
+          {
+            "disk": "disk_3",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_2",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_1",
+            "maximum_link_overlap_mm3": 0.0
+          }
+        ],
+        "maximum_stop_pin_overlap_mm3": 9.99995592504144e-07
+      },
+      {
+        "seed": 4,
+        "step_degrees": 0.25,
+        "stop_angles_degrees": [
+          204.514417424798,
+          223.48838398233056,
+          0.8473567850887775
+        ],
+        "disk_angles_degrees_rear_to_front": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stages_rear_to_front": [
+          [
+            2004.514417424798,
+            1643.6670606397092,
+            1508.2455447688699,
+            1080.0
+          ],
+          [
+            1303.4883839823306,
+            1259.1106320358813,
+            1440.0,
+            1080.0
+          ],
+          [
+            1800.8473567850888,
+            1440.0,
+            1440.0,
+            1080.0
+          ]
+        ],
+        "gate_checks": [
+          {
+            "disk": "disk_3",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_2",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_1",
+            "maximum_link_overlap_mm3": 0.0
+          }
+        ],
+        "maximum_stop_pin_overlap_mm3": 9.99995591372148e-07
+      },
+      {
+        "seed": 4,
+        "step_degrees": 1.0,
+        "stop_angles_degrees": [
+          204.514417424798,
+          223.48838398233056,
+          0.8473567850887775
+        ],
+        "disk_angles_degrees_rear_to_front": [
+          2.2737367544323206e-13,
+          0.0,
+          -2.2737367544323206e-13
+        ],
+        "stages_rear_to_front": [
+          [
+            2004.514417424798,
+            1643.667060639709,
+            1508.2455447688696,
+            1079.9999999999998
+          ],
+          [
+            1303.4883839823306,
+            1259.1106320358813,
+            1440.0,
+            1079.9999999999998
+          ],
+          [
+            1800.8473567850888,
+            1440.0000000000002,
+            1440.0,
+            1079.9999999999998
+          ]
+        ],
+        "gate_checks": [
+          {
+            "disk": "disk_3",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_2",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_1",
+            "maximum_link_overlap_mm3": 0.0
+          }
+        ],
+        "maximum_stop_pin_overlap_mm3": 9.99995592504144e-07
+      }
+    ],
+    "rounded_trial": {
+      "seed": 0,
+      "step_degrees": 0.5,
+      "stop_angles_degrees": [
+        202.5,
+        225.0,
+        0.0
+      ],
+      "disk_angles_degrees_rear_to_front": [
+        -0.8473567850887775,
+        1.5116160176694393,
+        -2.014417424798012
+      ],
+      "stages_rear_to_front": [
+        [
+          2002.5,
+          1641.6526432149112,
+          1506.2311273440719,
+          1077.985582575202
+        ],
+        [
+          1305.0,
+          1260.6222480535507,
+          1441.5116160176694,
+          1077.985582575202
+        ],
+        [
+          1800.0,
+          1439.1526432149112,
+          1441.5116160176694,
+          1077.985582575202
+        ]
+      ],
+      "gate_checks": [
+        {
+          "disk": "disk_3",
+          "maximum_link_overlap_mm3": 0.04848244406429116
+        },
+        {
+          "disk": "disk_2",
+          "maximum_link_overlap_mm3": 1.6042237657975984
+        },
+        {
+          "disk": "disk_1",
+          "maximum_link_overlap_mm3": 3.0245658610469577
+        }
+      ],
+      "maximum_stop_pin_overlap_mm3": 9.999955919273043e-07
+    },
+    "negative_control": {
+      "seed": 0,
+      "step_degrees": 0.5,
+      "stop_angles_degrees": [
+        202.5,
+        225.0,
+        5.0
+      ],
+      "disk_angles_degrees_rear_to_front": [
+        4.152643214910995,
+        1.5116160176694393,
+        -2.014417424798012
+      ],
+      "stages_rear_to_front": [
+        [
+          2002.5,
+          1641.6526432149112,
+          1506.2311273440719,
+          1077.985582575202
+        ],
+        [
+          1305.0,
+          1260.6222480535507,
+          1441.5116160176694,
+          1077.985582575202
+        ],
+        [
+          1805.0,
+          1444.152643214911,
+          1441.5116160176694,
+          1077.985582575202
+        ]
+      ],
+      "gate_checks": [
+        {
+          "disk": "disk_3",
+          "maximum_link_overlap_mm3": 9.823765496215929
+        },
+        {
+          "disk": "disk_2",
+          "maximum_link_overlap_mm3": 1.6042237657975984
+        },
+        {
+          "disk": "disk_1",
+          "maximum_link_overlap_mm3": 3.0245658610469577
+        }
+      ],
+      "maximum_stop_pin_overlap_mm3": 9.99995592476521e-07
+    },
+    "assumptions": [
+      "Disks remain stationary until picked up; no frictional drag",
+      "Rigid contact, 1e-6 mm3 Boolean threshold",
+      "Dial/shaft/knob keys preserve current source angular phase",
+      "Top pointer is a stated convention, not a verified marking on the physical door"
+    ],
+    "input_sha256": {
+      "knob": "ad97282a190ddd67e5bb0eba8eb8b9d40045f4585b517856e3b3fbddb10c698c",
+      "disk_1": "23fbf6fc901c2e99712ccf283f9b9fd6ed047031b974161980198a0fe13bea89",
+      "disk_2": "aaf57c51814ffee92b093cad27d66e67b0af4b51b92c620a6dd8d6d2c7fabe3e",
+      "disk_3": "7332c858a05fb584297c98c87f4c0147b6f85e37ae7f64a13656b11f32e7f3b5",
+      "fastener_1": "f7142f3c76952aa61f7c6afab4f09a685dc55c411bb6215af9e95f8459ab514a",
+      "fastener_2": "94ea31ec468c0e750b16c2229d17fdcb0855a3e791acb28b8f632cece5308ddb",
+      "fastener_3": "848b49e06fa6a1ab668b439695569f95e2f4912c921fe7768e08daa7dcb76ea7",
+      "link": "8b60225cde20c048610295c87ceb50a5253c8a8a14bf94e0f68a6786d3fdaebc"
+    }
+  },
+  {
+    "source_hashes": {
+      "mini-vault.scad": "db98be6d01deb5ffe2d2162449dc88379b54c622a4066286d1380513354cbd99",
+      "exporter.py": "84c01ff0b675d366ca09c61635d04b4da19ae3cadf281ed6791e1ddf10923dde",
+      "audit.py": "51c76221f77e4d4ad5e05adc4b4904033072665bd1d3aec7bfa2c32b318fd490",
+      "build.ps1": "33d46eeac25bbc577c774b6bbfea4c3df2e33981c7244f2fc9e5144fafd703de",
+      "analyze.py": "fa4ec1ddef52341fc32711f972cb123a906dd32d8ba4585590697b3ef3cd73a5",
+      "profile_builder.py": "0cd9627c2eee800995de153eb48e6175f128ebad0c304825006e2fd8e29e98be",
+      "profiles/collar_1.scad": "52bf3f6eda5a3cf50573a275b0f915573d9c8e6bb6e9688c6604dbe8627232a8",
+      "profiles/dial.scad": "0172fad2d7cbaef3b05676972ee088f748e8db82079f5d603b94fc6dca8b9ca0",
+      "profiles/disk_1.scad": "62dcab619a605cf87c5005fa14d15d0ff2d2540215b98328404e2cab39b234a6",
+      "profiles/door.scad": "9d1733828cb296ad8d32ef7aefe6b1ef3b409c99f0ec9b2dd113c9e4fe16961e",
+      "profiles/fastener_1.scad": "a6d1ec2c81d2ebebd631bc72acd1cd67c0a256f04f127729950c169cfa9fa320",
+      "profiles/hinge_leaf_top.scad": "404b8f39aae2f83594fbe14444e7952f1fc52019a64c4420e3d081fc88dc3de7",
+      "profiles/hinge_socket_top.scad": "062e652f94985815eddc60ea284b4b7354b2f3ace1f5d47bfd4fba3a77284914",
+      "profiles/housing.scad": "54140c25c06f33009d544f5818867ced073c89b4f8123422f8709584380eab64",
+      "profiles/knob.scad": "bd34d2fc76a506de487356fdbe1146d26afe41f2e0064312055df8fd12239b35",
+      "profiles/latch.scad": "340c50730657993665d777f2caabfce47343d04295ce052db062a150c99c3ae8",
+      "profiles/latch_cover.scad": "e2e1daafbee473bc6c169ec762199cefd785aec1d86dacc202c85793e89dd614",
+      "profiles/link.scad": "eb7ecc15371a72f52cede0429b9341d66a8c89f56ba62e50798a7f89543a6802",
+      "profiles/retaining_ring.scad": "088810c5c333a4f1b2842f6d83a72016127192fa36b7620b779954da53630a45",
+      "profiles/shaft.scad": "1d7b730d7226006bfc2e70b77958283dbc162860358b591ade64dd6b3b3c7054",
+      "geometry/collar.scad": "54e504db053959b46cfed69aa0f914b0bc61206caa9a9c83a30ed33dae8a3d2b",
+      "geometry/door.scad": "a7a5610f3a93753c13114abed585c54703bdf078c45e47481c4a02dc69d2b20f",
+      "geometry/fastener.scad": "776d3d541e86a58df7e66225cca5ec236abc41997550ebfeaf8eef1456936ed0",
+      "geometry/housing.scad": "20fc3e48d9c7fd92ba72d84711c880f737cbb405be609b4e1fb3169d36bf5fe1",
+      "geometry/latch.scad": "a55effdcd3ebf6fcf31fb6e012890b5011cec56864536d71aa88cce008f9a12b",
+      "geometry/link-cover.scad": "a05430eb7c486d3e42cd8c623c0b9225dd8113af85caca1f5ba1763b816572d2",
+      "geometry/rotating.scad": "f8068a20508f9effa1bd3c753c720d56718aa54df42fecb42b253044bf044d8d"
+    },
+    "scale": 1.5,
+    "contacts": [
+      {
+        "driver": "knob",
+        "follower": "fastener_3",
+        "alignment_rotation_degrees": 22.5,
+        "forbidden_relative_angle_degrees": [
+          0.8469347842037678,
+          44.37800934538245
+        ],
+        "edge_offset_degrees": [
+          -21.653065215796232,
+          21.878009345382452
+        ],
+        "overlap_inside_mm3": 0.018667210952843866,
+        "overlap_outside_mm3": 0.0
+      },
+      {
+        "driver": "fastener_3",
+        "follower": "fastener_2",
+        "alignment_rotation_degrees": -202.5,
+        "forbidden_relative_angle_degrees": [
+          -224.57895424216986,
+          -180.88884741067886
+        ],
+        "edge_offset_degrees": [
+          -22.078954242169857,
+          21.611152589321136
+        ],
+        "overlap_inside_mm3": 0.01931490979163193,
+        "overlap_outside_mm3": 0.0
+      },
+      {
+        "driver": "fastener_2",
+        "follower": "fastener_1",
+        "alignment_rotation_degrees": 90.0,
+        "forbidden_relative_angle_degrees": [
+          68.24505530297756,
+          111.99751501902938
+        ],
+        "edge_offset_degrees": [
+          -21.754944697022438,
+          21.99751501902938
+        ],
+        "overlap_inside_mm3": 0.019472284067499228,
+        "overlap_outside_mm3": 0.0
+      }
+    ],
+    "convention": "Front view, CCW positive; pointer assumed at +Z (top), 16=0. Disk order rear3, middle2, front1.",
+    "exact_dial_numbers": [
+      9.089468259778288,
+      9.932851641542381,
+      0.0376415459646119
+    ],
+    "rounded_dial_numbers": [
+      9.0,
+      10.0,
+      0.0
+    ],
+    "exact_trials": [
+      {
+        "seed": 0,
+        "step_degrees": 0.25,
+        "stop_angles_degrees": [
+          204.51303584501147,
+          223.4891619347036,
+          0.8469347842037678
+        ],
+        "disk_angles_degrees_rear_to_front": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stages_rear_to_front": [
+          [
+            2004.5130358450115,
+            1643.6661010608077,
+            1508.2450553029776,
+            1080.0
+          ],
+          [
+            1303.4891619347036,
+            1259.1111525893211,
+            1440.0,
+            1080.0
+          ],
+          [
+            1800.8469347842038,
+            1440.0,
+            1440.0,
+            1080.0
+          ]
+        ],
+        "gate_checks": [
+          {
+            "disk": "disk_3",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_2",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_1",
+            "maximum_link_overlap_mm3": 0.0
+          }
+        ],
+        "maximum_stop_pin_overlap_mm3": 9.999990115909248e-07
+      },
+      {
+        "seed": 0,
+        "step_degrees": 1.0,
+        "stop_angles_degrees": [
+          204.51303584501147,
+          223.4891619347036,
+          0.8469347842037678
+        ],
+        "disk_angles_degrees_rear_to_front": [
+          0.0,
+          0.0,
+          2.2737367544323206e-13
+        ],
+        "stages_rear_to_front": [
+          [
+            2004.5130358450115,
+            1643.666101060808,
+            1508.2450553029778,
+            1080.0000000000002
+          ],
+          [
+            1303.4891619347036,
+            1259.1111525893211,
+            1440.0,
+            1080.0000000000002
+          ],
+          [
+            1800.8469347842038,
+            1440.0,
+            1440.0,
+            1080.0000000000002
+          ]
+        ],
+        "gate_checks": [
+          {
+            "disk": "disk_3",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_2",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_1",
+            "maximum_link_overlap_mm3": 0.0
+          }
+        ],
+        "maximum_stop_pin_overlap_mm3": 9.999990115957834e-07
+      },
+      {
+        "seed": 1,
+        "step_degrees": 0.25,
+        "stop_angles_degrees": [
+          204.51303584501147,
+          223.4891619347036,
+          0.8469347842037678
+        ],
+        "disk_angles_degrees_rear_to_front": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stages_rear_to_front": [
+          [
+            2004.5130358450115,
+            1643.6661010608077,
+            1508.2450553029776,
+            1080.0
+          ],
+          [
+            1303.4891619347036,
+            1259.1111525893211,
+            1440.0,
+            1080.0
+          ],
+          [
+            1800.8469347842038,
+            1440.0,
+            1440.0,
+            1080.0
+          ]
+        ],
+        "gate_checks": [
+          {
+            "disk": "disk_3",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_2",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_1",
+            "maximum_link_overlap_mm3": 0.0
+          }
+        ],
+        "maximum_stop_pin_overlap_mm3": 9.999990115909248e-07
+      },
+      {
+        "seed": 1,
+        "step_degrees": 1.0,
+        "stop_angles_degrees": [
+          204.51303584501147,
+          223.4891619347036,
+          0.8469347842037678
+        ],
+        "disk_angles_degrees_rear_to_front": [
+          0.0,
+          0.0,
+          2.2737367544323206e-13
+        ],
+        "stages_rear_to_front": [
+          [
+            2004.5130358450115,
+            1643.666101060808,
+            1508.2450553029778,
+            1080.0000000000002
+          ],
+          [
+            1303.4891619347036,
+            1259.1111525893211,
+            1440.0,
+            1080.0000000000002
+          ],
+          [
+            1800.8469347842038,
+            1440.0,
+            1440.0,
+            1080.0000000000002
+          ]
+        ],
+        "gate_checks": [
+          {
+            "disk": "disk_3",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_2",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_1",
+            "maximum_link_overlap_mm3": 0.0
+          }
+        ],
+        "maximum_stop_pin_overlap_mm3": 9.999990115957834e-07
+      },
+      {
+        "seed": 2,
+        "step_degrees": 0.25,
+        "stop_angles_degrees": [
+          204.51303584501147,
+          223.4891619347036,
+          0.8469347842037678
+        ],
+        "disk_angles_degrees_rear_to_front": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stages_rear_to_front": [
+          [
+            2004.5130358450115,
+            1643.6661010608077,
+            1508.2450553029776,
+            1080.0
+          ],
+          [
+            1303.4891619347036,
+            1259.1111525893211,
+            1440.0,
+            1080.0
+          ],
+          [
+            1800.8469347842038,
+            1440.0,
+            1440.0,
+            1080.0
+          ]
+        ],
+        "gate_checks": [
+          {
+            "disk": "disk_3",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_2",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_1",
+            "maximum_link_overlap_mm3": 0.0
+          }
+        ],
+        "maximum_stop_pin_overlap_mm3": 9.999990115909248e-07
+      },
+      {
+        "seed": 2,
+        "step_degrees": 1.0,
+        "stop_angles_degrees": [
+          204.51303584501147,
+          223.4891619347036,
+          0.8469347842037678
+        ],
+        "disk_angles_degrees_rear_to_front": [
+          0.0,
+          0.0,
+          2.2737367544323206e-13
+        ],
+        "stages_rear_to_front": [
+          [
+            2004.5130358450115,
+            1643.666101060808,
+            1508.2450553029778,
+            1080.0000000000002
+          ],
+          [
+            1303.4891619347036,
+            1259.1111525893211,
+            1440.0,
+            1080.0000000000002
+          ],
+          [
+            1800.8469347842038,
+            1440.0,
+            1440.0,
+            1080.0000000000002
+          ]
+        ],
+        "gate_checks": [
+          {
+            "disk": "disk_3",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_2",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_1",
+            "maximum_link_overlap_mm3": 0.0
+          }
+        ],
+        "maximum_stop_pin_overlap_mm3": 9.999990115957834e-07
+      },
+      {
+        "seed": 3,
+        "step_degrees": 0.25,
+        "stop_angles_degrees": [
+          204.51303584501147,
+          223.4891619347036,
+          0.8469347842037678
+        ],
+        "disk_angles_degrees_rear_to_front": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stages_rear_to_front": [
+          [
+            2004.5130358450115,
+            1643.6661010608077,
+            1508.2450553029776,
+            1080.0
+          ],
+          [
+            1303.4891619347036,
+            1259.1111525893211,
+            1440.0,
+            1080.0
+          ],
+          [
+            1800.8469347842038,
+            1440.0,
+            1440.0,
+            1080.0
+          ]
+        ],
+        "gate_checks": [
+          {
+            "disk": "disk_3",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_2",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_1",
+            "maximum_link_overlap_mm3": 0.0
+          }
+        ],
+        "maximum_stop_pin_overlap_mm3": 9.999990115909248e-07
+      },
+      {
+        "seed": 3,
+        "step_degrees": 1.0,
+        "stop_angles_degrees": [
+          204.51303584501147,
+          223.4891619347036,
+          0.8469347842037678
+        ],
+        "disk_angles_degrees_rear_to_front": [
+          0.0,
+          0.0,
+          2.2737367544323206e-13
+        ],
+        "stages_rear_to_front": [
+          [
+            2004.5130358450115,
+            1643.666101060808,
+            1508.2450553029778,
+            1080.0000000000002
+          ],
+          [
+            1303.4891619347036,
+            1259.1111525893211,
+            1440.0,
+            1080.0000000000002
+          ],
+          [
+            1800.8469347842038,
+            1440.0,
+            1440.0,
+            1080.0000000000002
+          ]
+        ],
+        "gate_checks": [
+          {
+            "disk": "disk_3",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_2",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_1",
+            "maximum_link_overlap_mm3": 0.0
+          }
+        ],
+        "maximum_stop_pin_overlap_mm3": 9.999990115957834e-07
+      },
+      {
+        "seed": 4,
+        "step_degrees": 0.25,
+        "stop_angles_degrees": [
+          204.51303584501147,
+          223.4891619347036,
+          0.8469347842037678
+        ],
+        "disk_angles_degrees_rear_to_front": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stages_rear_to_front": [
+          [
+            2004.5130358450115,
+            1643.6661010608077,
+            1508.2450553029776,
+            1080.0
+          ],
+          [
+            1303.4891619347036,
+            1259.1111525893211,
+            1440.0,
+            1080.0
+          ],
+          [
+            1800.8469347842038,
+            1440.0,
+            1440.0,
+            1080.0
+          ]
+        ],
+        "gate_checks": [
+          {
+            "disk": "disk_3",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_2",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_1",
+            "maximum_link_overlap_mm3": 0.0
+          }
+        ],
+        "maximum_stop_pin_overlap_mm3": 9.999990115909248e-07
+      },
+      {
+        "seed": 4,
+        "step_degrees": 1.0,
+        "stop_angles_degrees": [
+          204.51303584501147,
+          223.4891619347036,
+          0.8469347842037678
+        ],
+        "disk_angles_degrees_rear_to_front": [
+          0.0,
+          0.0,
+          2.2737367544323206e-13
+        ],
+        "stages_rear_to_front": [
+          [
+            2004.5130358450115,
+            1643.666101060808,
+            1508.2450553029778,
+            1080.0000000000002
+          ],
+          [
+            1303.4891619347036,
+            1259.1111525893211,
+            1440.0,
+            1080.0000000000002
+          ],
+          [
+            1800.8469347842038,
+            1440.0,
+            1440.0,
+            1080.0000000000002
+          ]
+        ],
+        "gate_checks": [
+          {
+            "disk": "disk_3",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_2",
+            "maximum_link_overlap_mm3": 0.0
+          },
+          {
+            "disk": "disk_1",
+            "maximum_link_overlap_mm3": 0.0
+          }
+        ],
+        "maximum_stop_pin_overlap_mm3": 9.999990115957834e-07
+      }
+    ],
+    "rounded_trial": {
+      "seed": 0,
+      "step_degrees": 0.5,
+      "stop_angles_degrees": [
+        202.5,
+        225.0,
+        0.0
+      ],
+      "disk_angles_degrees_rear_to_front": [
+        -0.8469347842037678,
+        1.5108380652964115,
+        -2.0130358450114727
+      ],
+      "stages_rear_to_front": [
+        [
+          2002.5,
+          1641.6530652157962,
+          1506.232019457966,
+          1077.9869641549885
+        ],
+        [
+          1305.0,
+          1260.6219906546175,
+          1441.5108380652964,
+          1077.9869641549885
+        ],
+        [
+          1800.0,
+          1439.1530652157962,
+          1441.5108380652964,
+          1077.9869641549885
+        ]
+      ],
+      "gate_checks": [
+        {
+          "disk": "disk_3",
+          "maximum_link_overlap_mm3": 2.0527946866019686
+        },
+        {
+          "disk": "disk_2",
+          "maximum_link_overlap_mm3": 8.126621074376832
+        },
+        {
+          "disk": "disk_1",
+          "maximum_link_overlap_mm3": 13.05825301112959
+        }
+      ],
+      "maximum_stop_pin_overlap_mm3": 9.999990115971746e-07
+    },
+    "negative_control": {
+      "seed": 0,
+      "step_degrees": 0.5,
+      "stop_angles_degrees": [
+        202.5,
+        225.0,
+        5.0
+      ],
+      "disk_angles_degrees_rear_to_front": [
+        4.153065215796005,
+        1.5108380652964115,
+        -2.0130358450114727
+      ],
+      "stages_rear_to_front": [
+        [
+          2002.5,
+          1641.6530652157962,
+          1506.232019457966,
+          1077.9869641549885
+        ],
+        [
+          1305.0,
+          1260.6219906546175,
+          1441.5108380652964,
+          1077.9869641549885
+        ],
+        [
+          1805.0,
+          1444.153065215796,
+          1441.5108380652964,
+          1077.9869641549885
+        ]
+      ],
+      "gate_checks": [
+        {
+          "disk": "disk_3",
+          "maximum_link_overlap_mm3": 36.33184803600461
+        },
+        {
+          "disk": "disk_2",
+          "maximum_link_overlap_mm3": 8.126621074376832
+        },
+        {
+          "disk": "disk_1",
+          "maximum_link_overlap_mm3": 13.05825301112959
+        }
+      ],
+      "maximum_stop_pin_overlap_mm3": 9.999990115971746e-07
+    },
+    "assumptions": [
+      "Disks remain stationary until picked up; no frictional drag",
+      "Rigid contact, 1e-6 mm3 Boolean threshold",
+      "Dial/shaft/knob keys preserve current source angular phase",
+      "Top pointer is a stated convention, not a verified marking on the physical door"
+    ],
+    "input_sha256": {
+      "knob": "f590b6eb721cdb55574652f6b4ab7e262d63c3a27ba6050aa58f5f62e4f0ea2f",
+      "disk_1": "43b9bcd5492c5de36c67ec08e5b40aad3b7ce8f639c867873f4cb72705043bf3",
+      "disk_2": "0b3f8e7258cce28aaf34f1da0bc1c1de8fa6c3fa349d31cb627b2c294ff648fe",
+      "disk_3": "8e7770460131dbf702a3364d7a979b1efe2e150881f28cf992afdd666aab39e9",
+      "fastener_1": "57e0149f641519f7e609df1f7dfe8ababf4bf5f09ef93fe17811c60037182ea2",
+      "fastener_2": "31939edfc52d8b2b9c6abb8cc8c9b7e103a1414dea7bf471de4246573610b5f3",
+      "fastener_3": "9bcaf888d7fd10ae002ccc9eb757faeed681f1cd239afc451e7557e9001d869c",
+      "link": "e3099b193c7527df77880068501c51240e8a1cf8905a8a64f138294a00227e6c"
+    }
+  }
+]
