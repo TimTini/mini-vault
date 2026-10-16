@@ -16,15 +16,17 @@ Các preset:
 
 - **Default:** vỏ142 ×100 ×84mm, `size_scale=1`.
 - **150 - scale 1:** vỏ150 ×150 ×150mm, cơ cấu gốc.
-- **200 - scale 1:** vỏ200 ×200 ×200mm, thành **2,4 mm**, mặt lưng **2 mm**, cơ cấu gốc. Thành dày thêm vào trong; kích thước ngoài và vùng lắp miệng trước giữ nguyên. Mức giảm cong vênh PETG cần thử in thực tế.
+- **200 - scale 1:** vỏ200 ×200 ×200mm, thành và tấm cửa **2,4 mm**, mặt lưng **2 mm**, cơ cấu gốc. Thành vỏ dày thêm vào trong; tấm cửa dày thêm ra ngoài, trục/núm số điều chỉnh theo để giữ khe hở. Mức giảm cong vênh PETG cần thử in thực tế.
 - **220 - scale 1.5:** vỏ220 ×220 ×220mm, cơ cấu phóng1,5lần và bù một số khe lắp.
 - **220 - local reinforcement:** tỷ lệ1, gia cường cục bộ thành/gân và các mặt ghép liên quan.
 
 `body_width/depth/height` là kích thước vỏ đầu ra. Các kích thước cơ cấu được dựng trước `size_scale`, còn các khe được chọn được bù bằng `fit_gap(mm)=mm/size_scale`. Miền tham số xét trước tỷ lệ, ví dụ chiều rộng tối thiểu142×size_scale. Default giữ thông số gốc.
 
-Kiểm chứng tăng thành 200 từ 1,8 lên 2,4 mm dùng `work/verify-thick-housing.py`: dựng lại bộ 200 bằng exporter bên dưới, rồi chạy `python work/verify-thick-housing.py --openscad $env:MINI_VAULT_OPENSCAD --previous-manifest <manifest-200-truoc-khi-tang-thanh.json>`. Manifest đối chứng phải được lưu trước khi xuất lại. Script đối chiếu hash 21 chi tiết còn lại, tiết diện thành, 231 cặp tĩnh, cửa 0..90° bước 0,5°, chốt -8..0 mm qua 61 vị trí, đĩa/trục bước 2°. Chênh vật liệu dùng OFF gốc; giao khối khi lắp/chuyển động dùng STL. Kết quả không thay thế thử in/lắp PETG hoặc mô phỏng nhiệt.
+Kiểm chứng cửa 200 dày 2,4 mm: trước khi xuất lại, lưu manifest của bộ cửa 2 mm và ba STL theo trục source (`door`, `shaft`, `dial`) trong một thư mục backup. Dựng bộ 200 bằng exporter bên dưới, chạy `<python-PyChrono> work/chrono-housing-check.py poses`, rồi `<python-project> work/verify-door-thickness.py --backup <thu-muc-backup>`. Script đối chiếu 19 chi tiết không đổi, 231 cặp tĩnh, độ dày tấm cửa, khe trục/núm số và các đường chuyển động. Hai script kiểm tra tăng thành trước đó (`verify-thick-housing.py` và mode `inspect` của `chrono-housing-check.py`) dành riêng cho checkpoint cửa còn 2 mm; không dùng report cũ để xác nhận preset hiện tại.
 
-Kiểm tra bổ sung bằng PyChrono 10.0.0 (runtime riêng, không thuộc `requirements.txt`): chạy `<python-PyChrono> work/chrono-housing-check.py poses`, sau đó `<python-project> work/chrono-housing-check.py inspect --previous-manifest <manifest-200-truoc-khi-tang-thanh.json>`. Cần chạy verifier trên trước để tạo vỏ đối chứng và report. Chrono giải ràng buộc motor bản lề tại [20,-0.5,0] mm và thanh trượt theo X; 361 tư thế cửa (bước 0,25°) và 121 vị trí trượt được đối chiếu giao khối bằng STL thật. Đây là động học cưỡng bức, không phải mô phỏng lực tiếp xúc/ma sát PETG hoặc chứng nhận không kẹt. Xem [Chrono 10.0.0 motors](https://api.projectchrono.org/10.0.0/motors.html).
+PyChrono 10.0.0 dùng runtime riêng, không thuộc `requirements.txt`. Chrono giải ràng buộc motor bản lề tại [20,-0.5,0] mm và thanh trượt theo X; 361 tư thế cửa (bước 0,25°) và 121 vị trí trượt được đối chiếu giao khối bằng STL thật; đĩa/trục được kiểm tra thêm mỗi 2°. Đây là động học cưỡng bức, không phải mô phỏng lực tiếp xúc/ma sát PETG hoặc chứng nhận không kẹt. Xem [Chrono 10.0.0 motors](https://api.projectchrono.org/10.0.0/motors.html). Mức giảm cong vênh và độ vừa sau in cần kiểm chứng thực tế.
+
+Với cửa dày hơn 2 mm, mép của lớp ngoài được lùi vào và vát để không tăng cọ khung khi mở; phần tấm 2 mm phía trong và các mặt lắp được giữ. Khi chuyển bộ 200 từ cửa 2 lên 2,4 mm, cần dùng `door` và `shaft` mới; `dial` chỉ dịch vị trí lắp, hình dạng chi tiết rời giữ nguyên. Bộ xuất hiện tại đã chứa đủ các chi tiết tương ứng.
 
 Vạch chỉ số mặt ngoài cửa giữ kích thước cục bộ1×4mm rồi nhân tỷ lệ; bản200 là1×4mm, bản220/1.5 là1,5×6mm. Latch mở rộng theo bề rộng cửa và có đế đỡ sau cổ núm ở các bản lớn.
 

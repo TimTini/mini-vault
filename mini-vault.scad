@@ -303,14 +303,14 @@ module door() {
     if(door_plate_thickness==2) native_door();
     else intersection() {
         native_door();
-        // Chamfer the added outward skin around the entire rounded outline.
-        // A straight edge cut alone leaves the curved corners in the opening arc.
+        // Inset the added skin at its root, then chamfer the entire outline.
+        // Extending the old edge forward increases its hinge-corner contact.
         union() {
             translate([-model_body_width-100,-7,-model_body_height])
                 cube([model_body_width+200,100,2*model_body_height]);
             hull() {
-                along_y(-7,eps) door_panel_outline();
-                along_y(-5-door_plate_thickness,eps) door_panel_outline(door_plate_thickness-2);
+                along_y(-7,eps) door_panel_outline(door_plate_thickness-2);
+                along_y(-5-door_plate_thickness,eps) door_panel_outline(2*(door_plate_thickness-2));
             }
         }
     }
