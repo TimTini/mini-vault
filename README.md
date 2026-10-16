@@ -16,11 +16,13 @@ Các preset:
 
 - **Default:** vỏ142 ×100 ×84mm, `size_scale=1`.
 - **150 - scale 1:** vỏ150 ×150 ×150mm, cơ cấu gốc.
-- **200 - scale 1:** vỏ200 ×200 ×200mm, cơ cấu gốc.
+- **200 - scale 1:** vỏ200 ×200 ×200mm, thành **2,4 mm**, mặt lưng **2 mm**, cơ cấu gốc. Thành dày thêm vào trong; kích thước ngoài và vùng lắp miệng trước giữ nguyên. Mức giảm cong vênh PETG cần thử in thực tế.
 - **220 - scale 1.5:** vỏ220 ×220 ×220mm, cơ cấu phóng1,5lần và bù một số khe lắp.
 - **220 - local reinforcement:** tỷ lệ1, gia cường cục bộ thành/gân và các mặt ghép liên quan.
 
 `body_width/depth/height` là kích thước vỏ đầu ra. Các kích thước cơ cấu được dựng trước `size_scale`, còn các khe được chọn được bù bằng `fit_gap(mm)=mm/size_scale`. Miền tham số xét trước tỷ lệ, ví dụ chiều rộng tối thiểu142×size_scale. Default giữ thông số gốc.
+
+Kiểm chứng tăng thành 200 từ 1,8 lên 2,4 mm dùng `work/verify-thick-housing.py`: dựng lại bộ 200 bằng exporter bên dưới, rồi chạy `python work/verify-thick-housing.py --openscad $env:MINI_VAULT_OPENSCAD --previous-manifest <manifest-200-truoc-khi-tang-thanh.json>`. Manifest đối chứng phải được lưu trước khi xuất lại. Script đối chiếu hash 21 chi tiết còn lại, tiết diện thành, 231 cặp tĩnh, cửa 0..90° bước 0,5°, chốt -8..0 mm qua 61 vị trí, đĩa/trục bước 2°. Chênh vật liệu dùng OFF gốc; giao khối khi lắp/chuyển động dùng STL. Kết quả không thay thế thử in/lắp PETG hoặc mô phỏng nhiệt.
 
 Vạch chỉ số mặt ngoài cửa giữ kích thước cục bộ1×4mm rồi nhân tỷ lệ; bản200 là1×4mm, bản220/1.5 là1,5×6mm. Latch mở rộng theo bề rộng cửa và có đế đỡ sau cổ núm ở các bản lớn.
 
