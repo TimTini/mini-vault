@@ -26,7 +26,7 @@ def generate():
 
     preset = json.loads((ROOT/'mini-vault.json').read_text())['parameterSets']['200 - scale 1']
     assert [float(preset['body_'+axis]) for axis in ['width', 'depth', 'height']] == [200]*3
-    assert float(preset['size_scale']) == 1 and float(preset['wall_thickness']) == 2.4
+    assert float(preset['size_scale']) == 1
     results = {}
     for name, steps, slope in [('door', 360, math.pi/2), ('slider', 120, -.008)]:
         system = ch.ChSystemNSC()

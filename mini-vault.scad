@@ -24,6 +24,13 @@ bottom_thickness = 2; // .1
 body_corner_radius = 12;
 door_corner_radius = 10;
 
+/* [Housing texture] */
+housing_texture = 0; // [0:Plain, 1:Capsule grooves]
+// Final millimetres; relief is added outside the base wall.
+housing_texture_height = 0.6; // .1
+housing_texture_width = 20; // 1
+housing_texture_pitch = 32; // 1
+
 /* [Local reinforcement] */
 // Load-bearing sections only. Step .1 so preset 2.8 is not rounded to 3.
 door_plate_thickness = 2; // .1
@@ -57,6 +64,12 @@ model_body_height=body_height/size_scale;
 function fit_gap(mm) = mm/size_scale;
 function fit_add(mm) = mm-fit_gap(mm);
 assert(size_scale>=1 && size_scale<=1.5,"size_scale: 1..1.5");
+assert(housing_texture==0 || housing_texture==1,"housing_texture: 0 or 1");
+assert(housing_texture_height>=.2 && housing_texture_height<=1.2,"texture height: .2..1.2 mm");
+assert(housing_texture_width>=8 && housing_texture_width<=30,"texture width: 8..30 mm");
+assert(housing_texture_pitch>=housing_texture_width+4,"texture pitch must leave at least 4 mm between grooves");
+assert(housing_texture==0 || body_depth-8*size_scale-8-max((14+.01)*size_scale,25-8*size_scale)>=16+housing_texture_width,
+    "capsule texture does not fit between the protected mouth and rear margins");
 
 $fn = curve_segments;
 eps = 0.00001; // Boolean epsilon only, not mechanical clearance.

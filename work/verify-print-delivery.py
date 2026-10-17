@@ -1,4 +1,5 @@
 """Read back both print kits independently of the export process."""
+import argparse
 import hashlib
 import importlib.util
 import json
@@ -17,7 +18,12 @@ motion = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(motion)
 
 results = {}
-for key, folder in [('200-scale-1','scale-100-200'),('220-scale-1.5','scale-150-220')]:
+parser=argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--preset',choices=['all','200 - scale 1','220 - scale 1.5'],default='all')
+selected=parser.parse_args().preset
+for preset,key,folder in [('200 - scale 1','200-scale-1','scale-100-200'),('220 - scale 1.5','220-scale-1.5','scale-150-220')]:
+    if selected!='all' and selected!=preset:
+        continue
     path = ROOT/f'exports/mini-vault-{key}-print.stl'
     manifest = json.loads(path.with_suffix('.verification.json').read_text())
     assert hashlib.sha256(path.read_bytes()).hexdigest() == manifest['sha256']
@@ -61,4 +67,5 @@ for key, folder in [('200-scale-1','scale-100-200'),('220-scale-1.5','scale-150-
     results[key] = dict(sha256=manifest['sha256'],components=22,closed=True,
                         rigid_transforms_match_triangles=True,individual_parts=records)
     print(key, '22 closed components, exact triangles, 22 print parts and latch bed support verified', flush=True)
-(ROOT/'work/print-delivery-verification.json').write_text(json.dumps(results,indent=2))
+suffix='' if selected=='all' else '-'+next(iter(results))
+(ROOT/'work'/f'print-delivery{suffix}-verification.json').write_text(json.dumps(results,indent=2))

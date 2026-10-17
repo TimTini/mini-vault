@@ -20,11 +20,11 @@ Các preset:
 
 - **Default:** vỏ142 ×100 ×84mm, `size_scale=1`.
 - **150 - scale 1:** vỏ150 ×150 ×150mm, cơ cấu gốc.
-- **200 - scale 1:** vỏ200 ×200 ×200mm, thành và tấm cửa **2,4 mm**, mặt lưng **2 mm**, cơ cấu gốc. Thành vỏ dày thêm vào trong; tấm cửa dày thêm ra ngoài, trục/núm số điều chỉnh theo để giữ khe hở. Mức giảm cong vênh PETG cần thử in thực tế.
+- **200 - scale 1:** vỏ nền200 ×200 ×200mm, thành chính **3 mm**, tấm cửa **2,4 mm**, mặt lưng **2 mm**, cơ cấu gốc. Bốn thành quanh miệng có vân capsule nổi **0,6 mm**; phủ bì có vân **201,2 ×200 ×201,2mm**. Đáy rãnh giữ thành nền3mm; vùng lắp cửa giữ kích thước cũ. Mức tăng chịu lực và giảm cong vênh cần thử in thực tế.
 - **220 - scale 1.5:** vỏ220 ×220 ×220mm, cơ cấu phóng1,5lần và bù một số khe lắp.
 - **220 - local reinforcement:** tỷ lệ1, gia cường cục bộ thành/gân và các mặt ghép liên quan.
 
-`body_width/depth/height` là kích thước vỏ đầu ra. Các kích thước cơ cấu được dựng trước `size_scale`, còn các khe được chọn được bù bằng `fit_gap(mm)=mm/size_scale`. Miền tham số xét trước tỷ lệ, ví dụ chiều rộng tối thiểu142×size_scale. Default giữ thông số gốc.
+`body_width/depth/height` là kích thước nền của vỏ; bật vân sẽ cộng phần nổi ra ngoài theo rộng/cao. `housing_texture=0` là trơn, `1` là rãnh capsule; height/width/pitch của vân tính bằng mm cuối cùng. Các kích thước cơ cấu được dựng trước `size_scale`, còn các khe được chọn được bù bằng `fit_gap(mm)=mm/size_scale`. Miền tham số xét trước tỷ lệ, ví dụ chiều rộng tối thiểu142×size_scale. Default giữ thông số gốc.
 
 Kiểm chứng cửa 200 dày 2,4 mm: trước khi xuất lại, lưu manifest của bộ cửa 2 mm và ba STL theo trục source (`door`, `shaft`, `dial`) trong một thư mục backup. Dựng bộ 200 bằng exporter bên dưới, chạy `<python-PyChrono> work/chrono-housing-check.py poses`, rồi `<python-project> work/verify-door-thickness.py --backup <thu-muc-backup>`. Script đối chiếu 19 chi tiết không đổi, 231 cặp tĩnh, độ dày tấm cửa, khe trục/núm số và các đường chuyển động. Hai script kiểm tra tăng thành trước đó (`verify-thick-housing.py` và mode `inspect` của `chrono-housing-check.py`) dành riêng cho checkpoint cửa còn 2 mm; không dùng report cũ để xác nhận preset hiện tại.
 
@@ -94,6 +94,7 @@ Python dependencies nằm trong `requirements.txt`; dùng OpenSCAD có backendMa
 python -m pip install -r requirements.txt
 $env:MINI_VAULT_OPENSCAD = (Get-Command openscad).Source
 python work/export-print-kit.py --preset '200 - scale 1' --openscad $env:MINI_VAULT_OPENSCAD
+python work/verify-print-delivery.py --preset '200 - scale 1'
 ```
 
 Exporter từ chối ghi đè STL đích đã tồn tại. File xuất, cache, log và metadata giữ local theo `.gitignore`. Muốn dùng rawSTLthamchiếu để đo lại, đặt input riêng ở `reference/MINI-VAULT.stl` và chạy `python analyze.py --check`; bản tham chiếu và lịch sử máy không nằm trong Git.

@@ -1,5 +1,37 @@
 # Housing mouth: continuous feature CSG
 
+## Capsule texture and 3 mm base: 2026-10-17
+
+The current 200 preset uses a 3 mm main wall, retaining the existing functional
+mouth, hinge guides and lock pockets. Its rear remains 2 mm; the door stays
+2.4 mm. The main wall thickness is measured under the grooves, away from the
+deliberately unchanged mounting lip.
+
+`housing_texture=0` keeps the plain shell; `1` adds four exterior capsule panels
+on the sidewalls adjoining the mouth. It adds material without cutting the base
+shell. The rear and door remain plain. `housing_texture_height/width/pitch`
+use final millimetres; defaults are 0.6 / 20 / 32. The 200 preset has five grooves
+per face. A 25 mm front band protects the mating geometry, and the rear edge
+stays clear of the build plate. Panel edges taper at approximately 45 degrees.
+
+Nominal base dimensions remain 200 x 200 x 200 mm; maximum textured dimensions
+are 201.2 x 200 x 201.2 mm. The inner cavity changes with wall thickness;
+the texture itself adds no inward material. Short bodies that cannot fit the
+protected margins and rounded groove ends are rejected explicitly.
+
+Focused geometry checks: `python -m unittest tests.test_housing_texture
+tests.test_housing_features tests.test_native_housing -v`. Compare current 200
+contacts to a local pre-change snapshot using `python work/verify-housing-texture.py
+--backup <snapshot-directory> --openscad <openscad.com>`. The verifier compares
+21 static pairs, 361 door positions, two sliders at 121 positions, and nine
+rotating parts at 180 angles: 2244 pairwise records. This checks geometry,
+not thermal deformation, physical strength, or print success.
+
+Export and independently read back the 200 kit with `work/export-print-kit.py`
+and `work/verify-print-delivery.py --preset '200 - scale 1'`. The selector allows
+checking 200 after the 220 outputs have been archived. Earlier numerical
+checkpoints below describe the plain housing at their recorded source state.
+
 `geometry/housing.scad` owns the housing shell and mouth. Dimensions are in mm
 before the final `size_scale`. Datum: X/Z are the front sketch, Y is depth;
 the hinge pivot is `[20,-0.5,0]`. Relations recovered from the reference are
@@ -91,3 +123,13 @@ sample maximum against the previous builder was 0.0196 mm, and the largest
 tested regular contour deviation was 0.0202 mm. These are sampled measurements,
 not a Hausdorff bound or proof of physical fit. Existing slicer 3MF projects and
 printer profiles were not changed by this source reconstruction.
+
+
+Capsule delivery checkpoint: 11 focused housing tests and 4 viewer tests passed;
+2244 pairwise contacts showed no increased significant overlap. The delivered
+housing has 29344 indexed faces / 22886 STL triangles and no final zero-area
+triangles. All 22 print parts were read back as closed solids with exact source
+triangles and placement. Only the housing source STL changed; all other 21
+hashes matched the pre-texture snapshot. Chrono poses and viewer input checks
+were refreshed. Local evidence is bound by
+`work/housing-texture/final-acceptance.json`. Existing 3MF projects are unchanged.
