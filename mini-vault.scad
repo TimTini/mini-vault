@@ -26,8 +26,8 @@ door_corner_radius = 10;
 
 /* [Housing texture] */
 housing_texture = 0; // [0:Plain, 1:Capsule grooves]
-// Final millimetres; relief is added outside the base wall.
-housing_texture_height = 0.6; // .1
+// Final millimetres; grooves are cut into the base wall.
+housing_texture_depth = 0.6; // .1
 housing_texture_width = 20; // 1
 housing_texture_pitch = 32; // 1
 
@@ -65,7 +65,9 @@ function fit_gap(mm) = mm/size_scale;
 function fit_add(mm) = mm-fit_gap(mm);
 assert(size_scale>=1 && size_scale<=1.5,"size_scale: 1..1.5");
 assert(housing_texture==0 || housing_texture==1,"housing_texture: 0 or 1");
-assert(housing_texture_height>=.2 && housing_texture_height<=1.2,"texture height: .2..1.2 mm");
+assert(housing_texture_depth>=.2 && housing_texture_depth<=1.2,"texture depth: .2..1.2 mm");
+assert(housing_texture==0 || wall_thickness*size_scale-housing_texture_depth>=1.8-1e-9,
+    "capsule grooves must leave at least 1.8 mm of wall");
 assert(housing_texture_width>=8 && housing_texture_width<=30,"texture width: 8..30 mm");
 assert(housing_texture_pitch>=housing_texture_width+4,"texture pitch must leave at least 4 mm between grooves");
 assert(housing_texture==0 || body_depth-8*size_scale-8-max((14+.01)*size_scale,25-8*size_scale)>=16+housing_texture_width,

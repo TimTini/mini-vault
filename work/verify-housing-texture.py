@@ -22,8 +22,11 @@ def digest(path):
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--backup',type=Path,required=True)
-    parser.add_argument('--openscad',required=True)
+    parser.add_argument('--openscad')
+    parser.add_argument('--delivered',action='store_true',help='Check the actual exported 200 housing without rendering a separate candidate')
     args=parser.parse_args()
+    if not args.delivered and not args.openscad:
+        parser.error('--openscad is required when rendering a candidate')
     snapshot=json.loads((args.backup/'snapshot.json').read_text())
     for name,expected in snapshot.items():
         assert digest(args.backup/name)==expected,name
@@ -33,12 +36,20 @@ def main():
     parameters={k:float(v) for k,v in json.loads((ROOT/'mini-vault.json').read_text())['parameterSets']['200 - scale 1'].items()}
     assert parameters['wall_thickness']==3 and parameters['housing_texture']==1
     folder=ROOT/'work/housing-texture'
-    path=render_part('housing',parameters,folder/'candidate.stl',args.openscad)
+    directory=ROOT/'work/rendered-parts/scale-100-200'
+    if args.delivered:
+        path=directory/'housing.stl'
+        manifest=json.loads((ROOT/'exports/mini-vault-200-scale-1-print.verification.json').read_text())
+        assert {k:float(v) for k,v in manifest['parameters'].items()}==parameters
+        assert manifest['source_hashes']==sources
+        assert manifest['parts']['housing']['source_sha256']==digest(path)
+        assert json.loads(path.with_suffix('.export.json').read_text())['source_hashes']==sources
+    else:
+        path=render_part('housing',parameters,folder/'candidate.stl',args.openscad)
     spec=importlib.util.spec_from_file_location('motion',ROOT/'work/final-print-check.py')
     motion=importlib.util.module_from_spec(spec)
     spec.loader.exec_module(motion)
     helpers={n:digest(ROOT/'work'/n) for n in ['final-print-check.py','verify-size-scale.py','verify-local-220.py']}
-    directory=ROOT/'work/rendered-parts/scale-100-200'
     old_path=args.backup/'work/rendered-parts/scale-100-200/housing.stl'
     housing=[motion.solid(trimesh.load_mesh(p)) for p in [old_path,path]]
     other={}
@@ -86,6 +97,8 @@ def main():
     for n,expected in helpers.items():
         assert digest(ROOT/'work'/n)==expected
     report=dict(parameters=parameters,source_hashes=sources,preset_sha256=preset_hash,
+                housing_source='delivered' if args.delivered else 'rerendered',
+                housing_path=path.relative_to(ROOT).as_posix(),
                 verifier_sha256=script_hash,helper_sha256=helpers,
                 backup_snapshot_sha256=digest(args.backup/'snapshot.json'),
                 control_housing_sha256=digest(old_path),candidate_housing_sha256=digest(path),

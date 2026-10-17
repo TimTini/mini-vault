@@ -49,10 +49,6 @@ def main():
         if name == 'housing':
             indexed = trimesh.load_mesh(metadata['source'], process=False)
             size = [numeric['body_'+a] for a in ['width','depth','height']]
-            if numeric.get('housing_texture',0)==1:
-                relief=2*numeric.get('housing_texture_height',.6)
-                size[0]+=relief
-                size[2]+=relief
             np.testing.assert_allclose(indexed.extents, size, atol=.001, rtol=0)
             np.testing.assert_allclose(mesh.extents, size, atol=.02, rtol=0)
         print(name, 'one closed part', flush=True)

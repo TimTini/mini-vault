@@ -35,9 +35,8 @@ class HousingFeatureMesh(unittest.TestCase):
                 mesh = trimesh.load_mesh(path)
                 self.assertTrue(mesh.is_volume)
                 self.assertEqual(len(mesh.split()), 1)
-                relief=2*parameters.get('housing_texture_height',.6) if parameters.get('housing_texture',0)==1 else 0
                 np.testing.assert_allclose(mesh.extents,
-                    [parameters['body_width']+relief, parameters['body_depth'], parameters['body_height']+relief], atol=.02)
+                    [parameters['body_width'], parameters['body_depth'], parameters['body_height']], atol=.02)
 
                 def hits(origin, direction, axis):
                     points, _, _ = mesh.ray.intersects_location([np.array(origin)*scale], [direction],
@@ -47,7 +46,7 @@ class HousingFeatureMesh(unittest.TestCase):
                 front = hits([0,12,0], [1,0,0], 0)
                 rear = hits([0,40 if parameters.get('housing_texture',0)==1 else 20,0], [1,0,0], 0)
                 np.testing.assert_allclose(front, [40.2,42], atol=.01)
-                np.testing.assert_allclose(rear, [42-parameters['wall_thickness'],42], atol=.01)
+                np.testing.assert_allclose(rear, [42-parameters['wall_thickness'],42-parameters.get('housing_texture_depth',.6)*parameters.get('housing_texture',0)/scale], atol=.01)
                 height_shift = (parameters['body_height']/scale-84)/2
                 guide = hits([10,0,0], [0,0,1], 2)
                 np.testing.assert_allclose(guide, np.array([36.2,38.1,40.2,42])+height_shift, atol=.01)

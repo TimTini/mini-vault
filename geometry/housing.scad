@@ -68,39 +68,26 @@ module housing_hinge_guides() {
         }
 }
 
-module housing_texture_panel(span) {
-    height=housing_texture_height/size_scale;
+module housing_capsule_cutter(span) {
+    depth=housing_texture_depth/size_scale;
     width=housing_texture_width/size_scale;
     pitch=housing_texture_pitch/size_scale;
     front=max(14+.01,25/size_scale-8);
     rear=model_body_depth-8-8/size_scale;
-    across=span-32/size_scale;
-    length=rear-front;
-    count=floor((across-16/size_scale-width)/pitch)+1;
-    module outline(inset=0) {
-        translate([0,(front+rear)/2]) offset(r=4/size_scale)
-            square([across-8/size_scale-2*inset,length-8/size_scale-2*inset],center=true);
-    }
-    difference() {
-        // A 45-degree edge transition starts on the existing sidewall.
-        hull() {
-            translate([0,0,-.01]) linear_extrude(.01) outline();
-            translate([0,0,height-.01]) linear_extrude(.01) outline(height);
-        }
-        for(i=[0:count-1]) translate([(i-(count-1)/2)*pitch,0,-.02])
-            linear_extrude(height+.04) hull() for(y=[front+8/size_scale+width/2,rear-8/size_scale-width/2])
-                translate([0,y]) circle(d=width);
-    }
+    count=floor((span-48/size_scale-width)/pitch)+1;
+    for(i=[0:count-1]) translate([(i-(count-1)/2)*pitch,0,-depth])
+        linear_extrude(depth+.01) hull() for(y=[front+8/size_scale+width/2,rear-8/size_scale-width/2])
+            translate([0,y]) circle(d=width);
 }
 
-module housing_capsule_texture() {
-    // Four sidewalls around the mouth. Rear face and functional lip stay plain.
+module housing_capsule_grooves() {
+    // Subtract from four sidewalls; the functional mouth and rear stay plain.
     for(s=[-1,1]) {
         translate([42-model_body_width/2,0,s*model_body_height/2]) scale([1,1,s])
-            housing_texture_panel(model_body_width);
+            housing_capsule_cutter(model_body_width);
         multmatrix([[0,0,s,s==1 ? 42 : 42-model_body_width],
                     [0,1,0,0],[1,0,0,0],[0,0,0,1]])
-            housing_texture_panel(model_body_height);
+            housing_capsule_cutter(model_body_height);
     }
 }
 
@@ -116,6 +103,7 @@ module native_housing() {
         housing_lock_pockets();
         along_y(14-eps,model_body_depth-8-bottom_thickness-14+eps)
             native_housing_outline(wall_thickness);
+        if(housing_texture==1) housing_capsule_grooves();
       }
       housing_lock_stop();
       housing_hinge_guides();
@@ -123,5 +111,4 @@ module native_housing() {
     if(hinge_gusset_size>0) for(s=[-1,1]) scale([1,1,s])
         along_x(4,10) polygon([[4.2,model_body_height/2-1.6],
             [4.2,model_body_height/2-1.6-hinge_gusset_size],[14,model_body_height/2-1.6]]);
-    if(housing_texture==1) housing_capsule_texture();
 }
