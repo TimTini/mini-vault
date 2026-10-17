@@ -19,9 +19,9 @@ spec.loader.exec_module(motion)
 
 results = {}
 parser=argparse.ArgumentParser(description=__doc__)
-parser.add_argument('--preset',choices=['all','200 - scale 1','220 - scale 1.5'],default='all')
+parser.add_argument('--preset',choices=['all','150 - scale 1','200 - scale 1','220 - scale 1.5'],default='all')
 selected=parser.parse_args().preset
-for preset,key,folder in [('200 - scale 1','200-scale-1','scale-100-200'),('220 - scale 1.5','220-scale-1.5','scale-150-220')]:
+for preset,key,folder in [('150 - scale 1','150-scale-1','scale-100-150'),('200 - scale 1','200-scale-1','scale-100-200'),('220 - scale 1.5','220-scale-1.5','scale-150-220')]:
     if selected!='all' and selected!=preset:
         continue
     path = ROOT/f'exports/mini-vault-{key}-print.stl'

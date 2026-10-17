@@ -23,11 +23,12 @@ def digest(path):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--preset', choices=['200 - scale 1','220 - scale 1.5'], required=True)
+    parser.add_argument('--preset', choices=['150 - scale 1','200 - scale 1','220 - scale 1.5'], required=True)
     parser.add_argument('--openscad', default=os.environ.get('MINI_VAULT_OPENSCAD','openscad'))
     args = parser.parse_args()
     preset = args.preset
-    key, source_folder = {'200 - scale 1':('200-scale-1','scale-100-200'),
+    key, source_folder = {'150 - scale 1':('150-scale-1','scale-100-150'),
+                          '200 - scale 1':('200-scale-1','scale-100-200'),
                           '220 - scale 1.5':('220-scale-1.5','scale-150-220')}[preset]
     presets_path = ROOT/'mini-vault.json'
     parameters = json.loads(presets_path.read_text())['parameterSets'][preset]

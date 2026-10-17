@@ -19,7 +19,7 @@ Mặt sau `door` dùng các feature riêng: bệ trục, cửa lắp kiểu bayo
 Các preset:
 
 - **Default:** vỏ142 ×100 ×84mm, `size_scale=1`.
-- **150 - scale 1:** vỏ150 ×150 ×150mm, cơ cấu gốc.
+- **150 - scale 1:** vỏ150 ×150 ×150mm, thành 3 mm, cửa 2,4 mm, lưng 2 mm; rãnh vỏ sâu 0,6 mm. Cơ cấu khóa giữ kích thước như bản 200; số/vạch trên dial nổi 0,4 mm.
 - **200 - scale 1:** vỏ200 ×200 ×200mm, thành nguyên **3 mm**, tấm cửa **2,4 mm**, mặt lưng **2 mm**, cơ cấu gốc. Rãnh capsule được khoét trực tiếp **0,6 mm** vào bốn thành quanh miệng; đáy rãnh còn **2,4 mm**, phủ bì vẫn200 ×200 ×200mm. Vùng lắp cửa giữ kích thước cũ. Hiệu quả chịu lực và chống cong vênh cần thử in thực tế.
 - **220 - scale 1.5:** vỏ220 ×220 ×220mm, cơ cấu phóng1,5lần và bù một số khe lắp.
 - **220 - local reinforcement:** tỷ lệ1, gia cường cục bộ thành/gân và các mặt ghép liên quan.
@@ -102,6 +102,17 @@ python -m pip install -r requirements.txt
 $env:MINI_VAULT_OPENSCAD = (Get-Command openscad).Source
 python work/export-print-kit.py --preset '200 - scale 1' --openscad $env:MINI_VAULT_OPENSCAD
 python work/verify-print-delivery.py --preset '200 - scale 1'
+```
+
+Xuất bản 150 bằng cùng công cụ; STL từng chi tiết nằm ở `exports/scale-100-150/`,
+bộ ghép ở `exports/mini-vault-150-scale-1-print.stl` và dial hai màu ở
+`exports/mini-vault-150-scale-1-dial-black-white.3mf`:
+
+```powershell
+python work/export-print-kit.py --preset '150 - scale 1' --openscad $env:MINI_VAULT_OPENSCAD
+python work/verify-print-delivery.py --preset '150 - scale 1'
+python work/export-colored-dial.py --preset '150 - scale 1'
+python -m unittest tests.test_150_print -v
 ```
 
 Exporter từ chối ghi đè STL đích đã tồn tại. File xuất, cache, log và metadata giữ local theo `.gitignore`. Muốn dùng rawSTLthamchiếu để đo lại, đặt input riêng ở `reference/MINI-VAULT.stl` và chạy `python analyze.py --check`; bản tham chiếu và lịch sử máy không nằm trong Git.

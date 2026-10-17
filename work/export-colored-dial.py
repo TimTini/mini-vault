@@ -1,4 +1,5 @@
 """Split existing raised dial marks into a second material; preserve source solid."""
+import argparse
 import hashlib
 import json
 from pathlib import Path
@@ -27,11 +28,15 @@ def mesh(body):
 def digest(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 
 def main():
-    source=ROOT/'work/rendered-parts/scale-100-200/dial.stl'
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--preset',choices=['150 - scale 1','200 - scale 1'],default='200 - scale 1')
+    args=parser.parse_args()
+    size=args.preset.split(' - ',1)[0]
+    source=ROOT/f'work/rendered-parts/scale-100-{size}/dial.stl'
     sources=source_hashes()
     preset_path=ROOT/'mini-vault.json'
-    preset=json.loads(preset_path.read_text())['parameterSets']['200 - scale 1']
-    manifest_path=ROOT/'exports/mini-vault-200-scale-1-print.verification.json'
+    preset=json.loads(preset_path.read_text())['parameterSets'][args.preset]
+    manifest_path=ROOT/f'exports/mini-vault-{size}-scale-1-print.verification.json'
     manifest=json.loads(manifest_path.read_text())
     assert manifest['parameters']==preset and float(preset['size_scale'])==1
     assert manifest['source_hashes']==sources
@@ -74,12 +79,12 @@ def main():
         data=ET.SubElement(obj,tag('mesh'));verts=ET.SubElement(data,tag('vertices'));tris=ET.SubElement(data,tag('triangles'))
         for v in p.vertices:ET.SubElement(verts,tag('vertex'),**dict(zip('xyz',[format(float(x),'.15g') for x in v])))
         for f in p.faces:ET.SubElement(tris,tag('triangle'),v1=str(f[0]),v2=str(f[1]),v3=str(f[2]))
-    assembly=ET.SubElement(resources,tag('object'),id='3',type='model',name='MINI-VAULT 200 scale1 colored dial')
+    assembly=ET.SubElement(resources,tag('object'),id='3',type='model',name=f'MINI-VAULT {size} scale1 colored dial')
     components=ET.SubElement(assembly,tag('components'))
     for i in [1,2]:ET.SubElement(components,tag('component'),objectid=str(i))
     ET.SubElement(ET.SubElement(model,tag('build')),tag('item'),objectid='3')
     config=ET.Element('config');obj=ET.SubElement(config,'object',id='3')
-    ET.SubElement(obj,'metadata',key='name',value='MINI-VAULT 200 scale1 colored dial')
+    ET.SubElement(obj,'metadata',key='name',value=f'MINI-VAULT {size} scale1 colored dial')
     ET.SubElement(obj,'metadata',key='extruder',value='1')
     for i,name in enumerate(names):
         part=ET.SubElement(obj,'part',id=str(i+1),subtype='normal_part')
@@ -87,7 +92,7 @@ def main():
         ET.SubElement(part,'metadata',key='extruder',value=str(i+1))
     content=b'<?xml version="1.0"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="model" ContentType="application/vnd.ms-package.3dmanufacturing-3dmodel+xml"/><Default Extension="config" ContentType="application/xml"/></Types>'
     rels=b'<?xml version="1.0"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Target="/3D/3dmodel.model" Id="rel1" Type="http://schemas.microsoft.com/3dmanufacturing/2013/01/3dmodel"/></Relationships>'
-    output=ROOT/'exports/mini-vault-200-scale-1-dial-black-white.3mf'
+    output=ROOT/f'exports/mini-vault-{size}-scale-1-dial-black-white.3mf'
     with zipfile.ZipFile(output,'w',zipfile.ZIP_DEFLATED) as z:
         z.writestr('[Content_Types].xml',content);z.writestr('_rels/.rels',rels)
         z.writestr('3D/3dmodel.model',ET.tostring(model,encoding='utf-8',xml_declaration=True))
@@ -108,7 +113,7 @@ def main():
         joined=checked[0]+checked[1];expected=solid(target)
         assert abs((joined-expected).volume())<1e-7 and abs((expected-joined).volume())<1e-7
     assert source_hashes()==sources and manifest['parts']['dial']['source_sha256']==digest(source)
-    assert json.loads(preset_path.read_text())['parameterSets']['200 - scale 1']==preset
+    assert json.loads(preset_path.read_text())['parameterSets'][args.preset]==preset
     report=dict(output=str(output),sha256=digest(output),source_sha256=digest(source),source_hashes=sources,
                 parameters=preset,preset_sha256=digest(preset_path),source_manifest_sha256=digest(manifest_path),
                 exporter_sha256=digest(Path(__file__)),split_plane_source_y_mm=split_y,
