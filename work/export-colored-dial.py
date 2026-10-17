@@ -28,12 +28,28 @@ def digest(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 
 def main():
     source=ROOT/'work/rendered-parts/scale-100-200/dial.stl'
+    sources=source_hashes()
+    preset_path=ROOT/'mini-vault.json'
+    preset=json.loads(preset_path.read_text())['parameterSets']['200 - scale 1']
+    manifest_path=ROOT/'exports/mini-vault-200-scale-1-print.verification.json'
+    manifest=json.loads(manifest_path.read_text())
+    assert manifest['parameters']==preset and float(preset['size_scale'])==1
+    assert manifest['source_hashes']==sources
+    assert manifest['parts']['dial']['source_sha256']==digest(source)
     metadata=json.loads(source.with_suffix('.export.json').read_text())
-    assert metadata['source_hashes']==source_hashes()
+    assert metadata['source_hashes']==sources
     original=trimesh.load_mesh(source);body=solid(original)
-    # Number and tick relief lies in source Y=-13.4..-13.2.
-    cutter=mf.Manifold.cube([100,100,100]).translate([-50,-113.2,-50])
-    marks=body^cutter;base=body-cutter
+    # The raised layer is .2 mm; its absolute Y changes with door thickness.
+    # Snap to the actual STL plane so float32 rounding cannot add a thin body skin.
+    expected=original.bounds[0,1]+.2
+    planes=np.unique(original.vertices[:,1])
+    split_y=float(planes[np.argmin(abs(planes-expected))])
+    assert abs(split_y-expected)<1e-5
+    # Inset the color seam 1e-6 mm into the relief, avoiding a coplanar body film.
+    # Both parts still partition the exact original solid without a physical gap.
+    split_y-=.000001
+    marks=body.trim_by_plane([0,-1,0],-split_y)
+    base=body.trim_by_plane([0,1,0],split_y)
     assert marks.volume()>0 and base.volume()>0
     assert abs((marks^base).volume())<1e-8
     merged=marks+base
@@ -76,7 +92,7 @@ def main():
         z.writestr('[Content_Types].xml',content);z.writestr('_rels/.rels',rels)
         z.writestr('3D/3dmodel.model',ET.tostring(model,encoding='utf-8',xml_declaration=True))
         z.writestr('Metadata/model_settings.config',ET.tostring(config,encoding='utf-8',xml_declaration=True))
-        z.writestr('Metadata/project_settings.config',json.dumps({'filament_colour':['#101010','#FFFFFF'],'filament_settings_id':['Generic PLA @BBL A1','Generic PLA @BBL A1'],'filament_type':['PLA','PLA'],'filament_diameter':['1.75','1.75']}))
+        z.writestr('Metadata/project_settings.config',json.dumps({'filament_colour':['#101010','#FFFFFF']}))
     # Fresh XML/mesh reload verifies both material volumes and the assembled union.
     with zipfile.ZipFile(output) as z:
         assert z.testzip() is None
@@ -91,9 +107,13 @@ def main():
         target=mesh(body);target.apply_transform(transform)
         joined=checked[0]+checked[1];expected=solid(target)
         assert abs((joined-expected).volume())<1e-7 and abs((expected-joined).volume())<1e-7
-    report=dict(output=str(output),sha256=digest(output),source_sha256=digest(source),source_hashes=source_hashes(),
+    assert source_hashes()==sources and manifest['parts']['dial']['source_sha256']==digest(source)
+    assert json.loads(preset_path.read_text())['parameterSets']['200 - scale 1']==preset
+    report=dict(output=str(output),sha256=digest(output),source_sha256=digest(source),source_hashes=sources,
+                parameters=preset,preset_sha256=digest(preset_path),source_manifest_sha256=digest(manifest_path),
+                exporter_sha256=digest(Path(__file__)),split_plane_source_y_mm=split_y,
                 parts=[dict(name=n,filament=i+1,color=['#101010','#FFFFFF'][i],volume_mm3=float(p.volume),components=len(p.split()),bounds_mm=p.bounds.tolist()) for i,(n,p) in enumerate(zip(names,parts))],
-                union_matches_source=True,overlap_mm3=abs((checked[0]^checked[1]).volume()),marks_thickness_mm=.2,
+                union_matches_source=True,overlap_mm3=abs((checked[0]^checked[1]).volume()),marks_thickness_mm=float(parts[1].extents[2]),
                 slicer='pending',physical='not_run')
     output.with_suffix('.verification.json').write_text(json.dumps(report,indent=2))
     print(json.dumps(report,indent=2),flush=True)

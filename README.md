@@ -68,6 +68,11 @@ Release gồm hai STL bố trí **22 chi tiết rời** cho200/1 và220/1.5, cù
 
 File `mini-vault-200-scale-1-dial-black-white.3mf` có hai part: thân đen và số/vạch trắng. Gán filament theo hai part trong slicer; file là mô hình, không phải lệnh gửi máy in.
 
+Tám vạch ở vị trí không có số trên `dial` chạy từ bán kính 9 đến 18,5 mm,
+ngang hàng số, rộng 1 mm và nổi 0,2 mm. Các vạch ngắn phía dưới số giữ nguyên.
+Xuất lại bản hai màu sau khi xuất bộ STL 200 bằng `python work/export-colored-dial.py`;
+kiểm tra file bằng `python -m unittest tests.test_colored_dial -v`.
+
 Kiểm chứng trước đây gồm22/22chi tiết200 sliceoffline với profileA1/PLA/0,4mm/0,2mm, supporttắt; latch220 đã slice riêng. Toàn bộ bộ220 chưa slice cùng lượt. Việc này không thay thế preview trên profile thực tế và thử in/lắp.
 
 Cơ cấu còn các giới hạn đã ghi nhận: tiếp xúc nhỏ tại hai góc cửa gần23° mở, retainingring trong hình assembly lệch rãnh0,75mm ởscale1.5, một số khe lắp sát, và khe dọc trục danh nghĩa đĩa/collar0mm. Lực, ma sát, độ nhám và độ bền vật lý chưa xác nhận. Các mẫu chuyển động/giao khối đã xét chỉ chứng minh trong phạm vi lấy mẫu.

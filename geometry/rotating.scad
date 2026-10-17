@@ -25,7 +25,13 @@ module native_shaft() {
 }
 module native_dial() {
     translate([0,-(door_plate_thickness-2),0]) {
-        along_y(-13.4,.2+eps) measured_sketch(9,dial_marks,-13.3);
+        along_y(-13.4,.2+eps) {
+            // Entries 8..15 are the old half-step ticks, replaced below.
+            measured_sketch(9,[for(i=[0:len(dial_marks)-1]) if(i<8 || i>15) dial_marks[i]],-13.3);
+            // Half-step ticks reach the numeral row; short ticks under digits stay.
+            for(a=[22.5:45:337.5]) rotate(a)
+                translate([9,-.5]) square([9.5,1]);
+        }
         difference() {
             union() {
                 along_y(-13.2,1+eps) circle(r=20);
