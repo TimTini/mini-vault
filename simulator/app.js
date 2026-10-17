@@ -1,37 +1,32 @@
 ﻿'use strict';
 const $=id=>document.getElementById(id);
-const {Model,solveCode,planCode,targets,describeVisits,visitTargets,error,mod}=VaultMechanism;
+const {Model,authorGuide,numbersForHoles,visitTargets,error,mod}=VaultMechanism;
 const {holePoint,viewPose}=VaultView;
-let numbers=[8,4,12],visits=[4,2,2],solution=solveCode(numbers,1,visits),holes=solution.holes;
+let numbers=[13,5,9],solution=authorGuide(numbers),visits=solution.visits,holes=solution.holes;
 let planned=solution.stops,routeStart=0;
-let replayNumbers=numbers,replayVisits=visits,correctedReplay=false;
-let model=new Model(holes),mode='assembly',selectedDisk=1,queue=[],inserted=false,last=0,pauseUntil=0;
+let model=new Model(holes,1,'author'),mode='assembly',selectedDisk=1,queue=[],inserted=false,last=0,pauseUntil=0;
 let renderMechanism=()=>{},rebuild=()=>{};
 const colors=['#60c5f0','#ae90fa','#f6b46a'];
 function showSolution(){
   const box=$('suggestion');box.className=solution.matches?'result good':'result';
-  const title=solution.matches?'Có phương án khớp mã trong mô hình.':'Chưa có phương án đáp ứng đúng mã; vị trí bên dưới là phương án gần nhất.';
+  const title=solution.matches?'Vị trí chốt theo bảng tác giả.':'Vị trí chốt theo bảng tác giả; chuỗi quay này chưa khớp trong mô hình hướng dẫn. Hãy thử mã khi cửa còn mở.';
   box.replaceChildren();const strong=document.createElement('strong');strong.textContent=title;box.append(strong);
   box.append(document.createTextNode(`Mã giữ nguyên: ${numbers.join(' → ')}. Chốt đĩa 1 / 2 / 3: lỗ ${holes.join(' / ')}.`));
-  $('precision').textContent=`Đã xét ${solution.tested} bộ lỗ trong mô hình. ${solution.measured?'Tiếp xúc của bộ lỗ này đã đo từ mesh.':'Bộ lỗ này dùng tiếp xúc ước lượng.'} Điểm dừng dự đoán riêng: ${solution.predictedNumbers.map(n=>n.toFixed(3)).join(' → ')}. Kết quả chưa xác nhận hoạt động trên bản in.`;
-  $('route').innerHTML=numbers.map((n,i)=>`<li>${['⭮','⭯','⭮'][i]} Đến ${n} lần thứ ${visits[i]} · quay ${Math.abs(planned[i]-(i?planned[i-1]:0)).toFixed(1)}°${i?' sau khi đảo chiều':' từ 16'}.</li>`).join('');
-  const contactStops=targets(model.low,model.high,false,-1);
-  const contactNumbers=contactStops.map(q=>mod(q)/22.5||16);
-  const contactVisits=describeVisits(contactNumbers,contactStops);
-  $('correctedRoute').textContent=`Điểm dừng hiệu chỉnh cho bộ chốt này: ${contactNumbers.map(n=>n.toFixed(3)).join(' → ')}; lượt ${contactVisits.join(' / ')} từ 16. Nút hiệu chỉnh thử các điểm này, khác mã đã nhập; tiếp xúc vẫn có thể là ước lượng.`;
+  $('precision').textContent='Tra vị trí chốt trực tiếp theo bảng tác giả. Animation minh họa truyền động lý tưởng theo quy tắc 3 → 2 → 1 đĩa; không mô phỏng lực, ma sát hay dung sai bản in.';
+  $('route').innerHTML=numbers.map((n,i)=>`<li>${['⭮','⭯','⭮'][i]} ${['Quay đến khi cả ba đĩa cùng quay','Đảo chiều đến khi đĩa 2 và 3 cùng quay','Đảo chiều đến khi chỉ đĩa 3 quay'][i]}, tiếp tục đến <b>${n}</b>. Từ mốc 16 theo chuỗi này: lần thứ ${visits[i]} · ${Math.abs(planned[i]-(i?planned[i-1]:0)).toFixed(1)}°.</li>`).join('');
 }
 function drawCards(){
   const pose=viewPose(mode,selectedDisk,[0,0,0]);
-  $('holes-title').textContent=`${solution.matches?'Vị trí chốt':'Phương án gần nhất'} — nhìn từ ${mode==='assembly'?'mặt trong':'bên ngoài'}`;
+  $('holes-title').textContent=`Vị trí chốt theo tác giả — nhìn từ ${mode==='assembly'?'mặt trong':'bên ngoài'}`;
   $('assemblyInstruction').textContent=mode==='assembly'?'Mặt có đầu lớn hướng về bạn. Giữ rãnh bên phải, đặt chốt vào lỗ màu vàng. Lắp đĩa 1 sát cửa → đĩa 2 → đĩa 3.':'Góc nhìn theo núm ngoài: rãnh ở bên trái. Chọn một đĩa để trở lại hướng dẫn lắp từ mặt trong.';
   $('holeCards').innerHTML=holes.map((h,i)=>{
     let circles='';
     for(let j=0;j<15;j++){
-      const p=holePoint(j,mode),t=holePoint(j,mode,73);
-      circles+=`<circle cx="${90+p.x}" cy="${90+p.y}" r="6" fill="${j===h?'#ffe18d':'#101923'}" stroke="${j===h?'#fff2b9':colors[i]}"/><text x="${90+t.x}" y="${94+t.y}" fill="${j===h?'#ffe18d':'#aab9cd'}" font-size="10" text-anchor="middle">${j}</text>`;
+      const p=holePoint(j,mode),t=holePoint(j,mode,73),number=numbersForHoles([j,j,j])[i];
+      circles+=`<circle cx="${90+p.x}" cy="${90+p.y}" r="6" fill="${j===h?'#ffe18d':'#101923'}" stroke="${j===h?'#fff2b9':colors[i]}"/><text x="${90+t.x}" y="${94+t.y}" fill="${j===h?'#ffe18d':'#aab9cd'}" font-size="10" text-anchor="middle">${number}</text>`;
     }
     const notch=pose.notch==='phải'?'M158 84H144V96H158':'M22 84H36V96H22';
-    return `<button type="button" class="hole-card" data-disk="${i+1}" aria-pressed="${mode==='assembly'&&selectedDisk===i+1}" aria-label="Lắp đĩa ${i+1}, lỗ ${h}"><b style="color:${colors[i]}">Đĩa ${i+1} · lỗ ${h}</b><svg viewBox="0 0 180 180" role="img" aria-label="Đĩa ${i+1}, lỗ ${h}, rãnh bên ${pose.notch}"><circle cx="90" cy="90" r="66" fill="${colors[i]}" fill-opacity=".16" stroke="${colors[i]}"/><path d="${notch}" fill="#101923" stroke="${colors[i]}"/><circle cx="90" cy="90" r="20" fill="#101923" stroke="${colors[i]}"/>${circles}</svg><small>${['Sát cửa','Ở giữa','Trong cùng'][i]}</small></button>`;
+    return `<button type="button" class="hole-card" data-disk="${i+1}" aria-pressed="${mode==='assembly'&&selectedDisk===i+1}" aria-label="Lắp đĩa ${i+1}, số ${numbers[i]}, lỗ ${h}"><b style="color:${colors[i]}">Đĩa ${i+1} · số ${numbers[i]} · lỗ ${h}</b><svg viewBox="0 0 180 180" role="img" aria-label="Đĩa ${i+1}, lỗ ${h}, rãnh bên ${pose.notch}"><circle cx="90" cy="90" r="66" fill="${colors[i]}" fill-opacity=".16" stroke="${colors[i]}"/><path d="${notch}" fill="#101923" stroke="${colors[i]}"/><circle cx="90" cy="90" r="20" fill="#101923" stroke="${colors[i]}"/>${circles}</svg><small>${['Sát cửa','Ở giữa','Trong cùng'][i]}</small></button>`;
   }).join('');
 }
 function update(){
@@ -46,9 +41,9 @@ function update(){
   $('status').className=aligned?'badge good':'badge';
   $('readout').textContent=(mod(model.q[0])/22.5||16).toFixed(3);
   const stage=3-queue.length;
-  const traveled=Math.abs(model.q[0]-routeStart),phaseTravel=queue.length?Math.abs(planned[stage]-routeStart)-360*(replayVisits[stage]-1):0;
-  const passed=queue.length&&traveled>=phaseTravel-1e-6?Math.min(replayVisits[stage],1+Math.floor((traveled-phaseTravel+1e-6)/360)):0;
-  $('stage').textContent=queue.length?`${correctedReplay?'Hiệu chỉnh · ':''}Chặng ${stage+1}/3 · ${['⭮','⭯','⭮'][stage]} đến ${replayNumbers[stage].toFixed(3)} lần ${replayVisits[stage]} · đã gặp ${passed}/${replayVisits[stage]} lần`:'⭮ → ⭯ → ⭮ · nhìn từ bên ngoài';
+  const traveled=Math.abs(model.q[0]-routeStart),phaseTravel=queue.length?Math.abs(planned[stage]-routeStart)-360*(visits[stage]-1):0;
+  const passed=queue.length&&traveled>=phaseTravel-1e-6?Math.min(visits[stage],1+Math.floor((traveled-phaseTravel+1e-6)/360)):0;
+  $('stage').textContent=queue.length?`Chặng ${stage+1}/3 · ${['⭮','⭯','⭮'][stage]} đến ${numbers[stage]} lần ${visits[stage]} · đã gặp ${passed}/${visits[stage]} lần`:'⭮ → ⭯ → ⭮ · nhìn từ bên ngoài';
   $('diskErrors').textContent=model.q.slice(1).reverse().map((q,i)=>`Đĩa ${i+1}: lệch ${error(q).toFixed(2)}°`).join(' · ');
   $('stop').disabled=queue.length===0;
   renderMechanism();
@@ -57,15 +52,14 @@ function changeView(next,disk=selectedDisk){
   mode=next;selectedDisk=disk;queue=[];inserted=false;
   drawCards();update();
 }
-function reset(){model=new Model(holes);queue=[];inserted=false;update();}
+function reset(){model=new Model(holes,1,'author');queue=[];inserted=false;update();}
 function apply(auto=false){
   const next=[1,2,3].map(i=>$('n'+i).valueAsNumber);
   const nextVisits=[1,2,3].map(i=>$('v'+i).valueAsNumber);
   try{
-    const proposal=auto?planCode(next):solveCode(next,1,nextVisits);
+    const proposal=authorGuide(next,auto?null:nextVisits);
     numbers=next;visits=proposal.visits;solution=proposal;holes=proposal.holes;planned=proposal.stops;
     if(auto)visits.forEach((n,i)=>{$('v'+(i+1)).value=n;$('v'+(i+1)).valueAsNumber=n;});
-    replayNumbers=numbers;replayVisits=visits;correctedReplay=false;
     reset();rebuild();
     showSolution();drawCards();update();$('message').textContent='';return true;
   }catch(e){$('message').textContent=e.message;return false;}
@@ -80,15 +74,6 @@ $('play').onclick=()=>{
   if(!apply())return;mode='dial';inserted=false;pauseUntil=0;
   planned=visitTargets(numbers,visits);queue=planned.slice();routeStart=0;drawCards();update();
   $('message').textContent=`Đang thử đúng mã ${numbers.join(' → ')} từ phía núm ngoài.`;
-};
-$('correctedPlay').onclick=()=>{
-  if(!apply())return;
-  correctedReplay=true;mode='dial';inserted=false;pauseUntil=0;
-  planned=targets(model.low,model.high,false,-1);
-  replayNumbers=planned.map(q=>mod(q)/22.5||16);
-  replayVisits=describeVisits(replayNumbers,planned);
-  queue=planned.slice();routeStart=0;drawCards();update();
-  $('message').textContent=`Đang thử điểm dừng hiệu chỉnh ${replayNumbers.map(n=>n.toFixed(3)).join(' → ')}; mã đã nhập ${numbers.join(' → ')} giữ nguyên.`;
 };
 $('stop').onclick=()=>{queue=[];$('message').textContent='Đã dừng thử mã.';update();};
 $('latch').onclick=()=>{
@@ -166,7 +151,7 @@ function frame(time){
   if(queue.length&&time>=pauseUntil){
     const target=queue[0],d=target-model.q[0],step=900*dt;
     model.move(Math.abs(d)<=step?target:model.q[0]+Math.sign(d)*step);
-    if(Math.abs(target-model.q[0])<1e-6){queue.shift();routeStart=target;pauseUntil=time+1000;if(!queue.length)$('message').textContent=model.aligned()?(correctedReplay?'Hoàn tất điểm dừng hiệu chỉnh: ba rãnh khớp trong mô hình; chưa xác nhận mã nguyên hoặc bản in.':'Hoàn tất ⭮ ⭯ ⭮: ba rãnh khớp trong mô hình.'):'Hoàn tất đúng lượt đã chọn: rãnh còn lệch; xem sai lệch từng đĩa.';}
+    if(Math.abs(target-model.q[0])<1e-6){queue.shift();routeStart=target;pauseUntil=time+1000;if(!queue.length)$('message').textContent=model.aligned()?'Hoàn tất ⭮ ⭯ ⭮: ba rãnh khớp trong mô hình hướng dẫn tác giả.':'Hoàn tất đúng lượt đã chọn: rãnh còn lệch; kiểm tra lại lượt quay 3 → 2 → 1 đĩa.';}
     update();
   }
   requestAnimationFrame(frame);

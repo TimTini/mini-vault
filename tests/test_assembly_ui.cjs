@@ -1,61 +1,45 @@
-// Exercise actual page handlers and animation with a small DOM fixture; no WebGL claim.
+// Actual handlers and animation in a DOM fixture; no WebGL claim.
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 const mechanism=require('../simulator/mechanism.js'),view=require('../simulator/view.js');
 const html=fs.readFileSync('simulator/index.html','utf8'),elements=new Map();
 function element(){return {textContent:'',innerHTML:'',hidden:false,disabled:false,attrs:{},children:[],setAttribute(k,v){this.attrs[k]=v;},replaceChildren(){this.children=[];},append(n){this.children.push(n);}};}
 for(const [,id] of html.matchAll(/\bid="([^"]+)"/g))elements.set(id,element());
 const get=id=>{assert.ok(elements.has(id),'page element exists: '+id);return elements.get(id);};
-[8,4,12].forEach((n,i)=>get('n'+(i+1)).valueAsNumber=n);
-[4,2,2].forEach((n,i)=>get('v'+(i+1)).valueAsNumber=n);
-assert.equal(elements.has('scale'),false,'assembly guide has one fixed mechanism, no size selector');
+for(const [,id,value] of html.matchAll(/<input id="([^"]+)"[^>]*value="([^"]+)"/g))get(id).valueAsNumber=Number(value);
 let frame;
 const context=vm.createContext({VaultMechanism:mechanism,VaultView:view,window:{},document:{getElementById:get,createElement:element,createTextNode:text=>({textContent:text})},requestAnimationFrame:cb=>frame=cb});
 vm.runInContext(fs.readFileSync('simulator/app.js','utf8'),context);
+assert.equal(elements.has('correctedPlay'),false,'no fractional-code workaround');
 assert.equal(get('assemblyView').attrs['aria-pressed'],'true');
 assert.ok(get('holeCards').innerHTML.includes('rãnh bên phải'));
-assert.ok(get('route').innerHTML.includes('Đến 4 lần thứ 2 · quay 630.0°'));
-get('play').onclick();
-for(let t=0;t<15000;t+=50)frame(t);
-assert.equal(get('readout').textContent,'12.000');
-assert.ok(get('diskErrors').textContent.includes('Đĩa 1: lệch 2.04°'));
-assert.ok(get('message').textContent.includes('đúng lượt đã chọn'));
+let time=0;
+function finish(){for(let i=0;i<400;i++){time+=50;frame(time);}}
+for(const [code,holes,visits] of [[[13,5,9],[5,2,3],[4,3,2]],[[13,9,2],[5,6,12],[4,2,2]],[[8,4,12],[0,1,6],[4,2,2]]]) {
+  code.forEach((n,i)=>get('n'+(i+1)).valueAsNumber=n);
+  get('codeForm').onsubmit({preventDefault(){}});
+  assert.deepEqual([1,2,3].map(i=>get('v'+i).valueAsNumber),visits);
+  holes.forEach((h,i)=>assert.ok(get('holeCards').innerHTML.includes(`Đĩa ${i+1} · số ${code[i]} · lỗ ${h}`)));
+  get('play').onclick();finish();
+  assert.equal(get('readout').textContent,code[2].toFixed(3));
+  assert.equal(get('status').className,'badge good');
+  assert.ok(get('diskErrors').textContent.includes('Đĩa 1: lệch 0.00°'));
+  assert.equal(get('stop').disabled,true);
+  get('latch').onclick();assert.equal(get('message').textContent,'Thanh gạt đã vào ba rãnh trong mô hình.');
+}
 get('holeCards').onclick({target:{closest:()=>({dataset:{disk:'3'}})}});
 assert.ok(get('viewCaption').textContent.startsWith('Đĩa 3'));
 get('dialView').onclick();assert.ok(get('holeCards').innerHTML.includes('rãnh bên trái'));
-assert.equal(get('dialStatus').hidden,false);
 get('assemblyView').onclick();assert.ok(get('viewCaption').textContent.startsWith('Đĩa 3'));
 get('wholeDoor').onclick();assert.ok(get('viewCaption').textContent.startsWith('Toàn bộ'));
-const model=new mechanism.Model([0,1,6]);
-const code=mechanism.targets(model.low,model.high,false,-1).map(q=>mechanism.mod(q)/22.5||16);
-code.forEach((n,i)=>get('n'+(i+1)).valueAsNumber=n);
-get('play').onclick();
-assert.equal(get('dialView').attrs['aria-pressed'],'true');
-for(let t=0;t<20000;t+=50)frame(t);
-assert.equal(get('readout').textContent,'11.967');
-assert.equal(get('status').className,'badge good');
-assert.equal(get('stop').disabled,true);
-get('assemblyView').onclick();assert.ok(get('holeCards').innerHTML.includes('rãnh bên phải'));
 [13,5,9].forEach((n,i)=>get('n'+(i+1)).valueAsNumber=n);
-get('codeForm').onsubmit({preventDefault(){}});
-assert.deepEqual([1,2,3].map(i=>get('v'+i).valueAsNumber),[4,3,2]);
-assert.ok(get('holeCards').innerHTML.includes('Đĩa 1 · lỗ 5'));
-assert.ok(get('holeCards').innerHTML.includes('Đĩa 2 · lỗ 2'));
-assert.ok(get('holeCards').innerHTML.includes('Đĩa 3 · lỗ 3'));
-get('play').onclick();
-for(let t=0;t<20000;t+=50)frame(t+40000);
-assert.equal(get('readout').textContent,'9.000');
-assert.equal(get('status').className,'badge','requested integer code remains unmatched');
-get('correctedPlay').onclick();
-assert.ok(get('message').textContent.includes('mã đã nhập 13 → 5 → 9 giữ nguyên'));
-for(let t=0;t<20000;t+=50)frame(t+60000);
-assert.equal(get('status').className,'badge good','corrected contacts align gates');
-assert.ok(get('message').textContent.includes('chưa xác nhận mã nguyên'));
-assert.deepEqual([1,2,3].map(i=>get('n'+i).valueAsNumber),[13,5,9]);
-get('latch').onclick();assert.equal(get('message').textContent,'Thanh gạt đã vào ba rãnh trong mô hình.');
 [4,2,2].forEach((n,i)=>get('v'+(i+1)).valueAsNumber=n);
 get('fixedRoute').onclick();
-assert.deepEqual([1,2,3].map(i=>get('v'+i).valueAsNumber),[4,2,2]);
-assert.ok(get('holeCards').innerHTML.includes('Đĩa 1 · lỗ 3'),'manual route must still be honored');
-get('n1').valueAsNumber=0;get('codeForm').onsubmit({preventDefault(){}});
-assert.ok(get('message').textContent.includes('Nhập ba số'));
-console.log('Verified actual compact-UI handlers, disk3 selection, synchronized sides, whole-door mode, exact-code animation and validation (DOM fixture, no WebGL).');
+assert.ok(get('holeCards').innerHTML.includes('Đĩa 1 · số 13 · lỗ 5'),'counts never remap pins');
+get('play').onclick();finish();assert.equal(get('status').className,'badge');
+for(const code of [[7,5,9],[13,2,9],[13,5,5],[13.5,5,9],[0,5,9]]) {
+  code.forEach((n,i)=>get('n'+(i+1)).valueAsNumber=n);
+  get('codeForm').onsubmit({preventDefault(){}});
+  assert.ok(get('message').textContent.length>0);
+  assert.ok(get('holeCards').innerHTML.includes('Đĩa 1 · số 13 · lỗ 5'),'invalid code keeps last valid result');
+}
+console.log('Verified chart labels, author example/user code replay, latch, manual wrong counts, view controls and invalid input (DOM fixture).');

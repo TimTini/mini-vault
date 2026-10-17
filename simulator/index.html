@@ -9,23 +9,24 @@
 </style>
 </head>
 <body><main>
-<header class="row spread"><div><h1>MINI-VAULT</h1><p class="muted">Đặt mã → gắn chốt → thử mở</p></div><span class="tag">Hướng lắp nhìn từ mặt trong cửa</span></header>
+<header class="row spread"><div><h1>MINI-VAULT</h1><p class="muted">Đặt mã → gắn chốt → thử mở theo hướng dẫn tác giả</p></div><span class="tag">Hướng lắp nhìn từ mặt trong cửa</span></header>
 <section class="panel" aria-labelledby="input-title">
 <h2 id="input-title">1. Nhập mã muốn dùng</h2>
 <form id="codeForm" class="row fields">
-<label>⭮ Số thứ 1<input id="n1" aria-label="Số thứ nhất trên núm" type="number" min="1" max="16" step="any" value="8" required></label>
-<label>⭯ Số thứ 2<input id="n2" aria-label="Số thứ hai trên núm" type="number" min="1" max="16" step="any" value="4" required></label>
-<label>⭮ Số thứ 3<input id="n3" aria-label="Số thứ ba trên núm" type="number" min="1" max="16" step="any" value="12" required></label>
+<label>⭮ Số thứ 1<input id="n1" aria-label="Số thứ nhất trên núm" type="number" min="1" max="16" step="1" value="13" required></label>
+<label>⭯ Số thứ 2<input id="n2" aria-label="Số thứ hai trên núm" type="number" min="1" max="16" step="1" value="5" required></label>
+<label>⭮ Số thứ 3<input id="n3" aria-label="Số thứ ba trên núm" type="number" min="1" max="16" step="1" value="9" required></label>
 <button id="search" type="submit" class="primary">Tìm chốt và lượt quay</button>
 <button id="fixedRoute" type="button">Tìm theo lượt đã nhập</button>
 <fieldset style="border:0;padding:0;margin:8px 0 0;flex-basis:100%"><legend class="muted">Dừng khi gặp số lần thứ mấy?</legend><div class="row fields">
 <label>⭮ Số thứ 1 · lần<input id="v1" aria-label="Lượt gặp số thứ nhất" type="number" min="1" max="10" step="1" value="4" required></label>
-<label>⭯ Số thứ 2 · lần<input id="v2" aria-label="Lượt gặp số thứ hai" type="number" min="1" max="10" step="1" value="2" required></label>
+<label>⭯ Số thứ 2 · lần<input id="v2" aria-label="Lượt gặp số thứ hai" type="number" min="1" max="10" step="1" value="3" required></label>
 <label>⭮ Số thứ 3 · lần<input id="v3" aria-label="Lượt gặp số thứ ba" type="number" min="1" max="10" step="1" value="2" required></label>
 </div><p class="muted">Bắt đầu ở 16. Mỗi khi đảo chiều, đếm lại từ lần 1; vị trí đang đứng chưa tính là một lần gặp. Nút tìm chính tự cập nhật lượt phù hợp; chọn “Tìm theo lượt đã nhập” để giữ lượt tự chọn.</p></fieldset>
 </form>
 <div id="suggestion" class="result" role="status"></div>
-<details><summary>Độ chính xác của phương án</summary><p id="precision"></p><p class="muted">Mô hình hỗ trợ đặt chốt; lực, ma sát và độ vừa của bản in cần kiểm tra thực tế.</p></details>
+<p class="muted">Theo bảng tác giả, không có lỗ cho số 7 trên đĩa 1, số 2 trên đĩa 2 và số 5 trên đĩa 3. Hãy thử mở khi cửa còn mở trước khi đóng két.</p>
+<details><summary>Cơ sở hướng dẫn và phạm vi mô phỏng</summary><p id="precision"></p></details>
 </section>
 <div class="layout">
 <section class="panel" aria-labelledby="view-title">
@@ -40,13 +41,12 @@
 <h2 id="holes-title">Vị trí chốt — nhìn từ mặt trong</h2>
 <p id="assemblyInstruction" class="assembly-note"></p>
 <div id="holeCards" class="hole-cards"></div>
-<p class="muted">Chọn một đĩa để xem riêng trên mặt cửa. Số 0–14 là chỉ số lỗ; số đĩa giữ nguyên khi đổi phía nhìn.</p>
+<p class="muted">Các số quanh đĩa là số mã theo bảng tác giả. “Lỗ” trong tiêu đề là chỉ số SCAD 0–14. Chọn một đĩa để xem riêng; số đĩa giữ nguyên khi đổi phía nhìn.</p>
 <div class="panel" style="margin-top:16px;padding:15px">
 <h2>3. Thử mã ⭮ → ⭯ → ⭮</h2>
+<p class="muted">Minh họa truyền động lý tưởng theo bảng tác giả; không tính ma sát và dung sai bản in.</p>
 <ol id="route" class="muted"></ol>
 <div class="row"><button id="play" type="button" class="primary">Thử quay mã đã nhập</button><button id="stop" type="button" disabled>Dừng</button></div>
-<p><button id="correctedPlay" type="button">Thử điểm dừng hiệu chỉnh</button></p>
-<p id="correctedRoute" class="muted"></p>
 <div id="dialStatus" hidden><div id="readout" class="readout">16.000</div><div id="status" class="badge" role="status"></div><p id="stage" class="muted"></p><p id="diskErrors" class="muted"></p><button id="latch" type="button">Thử mở</button></div>
 <p id="message" role="status"></p>
 </div>

@@ -85,13 +85,13 @@ Mở `simulator/index.html` cùng các file JS và `vendor/`. Tài nguyên đề
 python -m http.server 8000 --directory simulator
 ```
 
-Mở `http://localhost:8000/`. Nhập pass mong muốn rồi chọn **Tìm chốt và lượt quay** để tự tìm lượt phù hợp, hoặc **Tìm theo lượt đã nhập** để giữ số lượt tự chọn. Bắt đầu ở16; mỗi lần đảo chiều đếm lại từ1. Tool xét3375bộ lỗ cho mỗi chuỗi lượt và giữ nguyên pass. Khi chưa khớp, kết quả ghi rõ phương án gần nhất.
+Mở `http://localhost:8000/`. Nhập ba số nguyên1–16 rồi chọn **Tìm chốt và lượt quay** để tra bảng tác giả và tính lượt phù hợp, hoặc **Tìm theo lượt đã nhập** để giữ số lượt tự chọn. Bắt đầu ở16; mỗi lần đảo chiều đếm lại từ1. Chốt luôn theo bảng; lượt thủ công sai không làm thay đổi bộ chốt.
 
 Chế độ **Lắp từ mặt trong** đặt rãnh bên phải, đầu lớn của chốt hướng về người xem. Đĩa1 sát cửa, đĩa2 giữa, đĩa3 trong cùng; chọn từng đĩa hoặc **Cả nắp**. Đổi sang phía ngoài sẽ đổi cả hình3D và sơ đồ lỗ mà giữ nguyên index. **Thử quay mã đã nhập** quay đúng⭮⭯⭮ và số lượt đã chọn, không tự thêm vòng.
 
-Tool hiện dùng cơ cấu gốc và mặt nắp200 làm mốc minh họa; bộ chọn200/220 đã bỏ. Mặt cửa/trục/collar lấy từ mesh hiện tại; đĩa/chốt/núm hiển thị giản lược. Kết quả thuộc mô hình tiếp xúc theo góc, chưa tính ma sát/biến dạng hoặc chứng nhận bản in mở đúng mã. Ví dụ8/4/12 với4/2/2còn lệch khoảng2,04°/1,40°/0,75° ởđĩa1/2/3.
+Tool dùng cơ cấu gốc và mặt nắp200 làm mốc minh họa. Mặt cửa/trục/collar lấy từ mesh; đĩa/chốt/núm hiển thị giản lược. Animation dùng truyền động lý tưởng theo hướng dẫn tác giả: quay thuận đến khi cả ba đĩa cùng quay, đảo ngược đến khi đĩa2 và3 cùng quay, đảo thuận đến khi chỉ đĩa3 quay; mỗi chặng tiếp tục đến số tương ứng. Không tính ma sát và dung sai bản in.
 
-Chọn **Tìm chốt và lượt quay** để tìm đồng thời chốt và lượt thay vì giữ mặc định4/2/2. Với13/5/9, tool chọn chốt5/2/3 và lượt4/3/2; mã nguyên còn lệch khoảng2°. Nút **Thử điểm dừng hiệu chỉnh** chạy riêng các số lẻ dự đoán, giữ nguyên mã nhập và ghi rõ đây là lượt hiệu chỉnh. Xem chi tiết trong [hướng dẫn simulator](simulator/README.md).
+Mặc định13/5/9 tương ứng chốt5/2/3 và lượt4/3/2; ví dụ tác giả13/9/2 tương ứng chốt5/6/12 và lượt4/2/2. Sơ đồ quanh đĩa ghi số mã theo tác giả, chỉ số lỗ SCAD ghi riêng. Không có lỗ cho số7 ởđĩa1, số2 ởđĩa2, số5 ởđĩa3. Giao diện không đề xuất mã số lẻ; các biên tiếp xúc mesh xấp xỉ chỉ giữ trong API/test chẩn đoán. Xem [hướng dẫn simulator](simulator/README.md).
 
 ## Tái tạo và kiểm tra
 

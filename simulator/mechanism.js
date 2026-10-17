@@ -137,6 +137,19 @@
     }
     return best;
   }
-  const api={Model,targets,bands,error,mod,authorHoles,numbersForHoles,dialTargets,solveCode,planCode,visitTargets,describeVisits};
+  function authorGuide(numbers,visits=null) {
+    const holes=authorHoles(numbers),model=new Model(holes,1,'author');
+    if(visits===null) {
+      visits=describeVisits(numbers,dialTargets(numbers,model.low,model.high));
+      visits[0]=4;
+    }
+    const stops=visitTargets(numbers,visits),stageErrors=[];
+    stops.forEach((stop,i)=>{
+      model.move(stop);
+      stageErrors.push(model.q.slice(1).reverse().slice(0,i+1).map(error));
+    });
+    return {holes,visits:visits.slice(),stops,matches:stageErrors.flat().every(e=>Math.abs(e)<.25)};
+  }
+  const api={Model,targets,bands,error,mod,authorHoles,numbersForHoles,dialTargets,solveCode,planCode,authorGuide,visitTargets,describeVisits};
   if(typeof module==='object'&&module.exports)module.exports=api;else root.VaultMechanism=api;
 })(globalThis);

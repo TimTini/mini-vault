@@ -17,7 +17,6 @@ for(const fixture of actual.results){
  assert.ok(corrected.aligned());
  fixture.corrected_gate_checks.forEach(g=>assert.ok(g.max_link_overlap_mm3<.001,'measured adjusted-stop fixture must clear sampled link path'));
 }
-assert.ok(!fs.readFileSync('simulator/app.js','utf8').includes("new Model(holes,scale,'author')"),'UI must not default to ideal contacts after physical mismatch');
 const { authorHoles, numbersForHoles, dialTargets } = require('../simulator/mechanism.js');
 // Independent reference: MakerWorld original chart, example code13/9/2.
 assert.deepEqual(authorHoles([13,9,2]),[5,6,12]);
