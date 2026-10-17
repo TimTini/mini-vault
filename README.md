@@ -19,8 +19,8 @@ Mặt sau `door` dùng các feature riêng: bệ trục, cửa lắp kiểu bayo
 Các preset:
 
 - **Default:** vỏ142 ×100 ×84mm, `size_scale=1`.
-- **150 - scale 1:** vỏ150 ×150 ×150mm, thành 3 mm, cửa 2,4 mm, lưng 2 mm; rãnh vỏ sâu 0,6 mm. Cơ cấu khóa giữ kích thước như bản 200; số/vạch trên dial nổi 0,4 mm.
-- **200 - scale 1:** vỏ200 ×200 ×200mm, thành nguyên **3 mm**, tấm cửa **2,4 mm**, mặt lưng **2 mm**, cơ cấu gốc. Rãnh capsule được khoét trực tiếp **0,6 mm** vào bốn thành quanh miệng; đáy rãnh còn **2,4 mm**, phủ bì vẫn200 ×200 ×200mm. Vùng lắp cửa giữ kích thước cũ. Hiệu quả chịu lực và chống cong vênh cần thử in thực tế.
+- **150 - scale 1:** vỏ150 ×150 ×150mm, thành 3 mm, cửa 2,4 mm, lưng 2 mm; rãnh vỏ sâu 0,6 mm, vát mép 45°. Cơ cấu khóa giữ kích thước như bản 200; số/vạch trên dial nổi 0,4 mm.
+- **200 - scale 1:** vỏ200 ×200 ×200mm, thành nguyên **3 mm**, tấm cửa **2,4 mm**, mặt lưng **2 mm**, cơ cấu gốc. Rãnh capsule được khoét trực tiếp **0,6 mm** vào bốn thành quanh miệng, vát mép **45°**; đáy rãnh còn **2,4 mm**, phủ bì vẫn200 ×200 ×200mm. Miệng rãnh rộng 20 mm, đáy phẳng rộng 18,8 mm. Vùng lắp cửa giữ kích thước cũ. Hiệu quả chịu lực và chống cong vênh cần thử in thực tế.
 - **220 - scale 1.5:** vỏ220 ×220 ×220mm, cơ cấu phóng1,5lần và bù một số khe lắp.
 - **220 - local reinforcement:** tỷ lệ1, gia cường cục bộ thành/gân và các mặt ghép liên quan.
 

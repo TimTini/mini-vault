@@ -75,9 +75,11 @@ module housing_capsule_cutter(span) {
     front=max(14+.01,25/size_scale-8);
     rear=model_body_depth-8-8/size_scale;
     count=floor((span-48/size_scale-width)/pitch)+1;
-    for(i=[0:count-1]) translate([(i-(count-1)/2)*pitch,0,-depth])
-        linear_extrude(depth+.01) hull() for(y=[front+8/size_scale+width/2,rear-8/size_scale-width/2])
-            translate([0,y]) circle(d=width);
+    // Parallel 45-degree walls: keep the mouth width, shrink the floor by depth.
+    for(i=[0:count-1]) translate([(i-(count-1)/2)*pitch,0,0])
+        hull() for(y=[front+8/size_scale+width/2,rear-8/size_scale-width/2])
+            translate([0,y,-depth])
+                cylinder(h=depth+.01,r1=width/2-depth,r2=width/2+.01);
 }
 
 module housing_capsule_grooves() {

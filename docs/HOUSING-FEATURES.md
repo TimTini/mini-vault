@@ -7,6 +7,13 @@ into that wall. The groove floors retain 2.4 mm and the uncut lands remain
 3 mm. Maximum dimensions stay 200 x 200 x 200 mm. There is no added exterior
 panel. This supersedes the earlier raised-panel interpretation.
 
+Groove walls now slope at 45 degrees through the full 0.6 mm depth. The outer
+capsule mouth stays 20 mm wide, while the flat floor is 18.8 mm wide. Two conical
+cutters joined by a convex hull preserve this slope around the rounded ends as
+well as along the straight sides. This applies to both current 150 and 200
+presets. It adds no material outside the original shell. Print appearance still
+requires slicer and physical validation.
+
 `housing_texture=0` keeps the plain shell; `1` subtracts capsule cutters from
 four sidewalls adjoining the mouth. The rear remains 2 mm and the door remains
 2.4 mm, both plain. Functional mouth, hinge guides and lock pockets keep their
@@ -30,6 +37,10 @@ not thermal deformation, physical strength or print validation.
 After export, add `--delivered` to check the actual housing STL against its
 current print manifest without rendering again; `--openscad` is then optional.
 The report records the selected housing path, source mode and exact file hash.
+Select `--preset '150 - scale 1'` to compare the 150 kit with its own snapshot;
+its report is `contact-verification-150.json`, separate from the default 200
+report. For both variants the 45-degree slope is checked by transverse rays and
+capsule-end rays, with the original wall floor and outer envelope retained.
 
 Export and read back the 200 kit with `work/export-print-kit.py` and
 `work/verify-print-delivery.py --preset '200 - scale 1'`. Older numerical

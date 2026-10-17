@@ -59,9 +59,22 @@ class HousingTexture(unittest.TestCase):
     def test_front_groove_cutoff_and_rear_margin(self):
         # Front is Y=-8: the first groove tip is Y=25, 33 mm from the mouth.
         # The groove tips remain behind the protected front band.
-        for y,outer in [(16.9,42),(24.9,42),(26,41.4),(175.9,41.4),(177,42),(184.1,42)]:
+        for y,outer in [(16.9,42),(24.9,42),(25.3,41.7),(26,41.4),
+                        (175.7,41.7),(175.9,41.9),(177,42),(184.1,42)]:
             with self.subTest(y=y):
                 np.testing.assert_allclose(self.hits([0,y,0],[1,0,0],0),[39,outer],atol=.01)
+
+    def test_groove_edges_slope_45_degrees_on_all_four_walls(self):
+        # Each .2 mm step toward the unchanged mouth edge raises the floor .2 mm.
+        for u,depth in [(9.3,.6),(9.5,.5),(9.7,.3),(9.9,.1),(10.1,0)]:
+            for origin,direction,axis,expected in [
+                ([-58,100,u],[1,0,0],0,[39,42-depth]),
+                ([-58,100,u],[-1,0,0],0,[-158+depth,-155]),
+                ([-58+u,100,0],[0,0,1],2,[97,100-depth]),
+                ([-58+u,100,0],[0,0,-1],2,[-100+depth,-97]),
+            ]:
+                with self.subTest(offset=u,direction=direction):
+                    np.testing.assert_allclose(self.hits(origin,direction,axis),expected,atol=.01)
 
     def test_depth_stays_in_final_mm_when_scaled(self):
         path=render_part('housing',dict(self.parameters,size_scale=1.5,body_width=220,
@@ -73,6 +86,8 @@ class HousingTexture(unittest.TestCase):
         np.testing.assert_allclose(mesh.extents,[220,220,220],atol=.02)
         points,_,_=mesh.ray.intersects_location([[0,100,0]],[[1,0,0]],multiple_hits=True)
         np.testing.assert_allclose(sorted(points[:,0]),[58.5,62.1],atol=.01)
+        points,_,_=mesh.ray.intersects_location([[0,100,11.55]],[[1,0,0]],multiple_hits=True)
+        np.testing.assert_allclose(sorted(points[:,0]),[58.5,62.55],atol=.01)
 
     def test_shallow_body_rejects_overlapping_capsule_ends(self):
         with self.assertRaisesRegex(RuntimeError,'protected mouth and rear margins'):

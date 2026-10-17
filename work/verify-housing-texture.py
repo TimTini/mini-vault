@@ -1,4 +1,4 @@
-"""Compare 200 housing contacts to an explicit hash-verified pre-texture snapshot."""
+"""Compare housing contacts to an explicit hash-verified previous snapshot."""
 import argparse
 import hashlib
 import importlib.util
@@ -22,9 +22,11 @@ def digest(path):
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--backup',type=Path,required=True)
+    parser.add_argument('--preset',choices=['150 - scale 1','200 - scale 1'],default='200 - scale 1')
     parser.add_argument('--openscad')
-    parser.add_argument('--delivered',action='store_true',help='Check the actual exported 200 housing without rendering a separate candidate')
+    parser.add_argument('--delivered',action='store_true',help='Check the selected exported housing without rendering a separate candidate')
     args=parser.parse_args()
+    size=args.preset.split(' - ',1)[0]
     if not args.delivered and not args.openscad:
         parser.error('--openscad is required when rendering a candidate')
     snapshot=json.loads((args.backup/'snapshot.json').read_text())
@@ -33,24 +35,24 @@ def main():
     sources=source_hashes()
     preset_hash=digest(ROOT/'mini-vault.json')
     script_hash=digest(Path(__file__))
-    parameters={k:float(v) for k,v in json.loads((ROOT/'mini-vault.json').read_text())['parameterSets']['200 - scale 1'].items()}
+    parameters={k:float(v) for k,v in json.loads((ROOT/'mini-vault.json').read_text())['parameterSets'][args.preset].items()}
     assert parameters['wall_thickness']==3 and parameters['housing_texture']==1
     folder=ROOT/'work/housing-texture'
-    directory=ROOT/'work/rendered-parts/scale-100-200'
+    directory=ROOT/f'work/rendered-parts/scale-100-{size}'
     if args.delivered:
         path=directory/'housing.stl'
-        manifest=json.loads((ROOT/'exports/mini-vault-200-scale-1-print.verification.json').read_text())
+        manifest=json.loads((ROOT/f'exports/mini-vault-{size}-scale-1-print.verification.json').read_text())
         assert {k:float(v) for k,v in manifest['parameters'].items()}==parameters
         assert manifest['source_hashes']==sources
         assert manifest['parts']['housing']['source_sha256']==digest(path)
         assert json.loads(path.with_suffix('.export.json').read_text())['source_hashes']==sources
     else:
-        path=render_part('housing',parameters,folder/'candidate.stl',args.openscad)
+        path=render_part('housing',parameters,folder/f'candidate-{size}.stl',args.openscad)
     spec=importlib.util.spec_from_file_location('motion',ROOT/'work/final-print-check.py')
     motion=importlib.util.module_from_spec(spec)
     spec.loader.exec_module(motion)
     helpers={n:digest(ROOT/'work'/n) for n in ['final-print-check.py','verify-size-scale.py','verify-local-220.py']}
-    old_path=args.backup/'work/rendered-parts/scale-100-200/housing.stl'
+    old_path=args.backup/f'work/rendered-parts/scale-100-{size}/housing.stl'
     housing=[motion.solid(trimesh.load_mesh(p)) for p in [old_path,path]]
     other={}
     meshes={}
@@ -105,9 +107,10 @@ def main():
                 unchanged_other_parts_sha256=other,records=rows,increased_contacts=increases,
                 physical='not_run',thermal='not_run',slicer='not_run',
                 method='Pairwise rigid sampled contacts; existing sliver classifier, .001 mm3 increase gate.')
-    (folder/'contact-verification.json').write_text(json.dumps(report,indent=2,allow_nan=False))
-    print('200:',len(rows),'pairwise records;',len(increases),'increased contacts',flush=True)
-    assert not increases,'Inspect contact-verification.json'
+    filename='contact-verification.json' if size=='200' else f'contact-verification-{size}.json'
+    (folder/filename).write_text(json.dumps(report,indent=2,allow_nan=False))
+    print(size+':',len(rows),'pairwise records;',len(increases),'increased contacts',flush=True)
+    assert not increases,'Inspect '+filename
 
 
 if __name__=='__main__':

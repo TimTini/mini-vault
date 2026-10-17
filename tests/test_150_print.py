@@ -28,6 +28,14 @@ class Print150(unittest.TestCase):
             hits, _, _ = housing.ray.intersects_location([[-33,80,0]], [direction], multiple_hits=True)
             np.testing.assert_allclose(sorted(hits[:,axis]), expected, atol=.01)
         door = trimesh.load_mesh(directory/'door.stl')
+        for origin,direction,axis,expected in [
+            ([-33,80,9.7],[1,0,0],0,[39,41.7]),
+            ([-33,80,9.7],[-1,0,0],0,[-107.7,-105]),
+            ([-23.3,80,0],[0,0,1],2,[72,74.7]),
+            ([-23.3,80,0],[0,0,-1],2,[-74.7,-72]),
+        ]:
+            hits, _, _ = housing.ray.intersects_location([origin], [direction], multiple_hits=True)
+            np.testing.assert_allclose(sorted(hits[:,axis]), expected, atol=.01)
         hits, _, _ = door.ray.intersects_location([[-70,-20,50]], [[0,1,0]], multiple_hits=True)
         np.testing.assert_allclose(sorted(hits[:,1]), [-7.4,-5], atol=.005)
         for name in ['shaft','dial','knob','retaining_ring','disk_1','disk_2','disk_3']:
