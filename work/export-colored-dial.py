@@ -39,9 +39,9 @@ def main():
     metadata=json.loads(source.with_suffix('.export.json').read_text())
     assert metadata['source_hashes']==sources
     original=trimesh.load_mesh(source);body=solid(original)
-    # The raised layer is .2 mm; its absolute Y changes with door thickness.
+    # The raised layer is .4 mm; its absolute Y changes with door thickness.
     # Snap to the actual STL plane so float32 rounding cannot add a thin body skin.
-    expected=original.bounds[0,1]+.2
+    expected=original.bounds[0,1]+.4
     planes=np.unique(original.vertices[:,1])
     split_y=float(planes[np.argmin(abs(planes-expected))])
     assert abs(split_y-expected)<1e-5

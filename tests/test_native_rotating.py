@@ -12,7 +12,7 @@ from exporter import ROOT
 class NativeRotating(unittest.TestCase):
     def test_rotating_features_export_without_axial_staircases(self):
         expected = {'shaft': [[-7, -13.2, -7], [7, 18, 7]],
-                    'dial': [[-21, -13.4, -20.994047], [21, -7.2, 20.994047]]}
+                    'dial': [[-21, -13.6, -20.994047], [21, -7.2, 20.994047]]}
         for name in expected:
             with self.subTest(part=name):
                 path = ROOT/'work/native-rotating'/f'{name}.stl'

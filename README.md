@@ -69,7 +69,7 @@ Release gồm hai STL bố trí **22 chi tiết rời** cho200/1 và220/1.5, cù
 File `mini-vault-200-scale-1-dial-black-white.3mf` có hai part: thân đen và số/vạch trắng. Gán filament theo hai part trong slicer; file là mô hình, không phải lệnh gửi máy in.
 
 Tám vạch ở vị trí không có số trên `dial` chạy từ bán kính 9 đến 18,5 mm,
-ngang hàng số, rộng 1 mm và nổi 0,2 mm. Các vạch ngắn phía dưới số giữ nguyên.
+ngang hàng số, rộng 1 mm. Toàn bộ số và vạch nổi 0,4 mm; các vạch ngắn phía dưới số giữ nguyên chiều dài.
 Xuất lại bản hai màu sau khi xuất bộ STL 200 bằng `python work/export-colored-dial.py`;
 kiểm tra file bằng `python -m unittest tests.test_colored_dial -v`.
 

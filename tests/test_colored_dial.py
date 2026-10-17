@@ -27,11 +27,13 @@ class ColoredDial(unittest.TestCase):
             faces=[[int(t.get(a)) for a in ['v1','v2','v3']] for t in data.find('c:triangles',NS)]
             cls.meshes.append(trimesh.Trimesh(vertices,faces,process=False))
 
-    def test_marks_are_only_point_two_mm_relief(self):
+    def test_marks_are_only_point_four_mm_relief(self):
         self.assertEqual(len(self.meshes),2)
-        self.assertAlmostEqual(self.meshes[1].extents[2],.2,delta=.00001)
+        self.assertAlmostEqual(self.meshes[1].extents[2],.4,delta=.00001)
         # Digits and all 16 ticks remain separate islands, including long ticks.
         self.assertEqual(len(self.meshes[1].split()),28)
+        for island in self.meshes[1].split():
+            self.assertAlmostEqual(island.extents[2],.4,delta=.00001)
         for mesh in self.meshes:
             self.assertTrue(mesh.is_volume)
 

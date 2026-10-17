@@ -16,7 +16,7 @@ class DialTicks(unittest.TestCase):
         mesh = trimesh.load_mesh(path)
         self.assertTrue(mesh.is_volume)
         self.assertEqual(len(mesh.split()), 1)
-        # Probe normal to the face: raised marks start at Y=-13.8;
+        # Probe normal to the face: raised marks start at Y=-14;
         # the unchanged body surface is Y=-13.6.
         def front(radius, angle):
             a = np.deg2rad(angle)
@@ -26,15 +26,15 @@ class DialTicks(unittest.TestCase):
 
         for angle in np.arange(22.5, 360, 45):
             with self.subTest(angle=angle):
-                self.assertAlmostEqual(front(18.4, angle), -13.8, delta=.005)
+                self.assertAlmostEqual(front(18.4, angle), -14, delta=.005)
                 self.assertAlmostEqual(front(18.6, angle), -13.6, delta=.005)
                 self.assertAlmostEqual(front(8.8, angle), -13.6, delta=.005)
                 # Width stays 1 mm, including near the new outer tip.
                 self.assertAlmostEqual(front(18, angle+np.rad2deg(np.arctan(.6/18))), -13.6, delta=.005)
         for angle in range(0, 360, 45):
-            self.assertAlmostEqual(front(11, angle), -13.8, delta=.005)
+            self.assertAlmostEqual(front(11, angle), -14, delta=.005)
             self.assertAlmostEqual(front(12.5, angle), -13.6, delta=.005)
-        np.testing.assert_allclose(mesh.extents, [42, 6.2, 41.988094], atol=.01)
+        np.testing.assert_allclose(mesh.extents, [42, 6.4, 41.988094], atol=.01)
 
 
 if __name__ == '__main__':
