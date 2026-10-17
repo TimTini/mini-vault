@@ -1,0 +1,93 @@
+# Housing mouth: continuous feature CSG
+
+`geometry/housing.scad` owns the housing shell and mouth. Dimensions are in mm
+before the final `size_scale`. Datum: X/Z are the front sketch, Y is depth;
+the hinge pivot is `[20,-0.5,0]`. Relations recovered from the reference are
+inferred design intent, while dimensions below are measured.
+
+The mouth no longer loads `profiles/housing.scad`. That file is retained only as
+historical reference data; its 461 front layers are not executed by the model.
+
+## Features and ownership
+
+- Outer shell and edge rounds: existing `native_housing_outer`, unchanged.
+- Front opening: corner centres X=-80/30, Z=±30, R10.2; straight Y=-7.5..14.
+  The R0.5 entrance round is a quarter-circle loft. Panel spans follow
+  `body_point`; mounting dimensions retain their original values.
+- Right swing clearance: rounded opening swept through a symmetric cubic loft.
+  For `t=abs(Y+0.5)/6.5`, the right edge is
+  `40.2+0.9*(1-1.5*t*t+0.5*t*t*t)` over Y=-7..6. Against 25 independent
+  reference section vertices at Z=0, maximum residual was 0.0063 mm.
+  One convex hull of 33 stations approximates this concave boundary curve in
+  32 intervals. The constant left/top/bottom extents make that hull appropriate;
+  the independent right-edge residual must be rechecked if the curve changes.
+  These are stations of one named feature, not measured STL layers.
+- Left lead-in: union the narrow opening with a conical/planar 45° loft,
+  left corner centres X=-88, Z=±30, radius `Y-0.8` over Y=3..11.
+  The rear opening then continues to Y=14. The ordinary wall-thickness cavity
+  takes over behind Y=14.
+- Lock pockets: X=-98.2..-90.2, Y=-5.2..0.2, Z=15.8..24.2 and -24.2..-15.8.
+  The upper pocket retains the measured R1 concave entrance around its four
+  edges. Its cross-sections are rectangles expanded by `1-cos(a)` as X follows
+  `-91.2+sin(a)`, a quarter-circle law. The lower pocket retains square edges.
+- Central lock stop: trapezoid X=-90.2..-88.2, Z=±9 at its root / ±7 at its tip,
+  Y=-5..-3; a 45° rear taper ends at Y=-1.
+- Hinge guide pair: X=3.5..15.5, |Z|=36.2..40.2, Y=-5..4, then a 45° ramp
+  ends at Y=8. A recess X=5.5..15.5, |Z|≥38.1, Y=-3..2 keeps the socket step.
+- Optional hinge gussets: existing construction and parameter, unchanged.
+
+The front lip is independent of `wall_thickness` and `body_corner_radius`.
+The rear cavity still follows both. Width changes move left-side lock features
+with the left wall; height changes move hinge guides with the top/bottom panels.
+
+## Verification
+
+Keep `$fn=128`, Manifold backend, and exporter tolerance 0.005 mm when comparing
+builders. Source complexity, direct indexed faces, and simplified STL triangles
+are separate measurements. `tests/test_housing_features.py` rejects a production
+measured-profile dependency and a default indexed mesh with 20,000 or more faces.
+
+Local reconstruction evidence and failed prototypes stay under
+`work/housing-feature-rebuild/`; the immutable old builder and current-kit
+snapshot stay under `work/backup/housing-feature-20261017/`. These local inputs
+are not part of a public source clone. Reproduce the matrix and sampled motion
+check with the project Python runtime and its `requirements.txt` dependencies:
+
+```powershell
+& '<project-python>' work/verify-housing-features.py --openscad '<openscad.com>'
+$env:MINI_VAULT_OPENSCAD='<openscad.com>'
+& '<project-python>' -m unittest tests.test_housing_features tests.test_native_housing -v
+```
+
+The verifier leaves delivered kits untouched. It compares every saved preset,
+minimum depth, rounded corners and maximum dimensions to the snapshotted old
+builder, including targeted functional contours and two-way seeded surface
+samples. At a sharp pocket end, compare indexed CSG within 0.005 mm of the seam:
+the old simplified STL can smear an 8 mm step across that tiny distance.
+Printed-mesh contour probes sit 0.02 mm away; the tolerance remains 0.1 mm.
+
+Housing contacts are compared using rigid door poses (0..90°, 0.25° steps) and
+121 slider positions for both active print presets. These checks do not establish
+physical fit, force, durability, warping, slicing, or an independent exhaustive
+self-intersection audit.
+
+## Checkpoint: 2026-10-17
+
+OpenSCAD 2026.09.29, Manifold, curve_segments=128, simplify=0.005 mm:
+
+- Default: 307,260 → 17,204 indexed faces; 130,512 → 9,972 STL triangles.
+- 200 - scale 1: 314,736 → 16,838 indexed faces; 128,972 → 10,510 STL triangles.
+- 220 - scale 1.5: 314,594 → 17,074 indexed faces; 152,792 → 10,616 STL triangles.
+- Eight geometry cases passed: all five saved presets, minimum depth, R13 outer
+  corners, and maximum dimensions with wall 3 / rear 4 / R14 corners.
+- Five focused unit tests passed, including five-preset mounting measurements.
+- Each active print preset had 21 static housing pairs, 361 door poses and 121
+  slider poses compared; no increased significant housing contact was found.
+- Both 22-part STL kits were regenerated and read back. Only the housing source
+  mesh changed; the other 21 source STL hashes stayed identical in each kit.
+
+This is a bounded reconstruction: for the 200 preset, the two-way seeded surface
+sample maximum against the previous builder was 0.0196 mm, and the largest
+tested regular contour deviation was 0.0202 mm. These are sampled measurements,
+not a Hausdorff bound or proof of physical fit. Existing slicer 3MF projects and
+printer profiles were not changed by this source reconstruction.

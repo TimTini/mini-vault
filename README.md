@@ -12,6 +12,8 @@ Mô hình có tham số, bộ preset in FDM và tool HTML local để tìm vị 
 
 Mở `mini-vault.scad` trong OpenSCAD, giữ `mini-vault.json`, `geometry/` và `profiles/` cạnh source. Đơn vị mm. Hình học dùng khối CSG liên tục và các biên dạng chức năng. Chọn `part="assembly"` để xem tư thế lắp hoặc chọn tên từng chi tiết để xuất riêng. `source_layout` giữ vị trí đo nguồn.
 
+Miệng `housing` được dựng bằng các khối CSG có tên: khoang bo góc, đoạn loe, hốc khóa, chặn khóa và gờ bản lề. Dữ liệu 461 lát cắt cũ chỉ giữ để tham chiếu, không tham gia render vỏ. Xem [kích thước, quan hệ và cách kiểm chứng housing](docs/HOUSING-FEATURES.md).
+
 Các preset:
 
 - **Default:** vỏ142 ×100 ×84mm, `size_scale=1`.

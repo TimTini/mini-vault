@@ -1,4 +1,5 @@
-// Continuous outer shell and rear cavity; measured front reliefs retained locally.
+// Continuous feature CSG. Dimensions recovered from the reference mesh in mm;
+// see docs/HOUSING-FEATURES.md for datums, fits and independent verification.
 module native_housing_outline(inset=0) {
     w=model_body_width-2*inset; h=model_body_height-2*inset; r=body_corner_radius-inset;
     translate([42-model_body_width/2,0]) hull() for(sx=[-1,1],sz=[-1,1])
@@ -14,20 +15,74 @@ module native_housing_outer() {
                 along_y(y-.005,.01) native_housing_outline(inset);
     }
 }
+
+// Corner centres move with the panel spans; the mounting lip keeps its 10.2 radius.
+module housing_mouth_outline(radius=10.2,left=-80,right=30) {
+    hull() for(x=[left,right],z=[-30,30])
+        translate(body_point([x,z])) circle(r=radius);
+}
+
+module housing_mouth_opening() {
+    along_y(-7.5,21.5+eps) housing_mouth_outline();
+    // R0.5 inner edge round. Analytic quarter-circle loft, rather than measured slices.
+    for(j=[0:7]) hull() for(a=[j*90/8,(j+1)*90/8])
+        along_y(-7.5-.5*sin(a)-eps,2*eps)
+            housing_mouth_outline(10.7-.5*cos(a));
+    // Right door-swing relief: symmetric cubic fit, 0.9 mm maximum at Y=-0.5.
+    // Its rounded XZ section retains the measured R10.2 corner.
+    hull() for(j=[-16:16]) let(t=abs(j)/16)
+        along_y(-.5+6.5*j/16-eps,2*eps)
+            housing_mouth_outline(right=30+.9*(1-1.5*t*t+.5*t*t*t));
+    // Left internal lead-in: a 45-degree conical/planar transition, Y=3..11.
+    hull() for(y=[3,11]) along_y(y-eps,2*eps)
+        housing_mouth_outline(radius=y-.8,left=-88);
+    along_y(11,3+eps) housing_mouth_outline(left=-88);
+}
+
+module housing_lock_pockets() {
+    // Two blind rectangular pockets, with R1 entry corners on the upper pocket.
+    along_y(-5.2,5.4) {
+        polygon([for(p=[[-98.2,-24.2],[-90.2,-24.2],[-90.2,-15.8],[-98.2,-15.8]]) body_point(p)]);
+        polygon([for(p=[[-98.2,15.8],[-90.2,15.8],[-90.2,24.2],[-98.2,24.2]]) body_point(p)]);
+    }
+    // R1 concave blend around the upper pocket's mouth, including its front/rear edges.
+    for(j=[0:15]) hull() for(a=[j*90/16,(j+1)*90/16])
+        along_x(-91.2-(model_body_width-142)+sin(a)-eps,2*eps)
+            translate([-5.2,15.8]) offset(delta=1-cos(a)) square([5.4,8.4]);
+}
+
+module housing_lock_stop() {
+    // Trapezoidal central stop; the rear face retreats at 45 degrees to Y=-1.
+    intersection() {
+        along_y(-5,4) polygon([for(p=[[-90.2,-9],[-88.2,-7],[-88.2,7],[-90.2,9]]) body_point(p)]);
+        translate([-(model_body_width-142),0,-10]) linear_extrude(20)
+            polygon([[-91,-5],[-88.2,-5],[-88.2,-3],[-90.2,-1],[-91,-1]]);
+    }
+}
+
+module housing_hinge_guides() {
+    for(s=[-1,1]) scale([1,1,s]) translate([0,0,(model_body_height-84)/2])
+        difference() {
+            along_x(3.5,12) polygon([[-5,36.2],[4,36.2],[8,40.2],[8,41],[-5,41]]);
+            translate([5.5,-3,38.1]) cube([10+eps,5,4]);
+        }
+}
+
 module native_housing() {
-    difference() {
+    union() {
+      difference() {
         intersection() {
             native_housing_outer();
             translate([-model_body_width-100,-8,-model_body_height])
                 cube([model_body_width+200,model_body_depth,2*model_body_height]);
         }
-        // Front lock/hinge relief data retains its measured local tolerances.
-        for(layer=profile_11) if(layer[0]<14)
-            along_y(layer[0],min(layer[1],14)-layer[0])
-                for(loop=layer[2]) if(loop[0]%2==1)
-                    loop_sketch(11,loop,(layer[0]+min(layer[1],14))/2);
+        housing_mouth_opening();
+        housing_lock_pockets();
         along_y(14-eps,model_body_depth-8-bottom_thickness-14+eps)
             native_housing_outline(wall_thickness);
+      }
+      housing_lock_stop();
+      housing_hinge_guides();
     }
     if(hinge_gusset_size>0) for(s=[-1,1]) scale([1,1,s])
         along_x(4,10) polygon([[4.2,model_body_height/2-1.6],

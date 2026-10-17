@@ -70,7 +70,6 @@ include <profiles/hinge_leaf_top.scad>
 include <geometry/latch.scad>
 include <geometry/rotating.scad>
 include <profiles/retaining_ring.scad>
-include <profiles/housing.scad>
 include <geometry/housing.scad>
 include <profiles/knob.scad>
 include <geometry/link-cover.scad>
