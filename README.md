@@ -14,6 +14,8 @@ Mở `mini-vault.scad` trong OpenSCAD, giữ `mini-vault.json`, `geometry/` và 
 
 Miệng `housing` được dựng bằng các khối CSG có tên: khoang bo góc, đoạn loe, hốc khóa, chặn khóa và gờ bản lề. Dữ liệu 461 lát cắt cũ chỉ giữ để tham chiếu, không tham gia render vỏ. Xem [kích thước, quan hệ và cách kiểm chứng housing](docs/HOUSING-FEATURES.md).
 
+Mặt sau `door` dùng các feature riêng: bệ trục, cửa lắp kiểu bayonet, càng/ray chốt, ngàm bản lề và chân gài nắp cơ cấu. Dữ liệu 475 lớp cũ chỉ giữ để tham chiếu. Xem [cấu trúc và cách kiểm chứng cửa](docs/DOOR-FEATURES.md).
+
 Các preset:
 
 - **Default:** vỏ142 ×100 ×84mm, `size_scale=1`.

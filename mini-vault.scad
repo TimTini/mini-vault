@@ -61,7 +61,7 @@ assert(size_scale>=1 && size_scale<=1.5,"size_scale: 1..1.5");
 $fn = curve_segments;
 eps = 0.00001; // Boolean epsilon only, not mechanical clearance.
 disk_center_x = -0.028609;
-include <profiles/door.scad>
+include <geometry/door-rear.scad>
 include <geometry/door.scad>
 include <profiles/hinge_socket_top.scad>
 include <geometry/fastener.scad>
