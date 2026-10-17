@@ -30,6 +30,34 @@ Với cửa dày hơn 2 mm, mép của lớp ngoài được lùi vào và vát 
 
 Vạch chỉ số mặt ngoài cửa giữ kích thước cục bộ1×4mm rồi nhân tỷ lệ; bản200 là1×4mm, bản220/1.5 là1,5×6mm. Latch mở rộng theo bề rộng cửa và có đế đỡ sau cổ núm ở các bản lớn.
 
+## Xem tư thế PyChrono
+
+Viewer local phát lại đúng **361 tư thế cửa** (0–90°) và **121 vị trí chốt trượt** (0 đến −8 mm theo X) của preset **200 - scale 1**. Cần runtime PyChrono có Irrlicht và Tkinter, cùng bộ mesh/manifest và `work/thick-housing/chrono-poses.json` đã tạo tại máy; các dữ liệu local này không có trong source clone.
+
+Mở từ PowerShell trên máy hiện tại:
+
+```powershell
+& 'python' 'work/chrono-viewer.py'
+```
+
+Hai cửa sổ xuất hiện: hình 3D và bảng điều khiển tiếng Việt. Chọn **Cửa** hoặc **Chốt trượt**, bấm **Phát/Dừng**, kéo thanh chọn tư thế hoặc bấm **±1 tư thế**. Kéo thanh sẽ dừng phát; mỗi lượt phát dài 6 giây. Trong cửa sổ 3D, giữ chuột trái và kéo để xoay, lăn bánh xe để zoom. Chế độ chốt chuyển camera sang mặt trong và tự ẩn vỏ; có thể bật lại vỏ bằng checkbox. Đóng một trong hai cửa sổ để thoát.
+
+Viewer kiểm tra hash source, preset, script sinh pose và 22 mesh trước khi mở. Nếu dữ liệu đã cũ hoặc thiếu, viewer báo lỗi và dừng; không tự render lại hoặc ghi đè bằng chứng. Tái tạo input theo quy trình xuất/kiểm chứng phía trên trước khi mở lại. Chỉ kiểm tra dữ liệu mà không mở GUI:
+
+```powershell
+& 'python' 'work/chrono-viewer.py' --check
+```
+
+Kiểm chứng viewer gồm test stdlib và smoke GUI hữu hạn (mở rồi tự đóng, ghi ảnh/report vào `work/chrono-viewer-smoke/`):
+
+```powershell
+Set-Location '.'
+& 'python' -m unittest discover -s tests -p test_chrono_viewer.py -v
+& 'python' work/verify-chrono-viewer.py
+```
+
+Đây là phát lại động học đã lưu; viewer không chạy mô phỏng lực tiếp xúc, không đánh dấu vùng cấn và không xác nhận độ vừa sau in.
+
 ## File để in
 
 Release gồm hai STL bố trí **22 chi tiết rời** cho200/1 và220/1.5, cùng ZIP chi tiết riêng. Trong slicer, dùng **Split to objects → Arrange** để chia ra nhiều bàn. Layout tổng lớn hơn một bàn; mỗi chi tiết đã được đặt mặt in và minZ=0, giữ kích thước bằng phép xoay/tịnh tiến cứng.
