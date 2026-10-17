@@ -33,12 +33,14 @@ def check():
             for match in re.finditer(pattern,text):
                 # The bundled dependency preserves the public copyright contact.
                 if category=='email' and name=='simulator/vendor/THREE-LICENSE.txt':continue
-                # Regex definitions are scanner code, not credential values.
-                if name=='work/publication-audit.py':continue
                 findings.append(dict(file=name,line=text.count('\n',0,match.start())+1,category=category))
     ignored=['.env','simulator/.env','work/environment.json','work/mini-vault-progress.md',
              'work/backup/private.txt','exports/mini-vault-200-scale-1-print.stl','reference/MINI-VAULT.stl',
-             'simulator/credentials.json','simulator/private.key','tests/__pycache__/x.pyc']
+             'simulator/credentials.json','simulator/private.key','tests/__pycache__/x.pyc',
+             'simulator/.ssh/id_ed25519','tests/.aws/credentials','tests/.netrc',
+             'tests/token.json','tests/config.local.json','tests/private.p8',
+             'tests/vault.kdbx','tests/state.sqlite3','tests/state.db-wal',
+             'tests/state.sqlite-wal','tests/state.sqlite3-shm']
     for name in ignored:
         result=subprocess.run(['git','check-ignore','-q','--no-index',name],cwd=ROOT)
         if result.returncode:findings.append(dict(file=name,category='ignore_rule_missing'))
