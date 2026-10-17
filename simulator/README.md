@@ -4,11 +4,15 @@ Mở `index.html` cùng `vendor/`, `mechanism.js`, `view.js`, `context-meshes.js
 
 ## Sử dụng
 
-Lượt gặp số được nhập rõ cho từng chặng, mặc định **4 / 2 / 2**: bắt đầu kim ở16, quay⭮ đến8 lần thứ4, đảo⭯ đến4 lần thứ2, đảo⭮ đến12 lần thứ2. Mỗi lần đảo chiều đếm lại từ1; vị trí đang đứng chưa tính là một lần gặp. Đây là chuỗi đối chiếu, chưa xác nhận mở đúng8/4/12 trên bản in. Tool tìm chốt theo đúng các lượt bạn chọn, hiển thị góc quay từng chặng và số lần đã đi qua trong lúc chạy, giữ nguyên pass/lượt và không tự thêm360°. Sai lệch đĩa1/2/3 hiện dưới trạng thái mở.
+**Tìm chốt và lượt quay** giữ nguyên mã nhập, tìm bộ chốt và số lượt phù hợp: lượt đầu4 để gom ba đĩa, lượt thứ hai1–3, lượt cuối1–2. Tool ưu tiên sai lệch đĩa nhỏ nhất qua ba chặng, rồi sai lệch điểm dừng nhỏ nhất. Các ô lượt được cập nhật công khai; **Tìm theo lượt đã nhập** chỉ xét đúng lượt tự nhập.
 
-Chuỗi8/4/12 với4/2/2 đi lần lượt1260°/630°/540°. Phương án gần nhất vẫn0/1/6, sai lệch cuối khoảng2,04°/1,40°/0,75°, chưa khớp. Con số43,05° của planner tự tăng chặng2 lên990° là kết quả lịch sử, không phải chuỗi hiện tại. Regression: `node tests/test_dial_visits.cjs`. APIlegacytự chọn vòng giữ cho bằng chứng/test lịch sử; UI hiện dùng routeexplicit.
+Ví dụ **13/5/9**: chọn **Tìm chốt và lượt quay** để nhận **chốt5/2/3, lượt4/3/2**. Mã nguyên còn lệch khoảng2,01°/−1,27°/0,62°, chưa được đánh dấu khớp. **Thử điểm dừng hiệu chỉnh** chạy riêng các điểm tiếp xúc dự đoán khoảng **12,910/5,056/8,972**, với lượt được hiển thị bên cạnh, để ba rãnh khớp trong mô hình. Mã nhập và lượt của mã nhập giữ nguyên; thông báo kết thúc phân biệt rõ lượt hiệu chỉnh. Đây vẫn là tiếp xúc ước lượng cho bộ chốt này, chưa phải kiểm chứng bản in.
 
-1. Nhập mã mong muốn trên núm 1–16. Tool dùng cố định cơ cấu gốc scale1 và mặt nắp200; bộ chọn200/220 đã bỏ. Chọn **Tìm vị trí chốt**. Tool giữ nguyên pass và tìm trong 3.375 bộ lỗ; kết quả phân biệt khớp trong mô hình với phương án gần nhất.
+Lượt gặp số được nhập rõ cho từng chặng, ban đầu **4 / 2 / 2**: bắt đầu kim ở16, quay⭮ đến8 lần thứ4, đảo⭯ đến4 lần thứ2, đảo⭮ đến12 lần thứ2. Mỗi lần đảo chiều đếm lại từ1; vị trí đang đứng chưa tính là một lần gặp. Đây là chuỗi đối chiếu, chưa xác nhận mở đúng8/4/12 trên bản in. Tìm tự động cập nhật các ô lượt; tìm thủ công giữ lượt tự nhập. Nút thử mã nguyên quay đúng các lượt đang hiển thị và không tự thêm360°. Sai lệch đĩa1/2/3 hiện dưới trạng thái mở.
+
+Chuỗi8/4/12 với4/2/2 đi lần lượt1260°/630°/540°. Phương án gần nhất vẫn0/1/6, sai lệch cuối khoảng2,04°/1,40°/0,75°, chưa khớp. Con số43,05° của planner tự tăng chặng2 lên990° là kết quả lịch sử, không phải chuỗi hiện tại. Regression: `node tests/test_dial_visits.cjs`. Thử mã nguyên dùng routeexplicit; thử hiệu chỉnh có điểm dừng/lượt riêng được hiển thị trước và thông báo rõ khi chạy.
+
+1. Nhập mã mong muốn trên núm 1–16. Tool dùng cố định cơ cấu gốc scale1 và mặt nắp200; bộ chọn200/220 đã bỏ. Chọn **Tìm chốt và lượt quay**. Tool giữ nguyên pass và tìm trong 3.375 bộ lỗ cho mỗi chuỗi lượt; kết quả phân biệt khớp trong mô hình với phương án gần nhất.
 2. Mặc định **Lắp từ mặt trong**: mặt có đầu lớn hướng về bạn, rãnh đĩa bên phải. Chọn hình **Đĩa 1 / 2 / 3** để xem riêng đúng chi tiết trên cửa; lỗ cần đặt chốt tô vàng. Đĩa1 sát cửa, đĩa2 giữa, đĩa3 trong cùng. Các số0–14 là chỉ số lỗ SCAD.
 3. Chọn **Cả nắp** để thấy toàn bộ mặt trong cửa, trục, vòng đỡ và vị trí cụm đĩa. Chọn một đĩa để trở lại hình gần. Lăn chuột để phóng to/thu nhỏ.
 4. Chọn **Nhìn núm bên ngoài**: hình3D và sơ đồ lỗ cùng đổi phía nhìn, rãnh chuyển sang trái. Số lỗ và số đĩa gắn với chi tiết, chữ vẫn đọc xuôi.
@@ -43,6 +47,8 @@ Chạy tại thư mục project:
 ```powershell
 node tests/test_assembly_view.cjs
 node tests/test_assembly_ui.cjs
+node tests/test_auto_route.cjs
+node tests/test_pickup_motion.cjs
 node tests/test_inverse_code.cjs
 node tests/test_dialing.cjs
 node --check simulator/app.js

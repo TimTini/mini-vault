@@ -84,17 +84,15 @@
       for(let i=0;i<3;i++)this.q.push(this.q[i]-this.high[i]-this.span[i]/2);
     }
     move(target) {
-      // Subdivide manual jumps so a full revolution cannot skip a pickup.
-      const n=Math.max(1,Math.ceil(Math.abs(target-this.q[0]))),start=this.q[0];
-      for(let k=1;k<=n;k++) {
-        const old=this.q.slice();this.q[0]=start+(target-start)*k/n;
-        for(let i=0;i<3;i++) {
-          let gap=mod(old[i]-old[i+1]-this.high[i]);if(gap>360-1e-7)gap=0;
-          const proposed=gap+this.q[i]-old[i];
-          this.pulling[i]=proposed<0||proposed>this.span[i];
-          if(proposed>this.span[i])this.q[i+1]=old[i+1]+proposed-this.span[i];
-          else if(proposed<0)this.q[i+1]=old[i+1]+proposed;
-        }
+      // A monotone move crosses each pickup edge once. Keep the full unwrapped
+      // travel, clamp the free gap, then propagate actual motion to the next disk.
+      const old=this.q.slice();this.q[0]=target;
+      for(let i=0;i<3;i++) {
+        let gap=mod(old[i]-old[i+1]-this.high[i]);if(gap>360-1e-7)gap=0;
+        const proposed=gap+this.q[i]-old[i];
+        this.pulling[i]=proposed<0||proposed>this.span[i];
+        if(proposed>this.span[i])this.q[i+1]=old[i+1]+proposed-this.span[i];
+        else if(proposed<0)this.q[i+1]=old[i+1]+proposed;
       }
     }
     aligned() {return this.q.slice(1).every(q=>Math.abs(error(q))<.25);}
@@ -128,6 +126,17 @@
     if(!best.stageErrors)Object.assign(best,inspect(best.holes));
     return {...best,tested:3375,matchingCandidates:matches,...(visits?{visits:visits.slice(),stops:explicitStops}:{} )};
   }
-  const api={Model,targets,bands,error,mod,authorHoles,numbersForHoles,dialTargets,solveCode,visitTargets,describeVisits};
+  function planCode(numbers,scale=1) {
+    // Four first encounters clear all three pickup gaps, even from unknown phases.
+    // Later legs need at most three / two encounters; extra turns drag set disks.
+    let best=null;
+    for(let second=1;second<=3;second++)for(let third=1;third<=2;third++) {
+      const candidate=solveCode(numbers,scale,[4,second,third]);
+      if(!best||candidate.maxStageError<best.maxStageError-1e-7||
+        (Math.abs(candidate.maxStageError-best.maxStageError)<1e-7&&candidate.maxStopError<best.maxStopError-1e-7))best=candidate;
+    }
+    return best;
+  }
+  const api={Model,targets,bands,error,mod,authorHoles,numbersForHoles,dialTargets,solveCode,planCode,visitTargets,describeVisits};
   if(typeof module==='object'&&module.exports)module.exports=api;else root.VaultMechanism=api;
 })(globalThis);

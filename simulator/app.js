@@ -1,9 +1,10 @@
 ﻿'use strict';
 const $=id=>document.getElementById(id);
-const {Model,solveCode,visitTargets,error,mod}=VaultMechanism;
+const {Model,solveCode,planCode,targets,describeVisits,visitTargets,error,mod}=VaultMechanism;
 const {holePoint,viewPose}=VaultView;
 let numbers=[8,4,12],visits=[4,2,2],solution=solveCode(numbers,1,visits),holes=solution.holes;
 let planned=solution.stops,routeStart=0;
+let replayNumbers=numbers,replayVisits=visits,correctedReplay=false;
 let model=new Model(holes),mode='assembly',selectedDisk=1,queue=[],inserted=false,last=0,pauseUntil=0;
 let renderMechanism=()=>{},rebuild=()=>{};
 const colors=['#60c5f0','#ae90fa','#f6b46a'];
@@ -14,6 +15,10 @@ function showSolution(){
   box.append(document.createTextNode(`Mã giữ nguyên: ${numbers.join(' → ')}. Chốt đĩa 1 / 2 / 3: lỗ ${holes.join(' / ')}.`));
   $('precision').textContent=`Đã xét ${solution.tested} bộ lỗ trong mô hình. ${solution.measured?'Tiếp xúc của bộ lỗ này đã đo từ mesh.':'Bộ lỗ này dùng tiếp xúc ước lượng.'} Điểm dừng dự đoán riêng: ${solution.predictedNumbers.map(n=>n.toFixed(3)).join(' → ')}. Kết quả chưa xác nhận hoạt động trên bản in.`;
   $('route').innerHTML=numbers.map((n,i)=>`<li>${['⭮','⭯','⭮'][i]} Đến ${n} lần thứ ${visits[i]} · quay ${Math.abs(planned[i]-(i?planned[i-1]:0)).toFixed(1)}°${i?' sau khi đảo chiều':' từ 16'}.</li>`).join('');
+  const contactStops=targets(model.low,model.high,false,-1);
+  const contactNumbers=contactStops.map(q=>mod(q)/22.5||16);
+  const contactVisits=describeVisits(contactNumbers,contactStops);
+  $('correctedRoute').textContent=`Điểm dừng hiệu chỉnh cho bộ chốt này: ${contactNumbers.map(n=>n.toFixed(3)).join(' → ')}; lượt ${contactVisits.join(' / ')} từ 16. Nút hiệu chỉnh thử các điểm này, khác mã đã nhập; tiếp xúc vẫn có thể là ước lượng.`;
 }
 function drawCards(){
   const pose=viewPose(mode,selectedDisk,[0,0,0]);
@@ -41,9 +46,9 @@ function update(){
   $('status').className=aligned?'badge good':'badge';
   $('readout').textContent=(mod(model.q[0])/22.5||16).toFixed(3);
   const stage=3-queue.length;
-  const traveled=Math.abs(model.q[0]-routeStart),phaseTravel=queue.length?Math.abs(planned[stage]-routeStart)-360*(visits[stage]-1):0;
-  const passed=queue.length&&traveled>=phaseTravel-1e-6?Math.min(visits[stage],1+Math.floor((traveled-phaseTravel+1e-6)/360)):0;
-  $('stage').textContent=queue.length?`Chặng ${stage+1}/3 · ${['⭮','⭯','⭮'][stage]} đến ${numbers[stage]} lần ${visits[stage]} · đã gặp ${passed}/${visits[stage]} lần`:'⭮ → ⭯ → ⭮ · nhìn từ bên ngoài';
+  const traveled=Math.abs(model.q[0]-routeStart),phaseTravel=queue.length?Math.abs(planned[stage]-routeStart)-360*(replayVisits[stage]-1):0;
+  const passed=queue.length&&traveled>=phaseTravel-1e-6?Math.min(replayVisits[stage],1+Math.floor((traveled-phaseTravel+1e-6)/360)):0;
+  $('stage').textContent=queue.length?`${correctedReplay?'Hiệu chỉnh · ':''}Chặng ${stage+1}/3 · ${['⭮','⭯','⭮'][stage]} đến ${replayNumbers[stage].toFixed(3)} lần ${replayVisits[stage]} · đã gặp ${passed}/${replayVisits[stage]} lần`:'⭮ → ⭯ → ⭮ · nhìn từ bên ngoài';
   $('diskErrors').textContent=model.q.slice(1).reverse().map((q,i)=>`Đĩa ${i+1}: lệch ${error(q).toFixed(2)}°`).join(' · ');
   $('stop').disabled=queue.length===0;
   renderMechanism();
@@ -53,17 +58,20 @@ function changeView(next,disk=selectedDisk){
   drawCards();update();
 }
 function reset(){model=new Model(holes);queue=[];inserted=false;update();}
-function apply(){
+function apply(auto=false){
   const next=[1,2,3].map(i=>$('n'+i).valueAsNumber);
   const nextVisits=[1,2,3].map(i=>$('v'+i).valueAsNumber);
   try{
-    const proposal=solveCode(next,1,nextVisits);
-    numbers=next;visits=nextVisits;solution=proposal;holes=proposal.holes;planned=proposal.stops;
+    const proposal=auto?planCode(next):solveCode(next,1,nextVisits);
+    numbers=next;visits=proposal.visits;solution=proposal;holes=proposal.holes;planned=proposal.stops;
+    if(auto)visits.forEach((n,i)=>{$('v'+(i+1)).value=n;$('v'+(i+1)).valueAsNumber=n;});
+    replayNumbers=numbers;replayVisits=visits;correctedReplay=false;
     reset();rebuild();
     showSolution();drawCards();update();$('message').textContent='';return true;
   }catch(e){$('message').textContent=e.message;return false;}
 }
-$('codeForm').onsubmit=e=>{e.preventDefault();if(apply())changeView('assembly',1);};
+$('codeForm').onsubmit=e=>{e.preventDefault();if(apply(true))changeView('assembly',1);};
+$('fixedRoute').onclick=()=>{if(apply())changeView('assembly',1);};
 $('assemblyView').onclick=()=>changeView('assembly');
 $('dialView').onclick=()=>changeView('dial');
 $('wholeDoor').onclick=()=>changeView('assembly',0);
@@ -72,6 +80,15 @@ $('play').onclick=()=>{
   if(!apply())return;mode='dial';inserted=false;pauseUntil=0;
   planned=visitTargets(numbers,visits);queue=planned.slice();routeStart=0;drawCards();update();
   $('message').textContent=`Đang thử đúng mã ${numbers.join(' → ')} từ phía núm ngoài.`;
+};
+$('correctedPlay').onclick=()=>{
+  if(!apply())return;
+  correctedReplay=true;mode='dial';inserted=false;pauseUntil=0;
+  planned=targets(model.low,model.high,false,-1);
+  replayNumbers=planned.map(q=>mod(q)/22.5||16);
+  replayVisits=describeVisits(replayNumbers,planned);
+  queue=planned.slice();routeStart=0;drawCards();update();
+  $('message').textContent=`Đang thử điểm dừng hiệu chỉnh ${replayNumbers.map(n=>n.toFixed(3)).join(' → ')}; mã đã nhập ${numbers.join(' → ')} giữ nguyên.`;
 };
 $('stop').onclick=()=>{queue=[];$('message').textContent='Đã dừng thử mã.';update();};
 $('latch').onclick=()=>{
@@ -149,7 +166,7 @@ function frame(time){
   if(queue.length&&time>=pauseUntil){
     const target=queue[0],d=target-model.q[0],step=900*dt;
     model.move(Math.abs(d)<=step?target:model.q[0]+Math.sign(d)*step);
-    if(Math.abs(target-model.q[0])<1e-6){queue.shift();routeStart=target;pauseUntil=time+1000;if(!queue.length)$('message').textContent=model.aligned()?'Hoàn tất ⭮ ⭯ ⭮: ba rãnh khớp trong mô hình.':'Hoàn tất đúng lượt đã chọn: rãnh còn lệch; xem sai lệch từng đĩa.';}
+    if(Math.abs(target-model.q[0])<1e-6){queue.shift();routeStart=target;pauseUntil=time+1000;if(!queue.length)$('message').textContent=model.aligned()?(correctedReplay?'Hoàn tất điểm dừng hiệu chỉnh: ba rãnh khớp trong mô hình; chưa xác nhận mã nguyên hoặc bản in.':'Hoàn tất ⭮ ⭯ ⭮: ba rãnh khớp trong mô hình.'):'Hoàn tất đúng lượt đã chọn: rãnh còn lệch; xem sai lệch từng đĩa.';}
     update();
   }
   requestAnimationFrame(frame);

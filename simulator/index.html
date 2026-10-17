@@ -16,12 +16,13 @@
 <label>⭮ Số thứ 1<input id="n1" aria-label="Số thứ nhất trên núm" type="number" min="1" max="16" step="any" value="8" required></label>
 <label>⭯ Số thứ 2<input id="n2" aria-label="Số thứ hai trên núm" type="number" min="1" max="16" step="any" value="4" required></label>
 <label>⭮ Số thứ 3<input id="n3" aria-label="Số thứ ba trên núm" type="number" min="1" max="16" step="any" value="12" required></label>
-<button id="search" type="submit" class="primary">Tìm vị trí chốt</button>
+<button id="search" type="submit" class="primary">Tìm chốt và lượt quay</button>
+<button id="fixedRoute" type="button">Tìm theo lượt đã nhập</button>
 <fieldset style="border:0;padding:0;margin:8px 0 0;flex-basis:100%"><legend class="muted">Dừng khi gặp số lần thứ mấy?</legend><div class="row fields">
 <label>⭮ Số thứ 1 · lần<input id="v1" aria-label="Lượt gặp số thứ nhất" type="number" min="1" max="10" step="1" value="4" required></label>
 <label>⭯ Số thứ 2 · lần<input id="v2" aria-label="Lượt gặp số thứ hai" type="number" min="1" max="10" step="1" value="2" required></label>
 <label>⭮ Số thứ 3 · lần<input id="v3" aria-label="Lượt gặp số thứ ba" type="number" min="1" max="10" step="1" value="2" required></label>
-</div><p class="muted">Bắt đầu ở 16. Mỗi khi đảo chiều, đếm lại từ lần 1; vị trí đang đứng chưa tính là một lần gặp. Tool quay đúng số lần bạn chọn.</p></fieldset>
+</div><p class="muted">Bắt đầu ở 16. Mỗi khi đảo chiều, đếm lại từ lần 1; vị trí đang đứng chưa tính là một lần gặp. Nút tìm chính tự cập nhật lượt phù hợp; chọn “Tìm theo lượt đã nhập” để giữ lượt tự chọn.</p></fieldset>
 </form>
 <div id="suggestion" class="result" role="status"></div>
 <details><summary>Độ chính xác của phương án</summary><p id="precision"></p><p class="muted">Mô hình hỗ trợ đặt chốt; lực, ma sát và độ vừa của bản in cần kiểm tra thực tế.</p></details>
@@ -44,6 +45,8 @@
 <h2>3. Thử mã ⭮ → ⭯ → ⭮</h2>
 <ol id="route" class="muted"></ol>
 <div class="row"><button id="play" type="button" class="primary">Thử quay mã đã nhập</button><button id="stop" type="button" disabled>Dừng</button></div>
+<p><button id="correctedPlay" type="button">Thử điểm dừng hiệu chỉnh</button></p>
+<p id="correctedRoute" class="muted"></p>
 <div id="dialStatus" hidden><div id="readout" class="readout">16.000</div><div id="status" class="badge" role="status"></div><p id="stage" class="muted"></p><p id="diskErrors" class="muted"></p><button id="latch" type="button">Thử mở</button></div>
 <p id="message" role="status"></p>
 </div>

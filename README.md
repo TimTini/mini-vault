@@ -1,4 +1,4 @@
-﻿# MINI-VAULT — OpenSCAD và hướng dẫn lắp chốt
+# MINI-VAULT — OpenSCAD và hướng dẫn lắp chốt
 
 Mô hình có tham số, bộ preset in FDM và tool HTML local để tìm vị trí chốt, xem mặt trong cửa và thử chuỗi quay **⭮ → ⭯ → ⭮**.
 
@@ -80,11 +80,13 @@ Mở `simulator/index.html` cùng các file JS và `vendor/`. Tài nguyên đề
 python -m http.server 8000 --directory simulator
 ```
 
-Mở `http://localhost:8000/`. Nhập pass mong muốn và số lần gặp từng số, rồi chọn **Tìm vị trí chốt**. Mặc định bắt đầu ở16, lượt4/2/2; mỗi lần đảo chiều đếm lại từ1. Tool xét3375bộ lỗ theo chuỗi đã chọn và giữ nguyên pass. Khi chưa khớp, kết quả ghi rõ phương án gần nhất.
+Mở `http://localhost:8000/`. Nhập pass mong muốn rồi chọn **Tìm chốt và lượt quay** để tự tìm lượt phù hợp, hoặc **Tìm theo lượt đã nhập** để giữ số lượt tự chọn. Bắt đầu ở16; mỗi lần đảo chiều đếm lại từ1. Tool xét3375bộ lỗ cho mỗi chuỗi lượt và giữ nguyên pass. Khi chưa khớp, kết quả ghi rõ phương án gần nhất.
 
 Chế độ **Lắp từ mặt trong** đặt rãnh bên phải, đầu lớn của chốt hướng về người xem. Đĩa1 sát cửa, đĩa2 giữa, đĩa3 trong cùng; chọn từng đĩa hoặc **Cả nắp**. Đổi sang phía ngoài sẽ đổi cả hình3D và sơ đồ lỗ mà giữ nguyên index. **Thử quay mã đã nhập** quay đúng⭮⭯⭮ và số lượt đã chọn, không tự thêm vòng.
 
 Tool hiện dùng cơ cấu gốc và mặt nắp200 làm mốc minh họa; bộ chọn200/220 đã bỏ. Mặt cửa/trục/collar lấy từ mesh hiện tại; đĩa/chốt/núm hiển thị giản lược. Kết quả thuộc mô hình tiếp xúc theo góc, chưa tính ma sát/biến dạng hoặc chứng nhận bản in mở đúng mã. Ví dụ8/4/12 với4/2/2còn lệch khoảng2,04°/1,40°/0,75° ởđĩa1/2/3.
+
+Chọn **Tìm chốt và lượt quay** để tìm đồng thời chốt và lượt thay vì giữ mặc định4/2/2. Với13/5/9, tool chọn chốt5/2/3 và lượt4/3/2; mã nguyên còn lệch khoảng2°. Nút **Thử điểm dừng hiệu chỉnh** chạy riêng các số lẻ dự đoán, giữ nguyên mã nhập và ghi rõ đây là lượt hiệu chỉnh. Xem chi tiết trong [hướng dẫn simulator](simulator/README.md).
 
 ## Tái tạo và kiểm tra
 
